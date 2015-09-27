@@ -1,0 +1,565 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html"; charset="utf-8">
+<title>linux device driver</title>
+</head>
+<body>
+<table border=9 bordercolor=brown width="100%" background="../picture/wildboy24_2.bmp">
+<tr>
+<td>
+
+<!--   日曆
+-->
+<p align="center"><strong><a name="Toppage"><font size="10" face="新細明體">linux device driver</font><font size="10"></font>
+</a></strong></p>
+<div align="center"><center>
+<table border="1" width="85%">
+<TBODY>
+
+  <!-- 第1列 -->
+  <td><a href="http://lwn.net/Kernel/LDD3/" style="TEXT-DECORATION: none"><font size="2">LDD3
+  </font></a></td>
+  <td><a href="http://b8807053.pixnet.net/blog/post/3611386" style="TEXT-DECORATION: none"><font size="2">platform_driver架構
+  </font></a></td>
+  <td><a href="http://kezeodsnx.pixnet.net/blog/post/32310077" style="TEXT-DECORATION: none"><font size="2">(LDM) linux device model (一)
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+
+  <tr>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">Splitting the Kernel
+  </font></a></td>
+  <td><a href="#W02" style="TEXT-DECORATION: none"><font size="2">字元裝置驅動程式
+  </font></a></td>
+  <td><a href="#W03" style="TEXT-DECORATION: none"><font size="2">scull
+  </font></a></td>
+  <td><a href="#W04" style="TEXT-DECORATION: none"><font size="2">/proc
+  </font></a></td>
+  <td><a href="#W05" style="TEXT-DECORATION: none"><font size="2">排除重大系統失誤
+  </font></td>
+  <td><a href="#W06" style="TEXT-DECORATION: none"><font size="2">偵錯工具
+  </font></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+
+  <tr>
+  <td><a href="#W07" style="TEXT-DECORATION: none"><font size="2">共時情境與相競現象
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></td>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></td>  
+  
+  <tr>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">LDD-iodriver
+  </font></a></td>
+  <td><a href="#E02" style="TEXT-DECORATION: none"><font size="2">scull 實作
+  </font></a></td>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">BPi driver learning
+  </font></a></td>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></a></td>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></td>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">XXXX
+  </font></td> 
+  
+</TBODY>
+</table>
+</center></div>
+<!--   日曆
+-->
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W01">Splitting the Kernel</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<p align="center"><img src="../src/pic/20150605_1.png"></p>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W02">字元裝置驅動程式</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>數據結構是代碼的靈魂，要分析一個複雜的系統，關鍵是掌握那些核心的數據結構，這包括：
+ <li>弄清數據結構的核心功能。一個數據結構通常具有比較複雜的成員，此外，還有一些成員用於建立數據結構之間的關係。如果要一個個去理解，就會陷入細節。
+ </li><li>弄清數據結構之間的靜態關係。
+ </li><li>弄清數據結構之間是如何建立起動態的關係的。
+</li></ul>
+
+<ul>
+ <li><b>裝置編號的內部表示法</b>
+  <ul>
+   <li><font color="dd1111">dev_t</font>型別定義在"linux/types.h"
+    <br>dev_t是一個32-bit無號數, 其中12-bit 是主編號, 20-bit 是次編號.
+   </li><li><font color="dd1111">MAJOR</font> & <font color="dd1111">MINOR</font> 定義在 "linux/kdev_t.h"
+    <br><font color="dd11dd">MAJOR</font>(dev_t dev),
+    <br><font color="dd11dd">MINOR</font>(dev_t dev),
+    <br>使用此兩個巨集可從裝置編號中抽離出主編號與次編號
+   </li><li><font color="dd1111">MKDEV</font>可合併主編號與次編號
+    <br>dev_t dev = <font color="dd11dd">MKDEV</font>(int major, int minor);
+  </li></ul> 
+ </li><li><b>裝置編號的配置與釋放</b> 
+  <ul>
+   <li>取得裝置編號:<font color="dd1111">register_chrdev_region</font>
+    <br>int <font color="dd1111">register_chrdev_region</font>(<font color="11dd11">dev_t</font> first, <font color="11dd11">unsigned int</font> count, <font color="11dd11">char *</font>name);
+    <ul>
+    <li><b>first</b> : 想配置的裝置編號的範圍之起點, first 的次編號通常是0, 但不是硬性規定.
+    </li><li><b>count</b> : 想申請的連續裝置編號的總數. 
+    </li><li><b>name</b> : 獲得此編號範圍的裝置之名稱.
+    </li><li>通常,我們不會知道該用哪個主編號, 以往, 裝置與主編號之間有固定的對應關係, 但現在linux核心開發團隊盡力淡化這層關係, 儘量改用動態配置的裝置編號. 核心很樂意即時挑選一個主編號, 但得改配置函數.
+    </li></ul>
+   </li><li>int <font color="dd1111">alloc_chrdev_region</font>(<font color="11dd11">dev_t *</font>dev, <font color="11dd11">unsigned int</font> firstminor, <font color="11dd11">unsigned int</font> count, <font color="11dd11">char *</font>name);
+    <ul>
+    <li><b>dev</b> : 僅供輸出的參數, 當配置成功時, 此參數會持有配置範圍的第一個裝置編號.
+    </li><li><b>firstminor</b> : 想申請的第一個次編號.
+    </li></ul>
+   </li><li>釋放裝置編號:
+    <br>int <font color="dd1111">unregister_chrdev_region</font>(<font color="11dd11">dev_t </font>first, <font color="11dd11">unsigned int</font> count);
+   </li></ul> 
+ </li><li><b>動態配置主偏號</b> 
+  <br>核心原始程式中的<a href="http://goo.gl/9Oc7G" style="TEXT-DECORATION: none">Documentation/devices.txt</a> 檔案紀錄了該版核心預定的"裝置-主編號"對照表. 當需要申請主編號時, 我們有兩種選擇.
+  <ul>
+   <li>挑選一個未使用的編號 : 有機率使用的編號, 已經被核心預先配置給其他裝置.
+   </li><li>要求核心動態配置(<font color="dd1111">alloc_chrdev_region</font>)一個主編號, 此缺點是你無法事先建立 <font color="1111dd">/dev/裝置節點(*1)</font>, 因為每次分配到的主編號不一定相同. 但對於一般用途的驅動程式.
+   </li><li>*1:使用devfs或udev可解決此問題. <font color="dd1111">devfs</font>可讓核心自動產生裝置節點. <font color="dd1111">udev</font>是<font color="dd1111">devfs</font>的user-space解決方案, 其原理是利用核心送出的hotplug事件來觸發user-space的程式.
+  </li></ul>
+ </li><li><b>重要的資料結構</b> 
+  <ul>
+   <li>檔案作業 : file_operations : 定義於 "linux/fs.h"
+    <ul>
+     <li>定義在"linux/fs.h", <a href="http://blog.csdn.net/ixidof/article/details/7893680"  style="TEXT-DECORATION: none">初始化</a>, linux 內核習慣某些語法.
+      <br>__user : 另類的註解, 註明該指標是指向一個user-space位址, 不可直接取值(dereference). 平常編譯時, __user沒有效果, 但有助於讓外部檢查軟體用來找出是否有誤用user-space位址的現象.
+     </li><li><font color="dd1111">struct module</font> *owner
+      <br>此非函式指標, 指向擁有本結構的模組. 作用是避免模組活動時, 被卸載出核心. 通常, 此欄位初始化為"THIS_MODULE" (定義在"linux/module.h").
+     </li><li>loff_t (*<font color="1111dd">llseek</font>) (struct file *, loff_t, int);
+      <br>定位作業, 改變檔案的存取位置. 使下次讀或寫作業從新位置開始. NULL 會造成file結構中位置指標被改到無法預期的位置. loff_t是一個"long offset"
+    </li></ul> 
+   </li><li>file結構 : 定義於 "linux/fs.h", file 結構代表<b>已開啟的檔案</b>(open file). 這不是驅動程式的專利, 對於系統上每一個已開啟的檔案, 在Kernel-space裡都有一個對應的struct file. 
+    <ul>
+     <li><font color="33dd33">fmode_t</font> f_mode;
+      <br>
+     </li><li><font color="33dd33">loff_t</font> f_pos;
+      <br>
+     </li><li><font color="33dd33">unsigned int</font> f_flags;
+      <br>
+     </li><li><font color="33dd33">struct file_operations</font> *f_op;
+      <br>
+     </li><li><font color="33dd33">void</font> *private_data;
+      <br>
+     </li><li><font color="33dd33">struct  dentry</font> *f_dentry;
+      <br>
+    </li></ul>     
+   </li><li>inode結構 : 核心內部使用inode結構來代表檔案, 不同於file結構, 該結構是代表
+   <ul>
+     <li><font color="33dd33">dev_t</font> i_rdev;
+      <br>
+     </li><li><font color="33dd33">struct cdev</font> *i_cdev;
+      <br>"dcache.h"
+      <ul>
+       <li><font color="33dd33">struct inode</font> *d_inode;
+       </li><li>.
+       </li><li>.
+      </li></ul>
+     </li><li><font color="33dd33">const struct file_operations</font> *i_fop;
+      <br>
+    </li></ul>  
+  </li></ul>
+ </li><li><b>4</b> 
+</li></ul>
+
+<a href="http://goo.gl/9EJlgC">Linux 2.4.30 内核文件关键数据结构</a>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W03">scull : simple character utility for loading localities</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br>寫驅動程式的第一步, 定義你的驅動程式對user-space程式提供哪些"功能"(所謂的"機制"). 
+<br>scull的硬體基礎是核心內部的一塊記憶體.
+
+<ul>
+ <li>
+ </li><li>
+ </li><li>
+ </li><li>
+ </li><li>
+ </li><li>
+ </li><li>
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W04">Using the /proc Filesystem</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br>/proc是核心模擬出來的軟體檔案系統, 是核心用來輸出資訊的窗口.
+linux 相當倚重/proc檔案系統, 很多常用的系統軟體都會從/proc取得所需要的資料.
+有些Driver會將資料輸出到/proc. /proc檔案系統是動態的, 所以可以隨時增減資料.
+<br><br>現在, 新寫的的驅動程式改使用<font color="1111dd">sysfs</font>來提供狀態資訊. 
+
+<ul>
+ <li>實作/proc檔案
+  <br>與/dev類似, 需要實作能對應<font color="1111dd">read()</font>和<font color="1111dd">write()</font>系統呼叫的<font color="dd1111">作業函式</font>, 供核心再收到系統呼叫時使用. 支援/proc檔案系統的函式,都定義在"linux/proc_fs.h". 若要建立一個<font color="dd1111">唯讀</font>的/proc檔案, Driver需要實作read_proc作業函式, 並向核心註冊註冊該函式. 每當任何process讀取/proc檔, Kernel會配置一頁記憶體(PAGE_SIZE bytes). read_proc的任務就是將要傳到user_space的資料寫入記憶體中. 對Deriver來說, 若要實作/proc file, 需要提供介面(read & write), 以下是read函式的原型:
+  <p><i>int (*<b>read_proc</b>)(char *page, char **start, off_t offset, int count,int *eof, void *data); </i></p>
+  <br>read_proc的<font color="dd1111">回傳值</font>是成功寫入page裡的有效資料的位元組數.
+  <br>read_proc可利用<i>*start</i>與<i>offset</i>來達成分批傳輸的效果, 一開始先讓<i>*start</i>指向page, 將<i>offset</i>設定為0, 讓kernel知道第1段資料是放在page記憶頁的開頭處. 第二次傳輸時, 則將<i>*start</i>指向<i>offset</i> bytes之後的下一個位元組. <i>*start</i>引數(real argument)同時也解決/proc file另一個問題. 若<i>*start</i>是設定成一個小整數值, 讓呼叫者用他來增遞filep->f_pos, 而不管實際傳回的資料量是多少,這將使得f_pos成為read_proc的一個內部記憶編號.
+ </li><li>註冊/proc檔案
+  <p><i>struct proc_dir_entry *<b>create_proc_read_entry</b>(const char *name,mode_t mode, struct proc_dir_entry *base,<font color="1111dd">read_proc_t *read_proc</font>, void *data); </i></p>
+  <br>呼叫<b>create_proc_read_entry</b>函式可以完成註冊動作. 以下為scull範例:
+  <p><i><b>create_proc_read_entry</b>("<b>driver/</b>scullmem", 0 /* default mode */, NULL /* parent dir */, <font color="1111dd">scull_read_procmem</font>, NULL /* client data */); </i></p>
+  <br>模組卸載前,必須先移除相關的/proc 入口點.
+  <p><i><b>remove_proc_entry</b>("<b>driver/</b>scullmem", NULL /* parent dir */); </i></p>
+ </li><li>seq_file介面
+  <br>當資料量超過一個記憶頁時, /proc 不是很好的機制. 為了讓/proc程式保持簡潔,後來才有seq_file 介面的提出, 此介面提供一組簡單的函式,用來實作大型的核心虛擬檔.
+  <br>要使用seq_file, 需要先建立一個簡單的iterator物件. 建立iterator物件的四種作業方法:<i>start</i>,<i>next</i>,<i>stop</i>與<i>show</i>.
+  <p><i>void *<b>start</b>(struct seq_file *sfile, loff_t *pos); </i></p>
+  <br><i>start</i>實作時,幾乎可以忽略<i>sfile</i>引數, 唯一要處理的是<i>pos</i>引數. 他是一個正整數, 代表讀取起點的"位置". 而位置的意義由開發者決定. 在scull範例中, 所謂"項目"指的是"個別的裝置". 而<i>*pos</i>就是scull_devises陣列的索引.
+  <p align="center"><img src="../src/pic/20150713_002.png"></p>
+  <p align="center"><img src="../src/pic/20150713_001.png"></p>
+ </li><li>ioctl作業方法
+  <br>ioctl()是作用在"檔案描述子"(file descriptor,FD)的一種系統呼叫, 他接受一個<b>數值引數</b>, 以及一個可有可無的<b>指標引數</b>. <font color="1111dd">數值引數</font>代表ioctl()所要執行的命令, <font color="1111dd">指數引數</font>是該命令的作業參數. 當需要一些狀態資料提供給user-space時, 除了/proc file system, 我們還可以<font color="dd1111">製作幾個專用於偵錯的ioctl命令</font>, 將相關資料結果從驅動程式抄寫到user space, 供user-space的工具程式來分析檢驗.
+  <br>ioctl()的優缺點:
+  <ul>
+   <li>缺點:
+    <br>使用ioctl()來取得資訊, 其實比較困難, 因為需要寫另外一個測試程式來發出ioctl()系統呼叫, 並顯示(解讀)所傳回的資訊. 測試程式必須自己寫出, 且要與<font color="dd1111">受測模組同步</font>.
+   </li><li>優點:
+    <br>ioctl()是取得資訊的最理想管道. 因為讀取速度比/proc的速度快.
+    <br>另一個優點是擷取偵錯資料的功能留在driver內, 並不影響效能, 但會讓程式碼虛胖.
+  </li></ul>
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W05">排除重大系統失誤</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li>Oops訊息
+  <br><a href="https://zh.wikipedia.org/wiki/Linux%E5%86%85%E6%A0%B8oops">Linux内核oops</a>
+  <br>處理器所使用的大部份位址都是<b>虛擬位址(virtual address)</b>, 必須藉由一種稱為<b>換頁表(page table)</b>的複雜結構, 才能換算成<b>實體位址(physical address)</b>. 當程式試圖提領一個無效指標, 造成換頁機制無法算出實體位址, CPU就會一個<b>換頁失誤(page fault)</b>訊號給作業系統. 若行程在user-space試圖提領無效位址, 後果頂多是無法"換入"(page in)該位址; 但如果是發生在核心則會迫使核心發出Oops訊息. 
+  <br>Oops訊息的主要內容, 是發生失誤時的CPU狀態, 包括CPU各個暫存器的值, 以及一些匪夷所思的資料. 
+ </li><li>系統停擺
+  <br>對於系統當機停擺, 我們只有兩個選擇. <font color="dd1111">事前避免</font>, 或是<font color="dd1111">事後偵錯</font>.
+  <br>避免無窮迴圈的辦法之一, 是在可疑之處呼叫<b>schedule()</b>. <b>schedule()</b>會觸發系統排程機制(scheduler), 讓其它行程有機會偷走目前行程的CPU時間. 如果某個行程因為驅動程式中的bug而在kernel-space裡遶回圈, schedule()將讓你在發生事故之後, 還有機會殺掉該行程. 
+  <br>schedule()意味著該函式有休眠的機會, 既然可能休眠, 函式本身的設計就必須要合乎"可重返"(reentrancy)的條件, 也就是同一段程式即使是被同時執行, 也不會導致錯誤的執行結果.
+  <br>對於假當機現象, linux核心提供一個稱為<b>"magic SysRq key"</b>的機制, 讓我能用一組特殊的按鍵組合來觸發動作. 
+  <p align="center"><img src="../src/pic/20150715_001.png"></p>
+  <p align="center"><img src="../src/pic/20150715_002.png"></p>
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W06">偵錯工具</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li>使用gdb
+  <br>在觀察系統內部運作方面, gdb也可以是相當優秀的工具. gdb必須將核心當成一般應用程式來跑. 在啟動gdb時, 除了要告訴它未壓縮的核心映像檔在哪? 還必須提供core檔. 對於一個運行中的核心, core檔位於/proc/kcore. 總之, 要使用gdb來執行核心程式, 典型的啟動方式類似下述:
+  <p alias="center">gdb /usr/src/linux/vmlinux /proc/kcore</p>  
+  <br>第一個引數是核心映像檔, 你必須提供未壓縮的的版本, 不可以使用zImage或bzImage或是其他任何經過壓縮的版本.
+  <br>gdb命令列的第二個引數是core檔案的位置.
+ </li><li>kdb核心偵錯器
+ </li><li>kgdb偵錯器
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W07">共時情境與相競現象</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li>使用gdb
+  <br>在觀察系統內部運作方面, gdb也可以是相當優秀的工具. gdb必須將核心當成一般應用程式來跑. 在啟動gdb時, 除了要告訴它未壓縮的核心映像檔在哪? 還必須提供core檔. 對於一個運行中的核心, core檔位於/proc/kcore. 總之, 要使用gdb來執行核心程式, 典型的啟動方式類似下述:
+  <p alias="center">gdb /usr/src/linux/vmlinux /proc/kcore</p>  
+  <br>第一個引數是核心映像檔, 你必須提供未壓縮的的版本, 不可以使用zImage或bzImage或是其他任何經過壓縮的版本.
+  <br>gdb命令列的第二個引數是core檔案的位置.
+ </li><li>kdb核心偵錯器
+ </li><li>kgdb偵錯器
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="E01">LDD-iodriver</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<p align="center"><img src="../src/pic/20150625_002.png"></p>
+<p align="center"><img src="../src/pic/20150625_001.png"></p>
+<p align="center"><img src="../src/pic/20150625_003.png"><img src="../src/pic/20150625_004.png"></p>
+<p align="center"><img src="../src/pic/20150625_005.png"><img src="../src/pic/20150625_006.png"></p>
+<p align="center"><img src="../src/pic/20150625_007.png"><img src="../src/pic/20150625_008.png"></p>
+<p align="center"><img src="../src/pic/20150625_009.png"></p>
+
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="E02">scull 實作</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li><b>Make Issue</b>
+  <ul>
+   <li><font color="dd3333"><b>CFLAGS was changed</b> in "/home/bananapi/ben/driver_learning/ex_scull/scull/Makefile". Fix it to use ccflags-y.  Stop.</font>
+    <br>解決方法
+    <br>將Makefile內的<b>CFLAGS</b>改為<b>EXTRA_CFLAGS</b>
+   </li><li><font color="dd3333">缺少<b>linux/config.h</b></font>
+    <br>解決方法
+    <br>在檔案內直接註解 linux/config.h, 不需要include.
+   </li><li><font color="dd3333">隱含宣告函式 「init_MUTEX」</font>
+    <br>在新版本的linux内核中，已經廢除init_mutex，新版本直接使用sema_init()。原始的定義如下 （linux 2.6.xx 時仍存在此定義)
+    <br>#define init_MUTEX(sem) sema_init(sem, 1)
+    <br>#define init_MUTEX_LOCKED(sem) sema_init(sem, 0)
+    <br>因此可更改如下：
+    <br>//init_MUTEX(&scull_devices[i].sem);
+    <br>sema_init(&scull_devices[i].sem, 1);
+   </li><li><font color="dd3333"> 錯誤： 初始值設定項裡有不明的欄位 「ioctl」</font>
+    <br>linux內核到2.6.36之後把ioctl這個成員給移除了，改用了以下兩名新成員
+    <br>long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+    <br>long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+    <br><br>此處需更改兩個地方
+    <ol>
+     <li>更改 file_operations 的 ioctl
+      <br><b>//</b>.ioctl = scull_ioctl,
+      <br>.unlocked_ioctl = scull_ioctl,
+     </li><li>更改 scull_ioctl 的函數原型 (main.c scull.h)
+      <br><b>//</b>int scull_ioctl(struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg)
+      <br>long scull_ioctl( struct file *filp, unsigned int cmd, unsigned long arg)
+      <br><br><a href="http://blog.chinaunix.net/uid-20543672-id-3015637.html"> 對於struct file_operations中ioctl消失的學習筆記</a>
+      <br>ioctl消失的版本是<b>v2.6.35</b>到<b>v2.6.36-rc1</b>間
+      <br><font color="dddd11"><b>unlocked_ioctl</b></font>就是ioctl的替代者
+    </li></ol>
+   </li><li><font color="dd3333">錯誤： 「TASK_INTERRUPTIBLE」 undeclared (first use in this function)</font>
+    <br>此常數定義在 sched.h
+   </li><li><font color="dd3333">找不到 SPIN_LOCK_UNLOCKED</font>
+    <br><b>//</b>static spinlock_t scull_u_lock = SPIN_LOCK_UNLOCKED;
+    <br>static DEFINE_SPINLOCK(scull_u_lock);
+   </li><li><font color="dd3333">錯誤： 「struct task_struct」 沒具名為 「uid」 的成員</font>
+    <br>struct task_struct 已經重新定義
+    <br>current->uid 改成 current->cred->uid
+    <br>current->euid 改成 current->cred->euid
+    <br>current->comm 改成 current->cred->comm
+  </li></ul>
+ </li><li><b>make</b>
+  <br>一開始執行<b><font color="dd3333">make</font> -C ~/ben/3.4.103 <font color="33dd33">M</font>=`pwd` modules</b>, 會有問題:KBUILD_NONAME. 藉由下述動作, 了解指令的差異.
+  <ul>
+   <li>在scull資料架內執行make, 會顯示執行的指令如下:
+    <br><b><font color="dd3333">make</font> -C /lib/modules/3.4.103/build <font color="33dd33">M</font>=/home/bananapi/ben/driver_learning/ex_scull/scull <font color="33dd33">LDDINC</font>=/home/bananapi/ben/driver_learning/ex_scull/scull/../include modules</b>
+   </li><li>根據上述指令更改為我們可執行的指令:
+    <br><b><font color="dd3333">make</font> -C ~/ben/3.4.103 <font color="33dd33">M</font>=`pwd` <font color="33dd33">LDDINC</font>=`pwd`/../include modules</b>
+    <br>LDDINC是定義的一個變數。需要提供給Makefile. LDDINC:LDD include
+  </li></ul>
+ </li><li><b>scull</b>
+  <br>scull的基本資料單位為"定額(quantum)", 預設容量是4000bytes. 每1000個定額稱為一個"定額組(quantum set)", scull 裝置是一個鏈結串列. 
+  <p align="center"><img src="../src/pic/20150703_001.png"></p>
+  <br>即使只寫入1byte的資料到scull, 也會消耗8000 或 12000 bytes記憶空間. 因為定額本身會消耗4000bytes. 而定額集(qset:quantum set)會佔4000或8000bytes, 依目標平台32-bits or 64-bits而定.
+  <br><font color="999999">1000筆*32-bits指標=1000*4*8-bits=4000 bytes</font>
+  <br><font color="999999">1000筆*64-bits指標=1000*8*8-bits=8000 bytes</font>
+  <br>若是要寫大量資料到scull, 練結串列造成的額外損耗就不算太遭. 1byte~4Mb的資料量只佔掉一個定額.
+  <br>機制(mechanism):要提供什麼能力
+  <br>法則(policy):如何使用這個能力
+  <br>一個定額多大? 多少個定額算一個定額量? 這是屬於操作法則(policy)的問題, 無關機制(mechanism)的設計.
+ </li><li>
+ </li><li>
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</body>

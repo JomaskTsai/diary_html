@@ -1,0 +1,381 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html"; charset="utf-8">
+<title>Device driver</title>
+</head>
+<body>
+<table border=9 bordercolor=brown width="100%" background="../picture/wildboy24_2.bmp">
+<tr>
+<td>
+
+<!--   日曆
+-->
+<p align="center"><strong><a name="Toppage"><font size="10" face="新細明體">Device driver learning</font><font size="10"></font>
+</a></strong></p>
+<div align="center"><center>
+<table border="1" width="85%">
+<TBODY>
+
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">USART
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td>  
+  
+  <tr>
+  <td><a href="#W08" style="TEXT-DECORATION: none"><font size="2">Tty
+  </font></a></td>
+  <td><a href="#W09" style="TEXT-DECORATION: none"><font size="2">Serial Drivers
+  </font></a></td>
+  <td><a href="#W10" style="TEXT-DECORATION: none"><font size="2">Uart(A20)
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td>  
+  
+  <tr>
+  <td><a href="#E01" style="TEXT-DECORATION: none"><font size="2">Tty實作
+  </font></a></td>
+  <td><a href="#E02" style="TEXT-DECORATION: none"><font size="2">UART實作
+  </font></a></td>
+  <td><a href="#E00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#E00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#E00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></a></td>
+  <td><a href="#E00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td>
+  <td><a href="#E00" style="TEXT-DECORATION: none"><font size="2">xxxx
+  </font></td> 
+  
+</TBODY>
+</table>
+</center></div>
+<!--   日曆
+-->
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W01">USART</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br>串列傳輸為CPU與周邊裝置或CPU與CPU間的資料傳輸方法之一，而USART(universal synchronous asynchronous receiver transmitter)，通用同步/非同步收發傳輸器，則常被用於一般的串列傳輸應用中。可依照NZR工業非同步資料傳輸格式，與其他設備進行資料交換。並且此種裝置使用fractional baud rate產生器，提供大範圍的baud rate供使用者選擇。
+
+<ul>
+ <li>NRZ標準資料格式(Mark/Space)
+  <br>NRZ(Nonreturn to Zero):不歸零編碼
+  <br>這是一種傳送資訊的編碼方式，它以正脈波代表1，負脈波代表0，當訊號連續為’1’時，則保持正脈波，直到出現’0’為止
+它的特色是編碼解碼較為簡單，但缺乏同步傳輸的能力，且無法提供較佳的訊號校正能力。
+  <br><p align="center"><img src="../linux/src/20150805_001.png"></p> 
+ </li><li>半雙工/全雙工
+
+  <ul>
+   <li>半雙工:允許二台設備之間的雙向資料傳輸，但不能同時進行。因此同一時間只允許一設備傳送資料，若另一設備要傳送資料，需等原來傳送資料的設備傳送完成後再處理。例:無線電
+   </li><li>全雙工:允許二台設備間同時進行雙向資料傳輸。例:手機
+  </li></ul>  
+
+ </li><li>Synchronous 同步傳輸
+  <br>同步: 額外提供時脈訊號，使兩端機器在溝通時能夠藉此同步收發資料。比起非同步傳輸，同步傳輸不需要start/stop bit，因此能夠一次傳較多的資料。同步傳輸需要解決時鐘偏移對資料傳輸造成的影響，除此之外，額外的時脈分佈網也需要大量的驅動電路，比起非同步傳輸增加了更多的耗能。一般同步系統會用阻斷時脈的方式(clock gating)，來令不需運作的模組進入睡眠狀態(sleeping mode)到省電的目的，這個機制需要額外的電路及再次同步的額外延遲，不僅造成多餘的能源損耗，也增加了電路設計上的困難度。
+   <br><p align="center"><img src="../linux/src/20150805_002.png"></p> 
+
+ </li><li>Asynchronous 非同步傳輸
+  <br>非同步: 在傳送資料時插入額外資訊，表示資料起始、結束。好處是設定時間短、硬體成本低、機器時脈不同也能傳資料，缺點是單次傳輸的資料量較少。
+  <br><p align="center"><img src="../linux/src/ASYNC.gif"></p> 
+
+</li></ul>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W08">Tty</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br><b>Tty</b>
+<br>Tty這名稱來自"Teletypewriter"這個字的縮寫. 原本只代表Unix 機器上的實體或是虛擬終端機, 但現在任何可以連接在串列阜的裝置, 也通通被稱為TTY, 因為此類裝置通常會搭載終端機連線.
+<br><br>Linux Tty驅動層的位階緊接在標準字元驅動層之下, 其作用是提供一個標準介面給終端機(Terminal)裝置, 此介面負責<br>控制</b><font color="dd1111">通過tty裝置的資料流</font>, 以及<font color="dd1111">資料的格式</font>. 為了控制資料串流, 有幾個不同的<b>line discipiline</b>驅動程式, 可以虛擬的安插到任何tty裝置上.
+<br><p align="center"><img src="../linux/src/20150716_001.png"></p>
+<br><br>如上圖, tty core取得使用者送到tty裝置的資料, 並傳給tty line discipline driver, 再傳給tty driver, 最後由tty driver將資料轉換成適合傳給硬體的格式. <b>反之</b>, 當硬體傳送的資料送到tty core後, 使用者可以從tty core取得資料.
+<br><br>雖然tty driver與tty line discipline連接在一起, 但tty driver卻不能直接與tty line discipline通訊, 甚至於tty driver根本不知道tty line discipline的存在. (開發上的思考)
+<br><br>Tty line discipline的任務是將來自使用者介面或是硬體的資料格式化為特定型式, 這樣的格式通常是以協定交談的型式存在, 像是PPP或是BT.
+<br><br>Tty驅動程式可分為三種類型:控制台(Console), 串列阜(Serial Port), 以及PTY(pseudo tty). 這三類中, 操作台與PTY驅動程式都早已經寫好. 因為這是系統運作所需要的. 若還需要tty core來讓使用者與系統互動的新驅動程式, 那必定是串列阜的驅動程式.
+
+<br><p align="center"><img src="../linux/src/20150716_002.png"></p>
+<br>上圖, 代表系統目前存在各種tty驅動程式, 
+<ul>
+ <li>第1欄:名稱(name of the driver)
+ </li><li>第2欄:預設節點(default node name)
+ </li><li>第3欄:主編號(major number for the driver)
+ </li><li>第4欄:次編號的範圍(range of minors used by the driver)
+ </li><li>第5欄:tty驅動程式的類型(type of the tty driver)
+</li></ul>
+
+<br>任何tty驅動程式的主要結構都是<font color="dd1111"><b>struct tty_driver</b></font>, tty 驅動程式透過此結構來向<b>Tty core註冊</b>, <b>註銷</b>它自己.
+
+<br><font color="dd1111"><b>struct tty_driver</b></font>是透過<b>alloc_tty_driver()</b>函式配置. 此動作對Uart而言, 在serial_core.c被執行.
+<br><p align="center"><img src="../linux/src/20150717_002.png"></p>
+
+
+<br><br><a href="http://fanli7.net/a/JAVAbiancheng/ANT/20120920/226743.html">Linux中tty框架與uart框架之間的調用關系剖析</a>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W09">Serial Drivers</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br><p align="center"><img src="../linux/src/20150717_001.png"></p>
+
+
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W10">UART(A20)</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li><font color="1111dd"><b>What do the terms UART, 8250, 16450 and 16550 mean?</b></font>
+  <br>UART means <b>Universal Asynchronous Receiver/Transmitter</b>. 8250, 16450 and 16550 are all common types of UARTs. The 8250 is an old chip which cannot run at high speed. The 16450 is similar to the 8250 except that it supports data communications at higher speeds. Both of these chips generate an interrupt for every character that is sent or received, which basically tells the CPU either "Here is some data for you" or "Feed me!" This is all very well, except that at high speed, the number of interrupts (nearly 4000 per port per second at 38 400 bps) can overwhelm a CPU, bringing system performance way down. Also, if the CPU is busy servicing another interrupt at the time, the serial port's interrupt may not be serviced in time, which will cause a character to be lost.
+  <br><br>The 16550 is pin-compatible with the 16450 and, by default, runs in 16450 mode. This makes it compatible with software which is not 16550-aware. If your software is 16550-aware, it can turn on a special mode in which the 16550 buffers all data with 16-byte internal buffers. This not only allows the CPU to deal with far more bytes at a time, increasing efficiency, but also means that if the CPU can't service the interrupt before the next character comes in, there's still space in the buffer for it.
+ </li><li><font color="1111dd"><b>UART(A20)</b></font>
+  <br>A20's UART has 16450 and 16550 modes of operation, which are compatible with a range of standard software drivers. In 16550 mode, transmit and receive operations are both buffered by FIFOs. In 16450 mode, these FIFOs are disabled. 
+  <br><br>The UART supports word lengths from five to eight bits, an optional parity bit and 1, 1 1⁄2 or 2 stop bits, and is fully programmable by an AMBA APB CPU interface. A 16-bit programmable baud rate generator and an 8-bit scratch register are included, together with separate transmit and receive FIFOs. Eight modem control lines and a diagnostic loop-back mode are provided.
+  <br><br>Interrupts can be generated for a range of TX Buffer/FIFO, RX Buffer/FIFO, Modem Status and Line
+Status conditions.
+  <br><br>For integration in systems where Infrared SIR serial data format is required, the UART can be
+configured to have a software-programmable IrDA SIR Mode. If this mode is not selected, only the
+UART (RS232 standard) serial data format is available.
+<br><p align="center"><img src="../linux/src/20150721_001.png"></p>
+ </li><li><font color="1111dd"><b>UART Timing Diagram</b></font>
+  <br><p align="left"><img src="../linux/src/20150721_002.png"></p>
+ </li><li><font color="1111dd"><b>UART Register List</b></font>
+  <br><p align="center"><img src="../linux/src/20150721_003.png"></p>
+  <br><p align="center"><img src="../linux/src/20150721_004.png"></p>
+  <br><p align="center"><img src="../linux/src/20150721_005.png"></p>
+ </li><li><font color="1111dd"><b>UART Register Description</b></font>
+  <ul>
+   <li><b>UART RECEIVER BUFFER REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_006.png"><img src="../linux/src/20150721_007.png"></p>
+   </li><li><b>UART TRANSMIT HOLDING REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_008.png"></p>
+   </li><li><b>UART DIVISOR LATCH LOW REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_009.png"></p>
+   </li><li><b>UART DIVISOR LATCH HIGH REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_010.png"><img src="../linux/src/20150721_011.png"></p>
+   </li><li><b>UART INTERRUPT ENABLE REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_012.png"><img src="../linux/src/20150721_013.png"></p>
+   </li><li><b>UART INTERRUPT IDENTITY REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_014.png"><img src="../linux/src/20150721_015.png"><img src="../linux/src/20150721_016.png"><img src="../linux/src/20150721_017.png"></p>
+   </li><li><b>UART FIFO CONTROL REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_018.png"><img src="../linux/src/20150721_019.png"></p>
+   </li><li><b>UART LINE CONTROL REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_020.png"><img src="../linux/src/20150721_021.png"><img src="../linux/src/20150721_022.png"><img src="../linux/src/20150721_023.png"></p>
+   </li><li><b>UART MODEM CONTROL REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_024.png"><img src="../linux/src/20150721_025.png"></p>
+   </li><li><b>UART LINE STATUS REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_026.png"><img src="../linux/src/20150721_027.png"><img src="../linux/src/20150721_028.png"></p>
+   </li><li><b>UART MODEM STATUS REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_029.png"><img src="../linux/src/20150721_030.png"><img src="../linux/src/20150721_031.png"></p>
+   </li><li><b>UART SCRATCH REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_032.png"></p>
+   </li><li><b>UART STATUS REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_033.png"><img src="../linux/src/20150721_034.png"></p>
+   </li><li><b>UART TRANSMIT FIFO LEVEL REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_035.png"></p>
+   </li><li><b>UART RECEIVE FIFO LEVEL REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_036.png"></p>
+   </li><li><b>UART HALT TX REGISTER</b>
+    <br><p align="center"><img src="../linux/src/20150721_037.png"></p>
+  </li></ul>
+ </li><li><font color="1111dd"><b>UART Special Requirement</b></font>
+</li></ul>
+
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="E01">UART 實作</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ul>
+ <li><b>Make Issue</b>
+  <ul>
+   <li><font color="dd3333"><b>CFLAGS was changed</b> in "/home/bananapi/ben/driver_learning/ex_scull/scull/Makefile". Fix it to use ccflags-y.  Stop.</font>
+    <br>解決方法
+    <br>將Makefile內的<b>CFLAGS</b>改為<b>EXTRA_CFLAGS</b>
+   </li><li><font color="dd3333">缺少<b>linux/config.h</b></font>
+    <br>解決方法
+    <br>在檔案內直接註解 linux/config.h, 不需要include.
+   </li><li><font color="dd3333">隱含宣告函式 「init_MUTEX」</font>
+    <br>在新版本的linux内核中，已經廢除init_mutex，新版本直接使用sema_init()。原始的定義如下 （linux 2.6.xx 時仍存在此定義)
+    <br>#define init_MUTEX(sem) sema_init(sem, 1)
+    <br>#define init_MUTEX_LOCKED(sem) sema_init(sem, 0)
+    <br>因此可更改如下：
+    <br>//init_MUTEX(&scull_devices[i].sem);
+    <br>sema_init(&scull_devices[i].sem, 1);
+   </li><li><font color="dd3333"> 錯誤： 初始值設定項裡有不明的欄位 「ioctl」</font>
+    <br>linux內核到2.6.36之後把ioctl這個成員給移除了，改用了以下兩名新成員
+    <br>long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+    <br>long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+    <br><br>此處需更改兩個地方
+    <ol>
+     <li>更改 file_operations 的 ioctl
+      <br><b>//</b>.ioctl = scull_ioctl,
+      <br>.unlocked_ioctl = scull_ioctl,
+     </li><li>更改 scull_ioctl 的函數原型 (main.c scull.h)
+      <br><b>//</b>int scull_ioctl(struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg)
+      <br>long scull_ioctl( struct file *filp, unsigned int cmd, unsigned long arg)
+      <br><br><a href="http://blog.chinaunix.net/uid-20543672-id-3015637.html"> 對於struct file_operations中ioctl消失的學習筆記</a>
+      <br>ioctl消失的版本是<b>v2.6.35</b>到<b>v2.6.36-rc1</b>間
+      <br><font color="dddd11"><b>unlocked_ioctl</b></font>就是ioctl的替代者
+    </li></ol>
+   </li><li><font color="dd3333">錯誤： 「TASK_INTERRUPTIBLE」 undeclared (first use in this function)</font>
+    <br>此常數定義在 sched.h
+   </li><li><font color="dd3333">找不到 SPIN_LOCK_UNLOCKED</font>
+    <br><b>//</b>static spinlock_t scull_u_lock = SPIN_LOCK_UNLOCKED;
+    <br>static DEFINE_SPINLOCK(scull_u_lock);
+   </li><li><font color="dd3333">錯誤： 「struct task_struct」 沒具名為 「uid」 的成員</font>
+    <br>struct task_struct 已經重新定義
+    <br>current->uid 改成 current->cred->uid
+    <br>current->euid 改成 current->cred->euid
+    <br>current->comm 改成 current->cred->comm
+  </li></ul>
+ </li><li><b>make</b>
+  <br>一開始執行<b><font color="dd3333">make</font> -C ~/ben/3.4.103 <font color="33dd33">M</font>=`pwd` modules</b>, 會有問題:KBUILD_NONAME. 藉由下述動作, 了解指令的差異.
+  <ul>
+   <li>在scull資料架內執行make, 會顯示執行的指令如下:
+    <br><b><font color="dd3333">make</font> -C /lib/modules/3.4.103/build <font color="33dd33">M</font>=/home/bananapi/ben/driver_learning/ex_scull/scull <font color="33dd33">LDDINC</font>=/home/bananapi/ben/driver_learning/ex_scull/scull/../include modules</b>
+   </li><li>根據上述指令更改為我們可執行的指令:
+    <br><b><font color="dd3333">make</font> -C ~/ben/3.4.103 <font color="33dd33">M</font>=`pwd` <font color="33dd33">LDDINC</font>=`pwd`/../include modules</b>
+    <br>LDDINC是定義的一個變數。需要提供給Makefile. LDDINC:LDD include
+  </li></ul>
+ </li><li><b>scull</b>
+  <br>scull的基本資料單位為"定額(quantum)", 預設容量是4000bytes. 每1000個定額稱為一個"定額組(quantum set)", scull 裝置是一個鏈結串列. 
+  <p align="center"><img src="../linux/src/20150703_001.png"></p>
+  <br>即使只寫入1byte的資料到scull, 也會消耗8000 或 12000 bytes記憶空間. 因為定額本身會消耗4000bytes. 而定額集(qset:quantum set)會佔4000或8000bytes, 依目標平台32-bits or 64-bits而定.
+  <br><font color="999999">1000筆*32-bits指標=1000*4*8-bits=4000 bytes</font>
+  <br><font color="999999">1000筆*64-bits指標=1000*8*8-bits=8000 bytes</font>
+  <br>若是要寫大量資料到scull, 練結串列造成的額外損耗就不算太遭. 1byte~4Mb的資料量只佔掉一個定額.
+  <br>機制(mechanism):要提供什麼能力
+  <br>法則(policy):如何使用這個能力
+  <br>一個定額多大? 多少個定額算一個定額量? 這是屬於操作法則(policy)的問題, 無關機制(mechanism)的設計.
+ </li><li>
+ </li><li>
+</li></ul>
+
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</body>

@@ -1,0 +1,1328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+<!--
+body { font-family: sans-serif; margin: 20px }
+h1 { color: #0083AB; text-align: center; }
+h2 { color: #0083AB; }
+h3 { color: #0083AB; }
+dt { font-weight: bold; }
+li { color: #0083AB; }
+p { color: black }
+span { color: black }
+sup { vertical-align: text-top; }
+.title { font-size: xx-large; font-weight: bold; color: #0083AB; text-align: center; }
+.builddata { color: #0083AB; text-align: center; }
+.bookref { font-style: italic; }
+.guiref { font-weight: bold; }
+table, th, td { border: 1px solid #0083AB; border-collapse:collapse; padding-left:10px; padding-right:10px; font-size:0.9em; }
+th { background-color:#0083AB; color: white; text-align: left; }
+.issueIdCol { white-space:nowrap; }
+.categoryCol { white-space:nowrap; }
+.summaryCol {}
+-->
+</style>
+<title>DS-5 Change Log</title>
+</head>
+<body>
+
+<img src="armdslogo.png" alt="ARM DS-5 Logo"/>
+<div class="title">DS-5 Change Log</div>
+<div class="builddata">(version 5.22.0 build 5220021 dated 2015/07/22 03:01:02 GMT)</div>
+
+<h2>This Release</h2>
+<p>
+This is a summary of the new features and other major changes in this release:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.05u2 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005t/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005t/index.html</a></span></li>
+    </ul>
+    <li><span>updated to ARM Compiler 6.02 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.arn0008g/index.html">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.arn0008g/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>Android ATRACE_BEGIN/END annotations are now supported</span></li>
+    <li><span>Streamline can now retrieve executables and the libraries they used directly from the target during capture for analysis</span></li>
+    <li><span>warnings now show up in the Live view as they occur, rather than only after a capture has been analyzed</span></li>
+    <li><span>the upcoming Mali &quot;Utgard&quot; DDK release for Mali-400 and Mali-450 will support userspace gator</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>Variables view provides auto-completion and browsing for local variables</span></li>
+    <li><span>improved ability to cope with powered-down ARMv8 hardware targets</span></li>
+    <li><span>debugger can now access CoreSight components on AXI-AP bus at addresses &gt; 4GB</span></li>
+    <li><span>additional controls are provided in the DTSL options dialog for configuring Marvell HSSTP connections</span></li>
+    <li><span>new device support for:
+    <ul>
+    <li><span>Juno ARM Development Platform (r1)</span></li>
+    <li><span>Freescale i.MX7 SDB</span></li>
+    <li><span>Spansion S6J3110EJAA</span></li>
+    <li><span>Texas Instruments EVMK2H KeyStone II</span></li>
+    </ul>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.24.0 build 12 of firmware included</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>added a new Streamline cache example to the Linux application examples, showing the use of Streamline to locate poor cache performance in application code</span></li>
+    <li><span>added a bare-metal example showing the use of ITM on a Cortex-M4 platform</span></li>
+    <li><span>added bare-metal-boards <tt>hello world</tt> examples for Altera Arria 10 and Spansion Traveo boards</span></li>
+    <li><span>updated the port of RTX for Cortex-A9 from RTX v4.74 to RTX v4.78, and corrected the behaviour of os_suspend(); see its readme for details on this and other fixes</span></li>
+    <li><span>Linux examples Xaos, Streamline_annotate and Streamline_cache_test are updated to use the latest streamline_annotate.c/.h, and the Streamline .apc's recaptured</span></li>
+    <li><span>Linux Distribution example is updated to replace old softfloat AEL filesystem with a recent Linaro hardfloat filesystem</span></li>
+    <li><span>converted remaining examples that used EB-Cortex-A8 model or Microcontroller Prototyping System (MPS) target to use Cortex-A9 model or MPS2 instead</span></li>
+</ul></span>
+<span><strong>Installer</strong><ul>
+    <li><span>added support for installing different versions of DS-5 on the same host; previous versions are no longer automatically uninstalled</span></li>
+</ul></span>
+<span><strong>Java</strong><ul>
+    <li><span>Java Runtime Environment (JRE) for Eclipse and other Java applications in DS-5 is upgraded to version 8</span></li>
+</ul></span>
+<span><strong>Eclipse</strong><ul>
+    <li><span>Eclipse IDE is upgraded to version 4.4.2 (Luna)</span></li>
+</ul></span>
+<span><strong>Simulation models</strong><ul>
+    <li><span>Cortex-A8 simulation model for Emulation Baseboard has been removed</li>
+    <li><span>updated to Fixed Virtual Platforms 9.3 release (64-bit host installation only)</span></li>
+</ul></span>
+</ul>
+
+<h2>Previous Releases</h2>
+<p>
+DS-5 version 5.21.1 build 5211009 dated 2015/04/28:
+</p>
+<ul>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.23.0 build 36 of firmware included:
+    <ul><li><span>build 36 fixes an issue with failing to read on-chip trace from TI Keystone II</span></li></ul>
+    </span></li>
+</ul></span>
+</ul>
+
+
+<p>
+DS-5 version 5.21.0 build 5210017 dated 2015/03/28:
+</p>
+<ul>
+<span><strong>Supported Host Platforms</strong><ul>
+    <li><span>Windows XP is no longer supported</span></li>
+</ul></span>
+<span><b>ARM Compiler</b><ul>
+    <li><span>updated to ARM Compiler 6.01u2 for embedded and bare-metal code for ARMv8-A (DS-5 Ultimate Edition only) and ARMv7-A processors</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0008f/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0008f/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>adds support for Cortex-A72</span></li>
+    <li><span>adds support for Mali-T8xx</span></li>
+    <li><span>improved support for Ftrace counters</span></li>
+    <li><span>annotate.h supports creating custom activity charts and an example is provided to show this</span></li>
+    <li><span>supports dark and light themes, configurable in Streamline preferences</span></li>
+    <li><span>additional Mali GPU snippets for the Midgard series of Mali GPUs</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>substantial improvements have been made to all areas of debugger performance</span></li>
+    <li><span>Registers and Variables views allow you to choose which registers and variables are displayed</span></li>
+    <li><span>Snapshot Viewer connections can now be made within the graphical debugger using the new Generic - Snapshot entries in the Debug Configurations dialog</span></li>
+    <li><span>Snapshot Viewer now supports ARMv8 architecture as well as multi-core systems</span></li>
+    <li><span>new CMSIS-DAP firmware for ULINK2 probe improves USB stability on some Windows hosts</span></li>
+    <li><span><tt>undodb-server</tt> executable is updated for speed improvements and bug fixes when using
+              application rewind</span></li>
+    <li><span>new device support for:
+    <ul>
+    <li><span>Cortex-A9x1 pre-configured to boot ARM Embedded Linux</span></li>
+    <li><span>Cortex-A9x4 pre-configured to boot ARM Embedded Linux</span></li>
+    <li><span>FastModel connections: VE Cortex A7x3, VE_Cortex_A17x3, VE_Cortex_A12x3, MPS2_Cortex_M7, MPS_Cortex_M0, MPS_Cortex_M0Plus, MPS_Cortex_M3, and MPS_Cortex_M4</span></li>
+    <li><span>Cavium - ThunderX</span></li>
+    <li><span>Renesas - RZ/T1 R7S910x01/02/06/07/11/13/15/16/17/18, RTK7910018S00000BE</span></li>
+    <li><span>Generic - Snapshot</span></li>
+    <li><span>Freescale - i.MX6 Solo adds ULINKpro connection support</span</li>
+    <li><span>Freescale - i.MX6 SoloLite adds ULINKpro connection support</span></li>
+    <li><span>Freescale - i.MX6 SoloX Sabre SDB adds ULINKpro and ULINKpro D connection support</span></li>
+    <li><span>Freescale - TWR-LS1021A adds mbed CMSIS-DAP connection support</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.23.0 build 36 of firmware included:
+    <ul><li><span>build 36 fixes an issue with failing to read on-chip trace from TI Keystone II</span></li></ul>
+    </span></li>
+</ul></span>
+<span><strong>Eclipse</strong><ul>
+    <li><span>Eclipse IDE is upgraded to version 4.4.1 (Luna), CDT 8.5 and PyDev 3.9.2</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>ARMv7 model-based examples now use the VE-A9x1 FVP model from the new "ARM FVP (Installed with DS-5)" folder instead of the deprecated EB-A8 FVP model</span></li>
+    <li><span>ARMv8 bare-metal examples cache invalidation function now uses the code from the ARM ARMv8-A Architecture Reference Manual, and alignment checking has been made explicit</span></li>
+    <li><span><tt>DTSLExamples.zip</tt>, previously at <tt>sw\DTSL</tt>, have been updated and moved into the main DS-5 Examples</span></li>
+    <li><span>RTX for Cortex-A9 now has a new NEON example added to demonstrate compiling for NEON, FPU initialisation, and NEON task switching</span></li>
+    <li><span>RTX for Cortex-A9 can have the default 64K (16-bit) maximum private stack size limit increased to 32-bit by compiling the RTX library with <tt>__LARGE_PRIV_STACK</tt></span></li>
+    <li><span>CoreSight Access Library example now supports ARMv8, ETMv4 and STM-500</span></li>
+</ul></span>
+<span><strong>Simulation Models</strong><ul>
+    <li><span>added single-core Cortex-A9 simulation model for bare-metal and Linux application development</span></li>
+</ul></span>
+</ul>
+
+
+<p>
+DS-5 version 5.20.2 build 5202025 dated 2015/02/20:
+</p>
+<ul>
+<span><b>ARM Compiler</b><ul>
+    <li><span>updated to ARM Compiler 6.01u1 for embedded and bare-metal code for ARMv8-A (DS-5 Ultimate Edition only) and ARMv7-A processors</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0008e/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0008e/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><b>DS-5 Debugger</b><ul>
+    <li><span>new device support for:
+    <ul>
+      <li><span>Cortex-A72</span></li>
+      <li><span>Altera - Arria 10 SoC</span></li>
+      <li><span>Freescale - i.MX6 SoloX Sabre SDB</span></li>
+      <li><span>Renesas - RZT1</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><b>DSTREAM/RVI</b><ul>
+    <li><span>new 4.22.0 build 9 of firmware included</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.20.1 build 5201031 dated 2014/12/11:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.05u1 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005r/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005r/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>new device support for:
+    <ul>
+    <li><span>Axxia 56xx</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.22.0 build 7 of firmware included</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.20.0 build 5200024 dated 2014/10/22:
+</p>
+<ul>
+<span><strong>Supported Host Platforms</strong><ul>
+    <li><span>Ubuntu Desktop Edition 14.04 LTS (64-bit) is added as a supported host platform</span></li>
+    <li><span>Ubuntu Desktop Edition 10.04 LTS (32-bit) is no longer supported</span></li>
+    <li><span>ARM Compiler 5.05 adds support for Windows Server 2012</span></li>
+    <li><span>Windows Server 2003 is no longer supported</span></li>
+</ul></span>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.05 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005q/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005q/index.html</a></span></li>
+    </ul>
+    <li><span>updated to ARM Compiler 6.00u2 (for embedded and bare-metal code for ARMv8-A processors, DS-5 Ultimate Edition only)</span></li>
+    <ul>
+        <li><span>for further information on changes see file <code>sw/ARMCompiler6.00u2/sw/info/readme.html</code> in the DS-5 installation directory</span></li>
+    </ul>
+    <li><span>Eclipse IDE is extended with the capability to register and use different versions of ARM Compiler and gcc than the versions supplied</span></li>
+    <li><span><tt>add_toolchain</tt> command allows registering new compiler toolchains, in addition to those pre-supplied with DS-5, from the command line (DS-5 Command Prompt on Windows, via <tt>suite_exec</tt> on Linux)</span></li>
+    <li><span><tt>select_toolchain</tt> and <tt>select_default_toolchain</tt> commands allow selecting a compiler toolchain from the command line (DS-5 Command Prompt on Windows, via <tt>suite_exec</tt> on Linux)</span></li>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>user space gator (beta) support for:<ul>
+        <li><span>Annotations</span></li>
+        <li><span>Custom counters</span></li>
+        <li><span>onlining/offlining of cores</span></li>
+        <li><span>hwmon counters, filesystem counters, Linux counters</span></li>
+        <li><span>OpenCL kernel tracing for Mali GPU and ARM NEON</span></li>
+    </ul></span></li>
+    <li><span>reduced probe effect of gator by about 15%</span></li>
+    <li><span>chart generation from the ftrace buffer using regex expressions</span></li>
+    <li><span>automatically copy and run gatord on the target</span></li>
+    <li><span>execute a command on the target from Streamline</span></li>
+    <li><span>adds support for Mali-T7xx (also available in 5.19.1)</span></li>
+    <li><span>support Android Runtime (ART) images</span></li>
+    <li><span>ADB devices appear in the Connection Browser</span></li>
+    <li><span>Stack and Call Graph views removed</span></li>
+    <li><span>includes gator version 20</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>MMU awareness is extended to support ARMv8 (DS-5 Ultimate Edition only)</span></li>
+    <li><span>DS-5 Debugger python scripting is extended with methods to access the MMU: <tt>listTranslations</tt> and <tt>translate</tt></span></li>
+    <li><span>cache viewing is extended to support L1 cache on Cortex-A53 and L1 and L2 caches on Cortex-A57 when using hardware targets</span></li>
+    <li><span>cache viewing is extended to support L1 and L2 caches on Cortex-A53 and Cortex-A57 when using Fast Models version 8.4 / 9.0 or later</span></li>
+    <li><span>added OS awareness for Mentor Graphics Nucleus<sup>&reg;</sup> on ARMv5, ARMv6M and ARMv7 architecture devices</span></li>
+    <li><span>OS awareness for Quadros Systems RTXC is extended to ARMv7M architecture devices</span></li>
+    <li><span>trace support is available when using simulation models</span></li>
+    <li><span>new <tt>assemble</tt> command is added to allow ARM assembly to be written directly to memory</span></li>
+    <li><span>new device support for:
+    <ul>
+    <li><span>Cortex-M7</span></li>
+    <li><span>Dual Arria V SoC (2 Dual Core SoCs)</span></li>
+    <li><span>Dual Cyclone V SoC (2 Dual Core SoCs)</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M7 (SMM-M7)</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M7 (SMM-M7CS)</span></li>
+    <li><span>VE_Cortex_M7 FVP Model</span></li>
+    <li><span>Marvell 88i9346</span></li>
+    </ul>
+    </span></li>
+    <li><span>ULINK2, ULINKpro ULINKpro D and CMSIS-DAP support added to:
+    <ul>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M0</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M0+</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M1</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M3</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M4</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M7 (SMM-M7)</span></li>
+    <li><span>Cortex-M Prototyping System (MPS2) Cortex-M7 (SMM-M7CS)</span></li>
+    </ul>
+    </span></li>
+    <li><span>DSTREAM trace support added to:
+    <ul>
+    <li><span>Versatile_Express_A53x2_SMM</span></li>
+    </ul>
+    </span></li>
+    <li><span>Fast Models trace added to:
+    <ul>
+    <li><span>Cortex-A8</span></li>
+    <li><span>VE_AEMv8x1</span></li>
+    <li><span>VE_AEMv8x4</span></li>
+    <li><span>VE_Cortex_A9x4</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.20.0 version of firmware included</span></li>
+    <li><span>new High-Speed Serial Trace Port (HSSTP) probe for DSTREAM supporting ARM HSSTP and Marvell SETM serial trace protocols</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>bare-metal ARMv8 SMP start-up code example added that initializes the system in AArch64 EL3 then launches an AArch32 SMP application in EL1: <tt>startup_ARMv8_AArch64_with_AArch32_app</tt></span></li>
+    <li><span>bare-metal start-up code added for Cortex-A17 MPCore: <tt>startup_Cortex-A17MPCore</tt></span></li>
+    <li><span>bare-metal start-up code added for Cortex-M7: <tt>startup_Cortex-M7</tt></span></li>
+    <li><span>all example Linux applications are now built for both hardfloat and softfloat</span></li>
+    <li><span>Cortex-M examples for MPS boards are updated to also run on MPS2 boards</span></li>
+    <li><span>CoreSight Access Library demo is enhanced to capture trace for all cores by default, and now includes an example trace capture for Versatile Express Cortex-A15x2+A7x3 (TC2)</span></li>
+    <li><span>Cortex-A9 bare-metal example projects are now compatible with the supplied Cortex-A9 FVP simulation model</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.19.0 build 5190027 dated 2014/07/16:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.04u2 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005p/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005p/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>user space Gator now supports kernels 3.4 and later</span></li>
+    <li><span>OpenCL improvements</span></li>
+    <li><span>early access for Mali-V500 support</span></li>
+    <li><span>generic support for Gator to generate charts from filesystem entries</span></li>
+    <li><span>GPU activity charts are displayed in the Live view</span></li>
+    <li><span>DS-5 ships with a pre-built &quot;gatord&quot; binary</span></li>
+    <li><span>Android application package .apk files are now supported as a valid program image</span></li>
+    <li><span>Chart configuration allows for drag and drop of series between charts</span></li>
+    <li><span>Streamline Data panel adds report searching/filtering</span></li>
+    <li><span>support added for generic Summary Tables</span></li>
+    <li><span>gator support for Mali-T7xx is available from <a href="https://git.linaro.org/?p=arm/ds5/gator.git">https://git.linaro.org/?p=arm/ds5/gator.git</a></span></li>
+</ul></span>
+<span><strong>DS-5</strong><ul>
+    <li><span>Eclipse IDE is upgraded to version 4.3.2 (Kepler)</span></li>
+    <li><span>Jython is upgraded to version 2.5.3</span></li>
+    <li><span>installation now includes FlexNet 11.12.1.0 binaries</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>added MMU support (for ARMv7 architecture only) with a new MMU view and <tt>mmu</tt> commands</span></li>
+    <li><span>added OS awareness for Quadros Systems RTXC on ARMv5, ARMv6M and ARMv7 architecture devices</span></li>
+    <li><span>Trace view shows a graphical representation of position in and size of trace buffer</span></li>
+    <li><span>add support in the Trace view for searching the trace buffer for a data access on a specified address (ETMv4 + ETMv3)</span></li>
+    <li><span>Memory view can be configured to show the contents of processor caches</span></li>
+    <li><span>Memory view adds an option to display addresses in a compressed format</span></li>
+    <li><span>device support changes include:
+    <ul>
+        <li><span>adds support for Juno ARM Development Platform (ADP)</span></li>
+        <li><span>i.MX Solo and SoloLite are extended with connections via ULINKpro</span></li>
+        <li><span>Emerald-P target now supports TPIU trace</span></li>
+        <li><span>MB9BF506N (Generic) target is moved from Fujitsu to Spansion</span></li>
+        <li><span>adds support for AEMv8 simulation model running with a single core (DS-5 Ultimate Edition only)</span></li>
+        <li><span>adds support for Renesas RZ/A1L R7S721020 devices</span></li>
+        <li><span>Renesas RZ/A1 devices now allow connection using mbed CMSIS-DAP and Toragi CMSIS-DAP hardware units</span></li>
+        <li><span>adds support for Alpha Project AP-RZA-0A board</span></li>
+    </ul>
+    <li><span>new Platform Configuration Editor provides graphical views for creating and editing
+              platforms in the DS-5 Debugger configuration database</span></li>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.18.0 version of firmware included</span></li>
+    <li><span>adds cache preservation when debugging Cortex-A15</span></li>
+    <li><span>rvi_log_client executable is renamed to dbghw_log_client</span></li>
+    <li><span>dbghw_log_client has an extra option <tt>-daplog</tt> that can be used to enable / disable the logging of DAP operations</span></li>
+    <li><span>dbghw_batchupdater tool added to allow batch updating of multiple DSTREAM/RVI hardware units</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>RTX updated to version 4.74 (see README.txt within the RTX example directory for further information)</span></li>
+    <li><span>CMSIS_RTOS_RTX.zip can now be imported directly into Eclipse (as an archive file) rather
+              than having to unzip it first outside of Eclipse</span></li>
+    <li><span>new bare-metal examples for ARMv8 showing how to enable caches and the MMU, execution level (EL)
+              switching, multi-core execution, semihosting and debugger features:
+              <tt>startup_v8_ARMCompiler6</tt> and <tt>fireworks_v8_ARMCompiler6</tt></span></li>
+    <li><span>bare-metal start-up code added for Cortex-A12: <tt>startup_Cortex-A12MPCore</tt></span></li>
+</ul></span>
+<span><strong>GCC Toolchain:</strong><ul>
+    <li><span>updated to Linaro GCC Toolchain 4.8-2014.04 for Linux applications and Linux kernel</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.18.1 build 5181003 dated 2014/05/20:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>added ARM Compiler 6.00u1 for embedded and bare-metal code for ARMv8-A processors (DS-5 Ultimate Edition only)</span></li>
+    <ul>
+        <li><span>for further information on changes see file <code>sw/ARMCompiler6.00/sw/info/readme.html</code> in the DS-5 installation directory</span></li>
+    </ul>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>fixed SDDEBUG-16375: Connection to some targets unexpectedly refused with an evaluation license</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.18.0 build 5180018 dated 2014/04/07:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.04u1 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005o/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005o/index.html</a></span></li>
+    </ul>
+    <li><span>added ARM Compiler 6.00 for embedded and bare-metal code for ARMv8-A processors (DS-5 Ultimate Edition only)</span></li>
+    <ul>
+        <li><span>for further information on changes see file <code>sw/ARMCompiler6.00/sw/info/readme.html</code> in the DS-5 installation directory</span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>data capture possible without gator.ko via user-space only gatord on Linux kernel 3.12 and later (early access feature)</span></li>
+    <li><span>OpenCL visualization from Mali GPU (early access feature)</span></li>
+    <li><span>added image source path substitution</span></li>
+    <li><span>Chart configuration supports log charts, line charts and has a redesigned counter source display</span></li>
+    <li><span>includes gator version 18</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>added the ability to view cache contents in the Data view and on the command line for Cortex-A15</span></li>
+    <li><span>Memory view highlights areas of memory that are cached (where cache data is available)</span></li>
+    <li><span><tt>trace dump</tt> command is extended to support dumping of STM and ITM trace</span></li>
+    <li><span>added OS awareness for SEGGER embOS<sup>&trade;</sup> on ARMv5, ARMv6M and ARMv7 architecture devices</span></li>
+    <li><span>exclusive access to a DSTREAM unit can be obtained by connecting with 'username@' prefixed to the IP address or hostname</span></li>
+    <li><span>new views are added in Eclipse for configuring and updating the firmware on DSTREAM and RealView ICE hardware debug units</span></li>
+    <li><span>RTOS Data view is renamed to OS Data view</span></li>
+    <li><span>trace reporting is extended to support ITM and STM</span></li>
+    <li><span>improved error messages when trace decode encounters issues</span></li>
+    <li><span>device support extended to include:
+    <ul>
+        <li><span>ARM FVP: VE_Cortex_A12x4, VE_Cortex_A7x1, VE_Cortex_A7x2, VE_Cortex_A7x4, VE_Cortex_R5x1, VE_Cortex_R5x2, VE_Cortex_R7x1, VE_Cortex_R7x2</span></li>
+        <li><span>Cyclone V SoC (Single Core)</span></li>
+        <li><span>Cortex-M Prototyping System (MPS2): Cortex-M0, Cortex-M0+, Cortex-M1, Cortex-M3 and Cortex-M4</span></li>
+        <li><span>Faraday SoCreativeIV-A380</span></li>
+        <li><span>i.MX6 DualLite</span></li>
+        <li><span>i.MX6 SoloLite</span></li>
+        <li><span>Linux Application Debug: Application Debug, Connections via AArch64 gdbserver</span></li>
+        <li><span>LSI: AXM5500 SIM, AXM5500x4 SIM, AXM5504, AXM5508, AXM5512, AXM5516</span></li>
+        <li><span>Pandaboard: debug of the Cortex-M3s</span></li>
+        <li><span>TMDX570LS04HDK: added ULINKpro/ULINKpro D support</span></li>
+        <li><span>TMDX570LS12HDK: added ULINKpro/ULINKpro D support</span></li>
+        <li><span>TMDX570LS31HDK: added ULINKpro/ULINKpro D support</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.17.0 version of firmware included</span></li>
+</ul></span>
+<span><strong>Eclipse</strong><ul>
+    <li><span>Eclipse IDE is upgraded to version 4.3 (Kepler)</span></li>
+</ul></span>
+<span><strong>Java</strong><ul>
+    <li><span>Java Runtime Environment (JRE) for Eclipse and other Java applications in DS-5 is upgraded to version 7</span></li>
+</ul></span>
+<span><strong>Simulation Models:</strong><ul>
+    <li><span>updated to Fixed Virtual Platforms 8.3.2 release</span></li>
+    <li><span>added ARMv8 simulation model for ARMv8 development (DS-5 Ultimate Edition only)</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.17.1 build 5171010 dated 2014/01/23:
+</p>
+<ul>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>bug fixes and improvements:
+    <ul>
+        <li><span>support for debugging Linux kernel with Large Physical Address Extension (LPAE) turned on: the debugger was unable to read the details of loaded kernel modules, generating Debug Precise Abort errors [SDDEBUG-14760]</span></li>
+        <li><span>support for L2C-310 on Cortex-A9 systems: DSTREAM firmware will perform maintenance on L2 cache if L2 cache is enabled, but some cores have disabled MMUs [SDDEBUG-14156]</span></li>
+        <li><span>extended DSTREAM DHCP support to fix compatibility issues with some firewalls: some routers require the 'secs' field to be set in BOOTP request [SDDEBUG-15492]</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.16.0 version of firmware included</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.17.0 build 5170015 dated 2013/12/16:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.04 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005n/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005n/index.html</a></span></li>
+        <li><span>optional <a href="http://ds.arm.com/ds-5/build/arm-compiler-qualification-kit/">ARM Compiler Qualification Kit</a>
+                  for ARM Compiler v5.04 is now available to help obtain certification for products in safety critical applications</span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>Memory Used chart now filterable by process</span></li>
+    <li><span>processes view in Live and Timeline shows per-process %CPU and Memory Used statistics</span></li>
+    <li><span>for Cortex-M/ITM captures, exceptions/interrupts are integrated into the scheduler trace heatmap</span></li>
+    <li><span>for Cortex-M/ITM captures, additional exception statistics are available via the Exceptions table</span></li>
+    <li><span>for Cortex-M/ITM captures, support added for ASCII annotations</span></li>
+    <li><span>combined .apc/.apd files into a single container</span></li>
+    <li><span>support added for the RT-Preempt Full kernel</span></li>
+    <li><span>Kconfig now ships with the gator driver to allow easy integration into the Linux build system</span></li>
+    <li><span>Caiman open sourced and the Caiman protocol defined and shipped with DS-5 located in <tt>&lt;installdir&gt;/sw/energy_probe</tt></span></li>
+    <li><span>Gator supports filmstrip for Mali-T6xx GPUs - requires Mali-T6xx DDK r4p0</span></li>
+    <li><span>Gator, Caiman, and Streamline support IPv6 addresses</span></li>
+    <li><span>CCN-504 supported</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>added OS awareness for Micrium<sup>&reg;</sup> &mu;COS-II<sup>&reg;</sup> on Cortex-M family devices</span></li>
+    <li><span>MQX operating system support is enhanced with visibility of Real-Time TCP/IP Communication Suite (RTCS) state</span></li>
+    <li><span>breakpoints in C and assembly code now track changes to source code</span></li>
+    <li><span>Trace Control view provides a menu option for dumping trace data to a file</span></li>
+    <li><span>new commands <tt>trace list/info/dump/report</tt> provide access to trace information from the command line</span></li>
+    <li><span>Trace Control view shows the relationship between trace source and trace capture devices</span></li>
+    <li><span>cdbimporter tool is enhanced to support System Trace Macrocell (STM) as well as AHB and AXI address spaces</span></li>
+    <li><span>Eclipse preferences for Configuration Database is enhanced with Test Platforms dialog to allow checking the validity of platforms</span></li>
+    <li><span>register set for Cortex-A15 is updated based on the latest technical reference manual (Cortex-A15 r4p0),
+              and now includes Performance Monitor Unit (PMU) registers</span></li>
+    <li><span>register set is added for CoreLink CCN-504 Cache Coherent Network</span></li>
+    <li><span>standalone version of Debug and Trace Services Layer (DTSL) included in <tt>&lt;installdir&gt;/sw/DTSL</tt></span></li>
+    <li><span>standalone version of Remote Device Debug Interface (RDDI) included in <tt>&lt;installdir&gt;/sw/debugger/RDDI</tt></span></li>
+    <li><span>device support extended to include:
+    <ul>
+        <li><span>Cortex-M Prototyping System / Cortex-M0: DSTREAM and RealView-ICE support</span></li>
+        <li><span>Cortex-M Prototyping System / Cortex-M0+: DSTREAM and RealView-ICE support</span></li>
+        <li><span>Cortex-M Prototyping System / Cortex-M1: DSTREAM and RealView-ICE support</span></li>
+        <li><span>Cortex-M Prototyping System / Cortex-M3: DSTREAM and RealView-ICE support</span></li>
+        <li><span>Cortex-M Prototyping System / Cortex-M4: DSTREAM and RealView-ICE support</span></li>
+        <li><span>Versatile_Express_V2P-CA15_A7: Snapshot View</span></li>
+        <li><span>ARM FVP: VE_Pelican</span></li>
+        <li><span>CALAO Systems: Snowball - Snapshot View</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.15.0 version of firmware included</span></li>
+    <li><span>support added for SMP debugging on ARMv8 devices</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>a flash programming example <tt>flash_example-FVP-A9x4</tt> in the <tt>Bare-metal_examples.zip</tt>
+              shows two ways of programming flash devices using DS-5: using a Keil Flash Method and using
+              a Custom Flash Method written in Jython</span></li>
+    <li><span>new examples in <tt>CoreSight_Access_Library.zip</tt> demonstrate how to configure
+              and access CoreSight hardware from Linux applications, and how to
+              later process that data in DS-5 Debugger</span></li>
+    <li><span>new bare-metal boards example: <tt>Atmel-ATSAMA5D35-EK_RAM</tt></span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.16.0 build 5160047 dated 2013/10/22:
+</p>
+<ul>
+<span><strong>Supported host platforms</strong><ul>
+    <li><span>added support for Red Hat Enterprise Linux 6 Workstation</span></li>
+</ul></span>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.03u3 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005m/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005m/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>auto-discover Gator, DSTREAM, and RealView ICE connections over the local network</span></li>
+    <li><span>support added for Mali-450 GPU</span></li>
+    <li><span>Streamline Data view adds the ability to import and export zipped capture files</span></li>
+    <li><span>chart configuration in the Timeline view provides settings for lower and upper extent of displayed data</span></li>
+    <li><span>Timeline view allows filtering by thread name</span></li>
+    <li><span>experimental support added for Cortex-A12 Performance Monitor Unit (PMU)</span></li>
+    <li><span>experimental support added for CoreLink CCN-504 Cache Coherent Network hardware counters</span></li>
+    <li><span>includes gator version 16</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>added OS awareness for Express Logic ThreadX<sup>&reg;</sup> on Cortex family devices</span></li>
+    <li><span>OS awareness for Micrium<sup>&reg;</sup> &mu;COS-III<sup>&reg;</sup> extended to Cortex-A family devices</span></li>
+    <li><span>Trace view now supports searching by instruction address, data address, function name and index</span></li>
+    <li><span>new Trace Control view to display information about trace capture devices and configure when trace capture is started and stopped</span></li>
+    <li><span>new commands <tt>trace-start</tt> and <tt>trace-stop</tt> allow starting and stopping trace capture from scripts</span></li>
+    <li><span>support is added for 64-bit data from STM (System Trace Macrocell)</span></li>
+    <li><span>Trace view allows display of captured trace data without stopping the target</span></li>
+    <li><span>device support extended to include:
+    <ul>
+      <li><span>i.MX6 Solo (Generic): DSTREAM and RVI</span></li>
+      <li><span>Vybrid VF5xx: ULINKPro, ULINKPro D and CMSIS-DAP, RVI and DSTREAM</span></li>
+      <li><span>Vybrid VF3xx: ULINKPro, ULINKPro D and CMSIS-DAP, RVI and DSTREAM</span></li>
+      <li><span>mbed NXP LPC11U24: CMSIS-DAP</span></li>
+      <li><span>mbed NXP LPC1768: CMSIS-DAP</span></li>
+    </ul>
+    </span></li>
+    <li><span>ULINKPro and ULINKPro D support added to:
+    <ul>
+      <li><span>Altera - Arria V SoC</span></li>
+      <li><span>Altera - Cyclone V SoC</span></li>
+      <li><span>ARM Development Boards - Versatile Express A9x4</span></li>
+      <li><span>Atmel - SAMA5D3x</span></li>
+      <li><span>Avnet - Zedboard_JTAG_J15</span></li>
+      <li><span>beagleboard.org - OMAP 3530</span></li>
+      <li><span>Freescale - i.MX50 Generic</span></li>
+      <li><span>Freescale - i.MX50 EVK</span></li>
+      <li><span>Freescale - i.MX51 Generic</span></li>
+      <li><span>Freescale - i.MX51 PDK</span></li>
+      <li><span>Fujitsu - MB9BF506N Generic</span></li>
+      <li><span>Nufront - NS115 Generic</span></li>
+      <li><span>Nufront - NS115 Development Kit</span></li>
+      <li><span>Phytec - Vybrid-VF65</span></li>
+      <li><span>ST - SPEAr1310</span></li>
+      <li><span>Texas Instruments - OMAP 3430 Generic</span></li>
+      <li><span>Texas Instruments - OMAP 34XX Generic</span></li>
+      <li><span>Texas Instruments - OMAP 3530 Generic</span></li>
+      <li><span>Texas Instruments - OMAP 35XX Generic</span></li>
+      <li><span>Texas Instruments - OMAP 3630 Generic</span></li>
+      <li><span>Xilinx - Zynq-7000 EPP Emulation Board</span></li>
+      <li><span>Xilinx - Zynq-7000 EPP ZC702</span></li>
+    </ul>
+    </span></li>
+    <li><span>ULINKPro D support added to:
+    <ul>
+      <li><span>Keil - Keil MCBSTM32E Evaluation Board</span></li>
+      <li><span>Freescale - Vybrid VF6xx</span></li>
+      <li><span>Renesas - RZ/A1H R7S721001</span></li>
+    </ul>
+    </span></li>
+    <li><span>ULINK2 support added to:
+    <ul>
+      <li><span>ARM Development Boards - Versatile Express A9x4</span></li>
+    </ul>
+    </span></li>
+    <li><span>CMSIS-DAP support added to:
+    <ul>
+    <li><span>Phytec - Vybrid-VF65</span></li>
+    </ul>
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.14.0 version of firmware included</span></li>
+    <li><span>powerdown awareness for Freescale i.MX6 and TI KeyStone platforms is added</span></li>
+    <li><span>support added for CoreSight components and Cortex cores on AHB/AXI interfaces</span></li>
+    <li><span>allows simultaneous connection from DS-5 and csat tools to the same target</span></li>
+</ul></span>
+<span><strong>Eclipse IDE</strong><ul>
+    <li><span>notifications are added for support and maintenance expiry and impending license expiry</span></li>
+    <li><span>updated to PyDev (Python development plug-ins) version 2.7.5 in Eclipse IDE for latest enhancements and fixes</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>new Linux examples <tt>application_rewind_1</tt> and <tt>application_rewind_2</tt> demonstrating application rewind</span></li>
+    <li><span>new bare-metal example <tt>Freescale-iMX6Q_RAM</tt> showing debug support for the Freescale i.MX6Q</span></li>
+    <li><span>numerous fixes and improvements to RTX real-time operating system (see README.txt within the RTX example directory for further information)</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.15.0 build 5150015 dated 2013/06/17:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.03u2 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>adds support for Cortex-A12 (<tt>--cpu Cortex-A12</tt>)</span></li>
+        <li><span>for further information on improvements see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005l/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005l/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>Capture &amp; Analysis Options dialog adds a Keep option to limit the amount of data to process from a capture session</span></li>
+    <li><span>per-cpu disclosure added to the real-time live display</span></li>
+    <li><span>CPU Wait charts are now user configurable</span></li>
+    <li><span>Log view allows filtering on <tt>When</tt> and <tt>Duration</tt></span></li>
+    <li><span>performance of .apc file generation is improved</span></li>
+    <li><span>redesigned interface for displaying warnings</span></li>
+</ul></span>
+<span><strong>DS-5</strong><ul>
+    <li><span>separate installers are provided for 32-bit and 64-bit Windows</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>processor support extended to include Cortex-A12</span></li>
+    <li><span>watchpoints are now supported when connected to CADI simulation models</span></li>
+    <li><span>added OS awareness for FreeRTOS<sup>&trade;</sup> on Cortex-M family devices</span></li>
+    <li><span>added OS awareness for Micrium<sup>&reg;</sup> &mu;COS-III<sup>&reg;</sup> on Cortex-M family devices</span></li>
+    <li><span>breakpoint and memory commands now set an internal $ variable with the breakpoint or memory region number so that these can be used in subsequent scripting commands</span></li>
+    <li><span>new command <tt>newvar</tt> allows creation of new variables in DS scripts</span></li>
+    <li><span>new address space AXI: provides direct memory access via a CoreSight<sup>&trade;</sup> Debug Access Port</span></li>
+    <li><span>cdbimporter now supports Embedded Trace FIFO (ETF) and Embedded Trace Router (ETR) devices</span></li>
+    <li><span>device support extended to include:
+    Avnet ZedBoard,
+    Freescale i.MX6 Dual,
+    Mindspeed T2200 / T3300,
+    pandaboard.org OMAP 5432,
+    Renesas RZ/A1H R7S721001,
+    ST-Ericsson U8540,
+    TI OMAP 543X and
+    TI TMDX570LS04HDK / TMDX570LS12HDK / TMDX570LS31HDK / TMDXRM42HDK / TMDXRM46HDK / TMDXRM48HDK
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.12.0 version of firmware included</span></li>
+    <li><span>support added for > 32-bit addresses on AXI-AP</span></li>
+    <li><span>drive strengths of the JTAG/SWD signals on the DSTREAM probe are reduced to prevent signal reflection issues with certain targets</span></li>
+    <li><span>improved support for large multi-core systems containing Cortex devices</span></li>
+</ul></span>
+<span><strong>Eclipse IDE</strong><ul>
+    <li><span>removed a limitation on linker command line lengths when building projects on Windows host platforms</span></li>
+    <li><span>License Manager dialog provides a diagnostics tab to help resolve licensing errors</span></li>
+    <li><span>improved visibility of product update notifications</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>new projects <tt>Freescale-Vybrid-VF6xx-A5_RAM</tt> and <tt>Freescale-VF6xx-M4_RAM</tt> in <tt>Bare-metal_boards_examples.zip</tt> demonstrate basic bare-metal applications running on Freescale Vybrid VF6xx devices</span></li>
+    <li><span>ports of RTX for Renesas RZ/A1 device and GENMAI board are included in <tt>CMSIS_RTOS_RTX.zip</tt></span></li>
+</ul></span>
+<span><strong>GCC Toolchain:</strong><ul>
+    <li><span>updated to Linaro GCC Toolchain 4.7-2013.03 for Linux applications and Linux kernel</span></li>
+</ul></span>
+<span><strong>Simulation Models</strong><ul>
+    <li><span>pre-supplied Real-Time Simulation Models (RTSM) are rebranded to Fixed Virtual Platforms (FVP)</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.14 build 1702 dated 2013/03/26:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.03 for latest enhancements and bug fixes:</span>
+    <ul>
+    <li><span>improved performance on well-formed loops and switch-based FSMs</span></li>
+    <li><span>new loop optimizations, enabled with <tt>--loop_optimization_level=2</tt></span></li>
+    <li><span>for further information on features and improvements see:
+    <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005j/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005j/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>new live view added to show performance data as it is being captured</span></li>
+    <li><span>Timeline view displays individual kernel threads under the kernel process.</span></li>
+    <li><span>Timeline view allows easy restoration of auto-generated charts via the snippets menu.</span></li>
+    <li><span>includes gator version 13</span></li>
+    <li><span>gator adds support for monitoring the performance of CoreLink CCI-400 (Cache Coherent Interconnect)</span></li>
+    <li><span>gator adds support for environmental data such as temperature, voltage, power and energy within the Linux kernel via the hwmon interface</span></li>
+    <li><span>gator adds support for capturing counters from clusters independently in a big.LITTLE system</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>added OS awareness for Keil CMSIS-RTOS RTX on Cortex-M and Cortex-A9 devices</span></li>
+    <li><span>added OS awareness for Freescale MQX RTOS on ARM processor-based Freescale devices</span></li>
+    <li><span>trace displays can be time-correlated within the debugger and with external tools</span></li>
+    <li><span>support is provided for displaying the CoreSight Global Timestamp unit</span></li>
+    <li><span>instruction and data trace from ETMv4 devices (such as Cortex-R7) is now supported</span></li>
+    <li><span>Altera USB-Blaster is supported as a connection mechanism to Altera Arria V SoC and Cyclone V SoC boards</span></li>
+    <li><span>context menu in the Debug Control and Trace views allows editing DTSL (Debug and Trace Services Layer) options during a debug session</span></li>
+    <li><span>new command <tt>set/show dtsl-options</tt> can be used to access DTSL options during a debug session</span></li>
+    <li><span>new command <tt>set/show trust-ro-sections-for-opcodes</tt> controls whether trace and disassembly can rely on data from read-only sections within any images that are loaded</span></li>
+    <li><span>device support extended to include:
+    Altera Arria V SoC,
+    Altera Cyclone V SoC and
+    Atmel ATSAMA5D3x
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.11.0 version of firmware included</span></li>
+    <li><span>Cortex-A50 series support now also includes support for Cortex-A53</span></li>
+    <li><span>stepping speed on Cortex-A cores is improved</span></li>
+    <li><span>SWD connections are supported over 38-pin Mictor connector and ARM and TI 14-pin JTAG connectors</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>new Jython script <tt>jython_pmu</tt> to demonstrate use of the Performance Monitor Unit (PMU) to count elapsed cycles and user-defined events</span></li>
+    <li><span>source code and examples for a Cortex-A9 port of Keil CMSIS-RTOS RTX are included in <tt>CMSIS_RTOS_RTX.zip</tt></span></li>
+    <li><span>Linux application examples cpp, cpp_library, cppex, cppex_library and example_library are removed</span></li>
+    <li><span>BeagleBoard/xM Linux distributions in the Linux examples are removed</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.13 build 1622 dated 2012/12/14:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>Updated to ARM Compiler 5.02u1 for latest bug fixes</span></li>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span><span class="guiref">Capture & Analysis Options</span> dialog allows configuring ARM Energy Probe options</span></li>
+    <li><span>hierarchy of annotations in the form of groups and channels</span></li>
+    <li><span>zoom performance in the Timeline view is improved</span></li>
+    <li><span>includes gator_v12</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span><tt>define</tt> command can use the variable <tt>$argv</tt> to refer to all the arguments</span></li>
+    <li><span>new <tt>document</tt> command allows help to be attached to newly defined commands</span></li>
+    <li><span>custom commands now auto-complete in the <span class="guiref">Commands</span> view and display their help in a tooltip</span></li>
+    <li><span>device support extended to include:
+                 Boundary Devices SABRE Lite,
+                 Boundary Devices Nitrogen6x,
+                 HardKernel O-Droid Q,
+                 Phytec PhyCORE Vybrid,
+                 Samsung Exynos 4410,
+                 Samsung Exynos 4412 and
+                 Samsung Exynos 5250
+    </span></li>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.10.0 version of firmware included</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>jython script <tt>jython_ttd</tt> to demonstrate decoding MMU translation tables</span></li>
+</ul></span>
+</ul>
+
+<p>
+DS-5 version 5.12 build 1571 dated 2012/10/13:
+</p>
+<ul>
+<li><span><strong>Supported host platforms</strong><ul>
+    <li><span>Added Ubuntu Desktop Edition 12.04 LTS</span></li></ul>
+</span></li>
+<li><span><strong>DS-5</strong><ul>
+    <li><span>Separate installers are provided for 32-bit (<tt>install_x86_32.sh</tt>) and 64-bit (<tt>install_x86_64.sh</tt>) Linux. Note 32-bit compatibility libraries are still required on 64-bit hosts (see section <a href="#installonlinux">Install on Linux</a>)</span></li></ul>
+</span></li>
+<li><span><strong>ARM Compiler</strong><ul>
+    <li><span>Updated to ARM Compiler 5.02:</span><ul>
+        <li><span>Support for Cortex-M0+</span></li>
+        <li><span>Performance improvements on CoreMark benchmark on Cortex-M3 and Cortex-M4 processors</span></li>
+        <li><span>Up to 40% performance improvements for 64-bit multiply operations on Cortex-M0 and Cortex-M0+, to accelerate DSP code</span></li></ul>
+    <span>For further information on features and improvements see  <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005h/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005h/index.html</a></span></li></ul>
+</span></li>
+<li><span><strong>ARM Streamline</strong><ul>
+    <li><span>Per-cluster viewing in the timeline (charts and x-ray mode) for big.LITTLE systems</span></li>
+    <li><span>National Instruments<sup>&trade;</sup> M Series DAQ for USB (USB-62xx) supported as external data source</span></li>
+    <li><span>Time filtering of analysis reports from the command line</span></li></ul>
+</span></li>
+<li><span><strong>DS-5 Debugger</strong><ul>
+    <li><span>Initial support for flash programming, provided by new debugger command <tt>flash load</tt></span></li>
+    <li><span>Data trace support for Cortex-A8, Cortex-A5, Cortex-R4 and Cortex-R5</span></li>
+    <li><span>Instruction trace support for Cortex-R7</span></li>
+    <li><span>Support for DWARF4 debug information generated by gcc 4.5 releases</span></li>
+    <li><span>Device support extended to include Emtrion DIMM-EMEV2 and DIMM-MX53 boards</span></li>
+    <li><span>The debugger no longer configures vector catches by default on connecting. However, when using Eclipse for DS-5,
+    user-defined vector catch configurations are remembered on a per debug configuration basis. Vector catch is especially
+    useful in the early stages of a bare-metal project where, for example, interrupt handlers and memory protection are not
+    yet written. For more details search for "Handling processor exceptions" in the DS-5 help.</span></li></ul>
+</span></li>
+<li><span><strong>Examples</strong><ul>
+    <li><span>A flash programming example has been added, comprising:
+        <ul>
+        <li><span>flash_algo-STM32F10x: flash algorithm targeted at STM32F10x family processor (as present on MCBSTM32E board), and</span></li>
+        <li><span>flash_blinky-MCBSTM32E: a blinky example payload targeted at MCBSTM32E board</span></li>
+        </ul></span></li>
+    <li><span>Another Jython scripting example has been added, <tt>jython_infostate</tt>, to display the state (stack frame / execution context) of a bare-metal or Linux application. 
+              This illustrates the use of several Jython debug classes/services (such as <tt>getExecutionContext()</tt>, <tt>getProgramAddress()</tt> and <tt>getRegisterNames()</tt>), and can be used as a starting point for your own debug scripts.</span></li>
+    <li><span>The Linux application examples (gnometris, threads, xaos, etc.) can now be built with either hard-float or soft-float libraries</span></li>
+    <li><span>As a consequence of moving from CodeSourcery <tt>gcc</tt> to Linaro <tt>gcc</tt>, the ability to build the Linux application examples with <tt>armcc</tt> has been removed from their makefiles</span></li></ul>
+</span></li>
+</ul>
+
+<p>
+DS-5 version 5.11 build 1479 dated 2012/07/31:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.01u4 release for latest bug fixes (see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005g/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005g/index.html</a> for further information)</span></li>
+<li><span><strong>ARM Compiler toolchain:</strong> Windows Server 2008 R2 is added as a supported host platform</span></li>
+<li><span><strong>GCC Toolchain:</strong> Linaro GCC Toolchain 2012.05 (<a href="https://launchpad.net/gcc-linaro/4.7/4.7-2012.05">https://launchpad.net/gcc-linaro/4.7/4.7-2012.05</a>)
+                                is added, and introduces support for hardfloat as well as including many new optimisations for ARMv7 architecture targets; the previous
+                                CodeSourcery toolchain is removed, but can still be obtained from <a href="http://www.codesourcery.com">http://www.codesourcery.com</a></span></li>
+<li><span><strong>ARM Streamline:</strong> support added for Mali-T6xx</span></li>
+<li><span><strong>ARM Streamline:</strong> editing of charts is now performed inline in the Timeline view, replacing the separate Chart Configuration view</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view chart configurations can be imported and exported for easy sharing with other developers</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view allows filtering by thread</span></li>
+<li><span><strong>ARM Streamline:</strong> Snippets button at bottom of Timeline view allows easy adding of new charts</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v10</span></li>
+<li><span><strong>ARM Streamline:</strong> gator compatibility extended to Linux 3.5</span></li>
+<li><span><strong>DS-5:</strong> Windows 7 service pack 1 is added as a supported host platform</span></li>
+<li><span><strong>DS-5:</strong> installation now includes FlexNet 11.10.1.0 binaries</span></li>
+<li><span><strong>DS-5:</strong> new armlmdiag utility added next to existing licensing utilities (<tt>&lt;installdir&gt;/sw/FLEXnet_&lt;version&gt;/&lt;platform&gt;/</tt>) to aid in diagnosing licensing problems</span></li>
+<li><span><strong>DS-5:</strong> added Target Configuration Editor plug-ins to Eclipse to allow importing, exporting and editing peripheral description files in a variety of formats</span></li>
+<li><span><strong>DS-5:</strong> settings panel for ARM Compiler projects now allows configuring additional object files to link against</span></li>
+<li><span><strong>DS-5 Debugger:</strong> the Files tab in the debug launch dialog provides an Add peripheral description files option to allow CMSIS-SVD peripheral description files to be loaded when connecting to the target</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Trace view shows data addresses and values when enabled in the DTSL Options dialog for devices that contain an ETMv3.5</span></li>
+<li><span><strong>DS-5 Debugger:</strong> content of Trace view can be filtered using the new Trace Record Filter Settings dialog</span></li>
+<li><span><strong>DS-5 Debugger:</strong> right-click on column headers in the Trace view to configure which columns are displayed</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new Events view added for configuring, displaying and filtering data from System Trace Macrocell (STM) components (STM support is beta status)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> debug launch dialog has changed to provide a tree view to select target platform and debug operation</span></li>
+<li><span><strong>DS-5 Debugger:</strong> debug launch dialog allows configuration of the parameters used when launching a CADI simulation model</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new command <tt>set/show debug-agent</tt> can be used to access configuration settings for an attached DSTREAM or RealView ICE hardware unit</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new Target Console view provides access to semihosting when using simulation models that provide their own semihosting implementation</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Versatile Express AEMv7A RTSM (configured as Cortex-A15),
+          ARM Versatile Express Cortex-A15x1 + Cortex-A7x1 RTSM,
+          ARM Versatile Express Cortex-A15x4 + Cortex-A7x4 RTSM,
+          ARM Versatile Express Cortex-A15x1 RTSM,
+          ARM Versatile Express Cortex-A15x2 RTSM,
+          ARM Versatile Express Cortex-A15x4 RTSM,
+          ARM Versatile Express V2P Cortex-A15x2 + Corex-A7x3 and
+          Freescale Vybrid VF6xx
+</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new 4.8 version of firmware included</span></li>
+<li><span><strong>Eclipse:</strong> License Manager Dialog allows choosing which license to use in the case where multiple different licenses are available</span></li>
+<li><span><strong>Eclipse:</strong> RXTX serial terminal plug-in is added (search for <tt>Terminal</tt> in Eclipse's Show View dialog)</span></li>
+<li><span><strong>Examples:</strong> pre-built Linux example executables are now built with Linaro GCC (except U-Boot, Beagle and Beagle xM Linux distributions)</span></li>
+<li><span><strong>Examples:</strong> TrustZone example is now supported on Versatile Express Cortex-A9x4 RTSM</span></li>
+<li><span><strong>Examples:</strong> bare-metal examples <tt>fireworks_A9x2-RTSM</tt> and <tt>smp_primes_A9x2-RTSM</tt> for the obsolete EB Cortex-A9x2 RTSM are replaced by <tt>fireworks_A9x4-RTSM</tt> and <tt>smp_primes_A9x4-RTSM</tt> for the VE Cortex-A9x4 RTSM</span></li>
+<li><span><strong>Examples:</strong> Xaos example and Streamline analysis file <tt>xaos-multithreaded-VXA9x4-example.apc</tt> are enhanced to illustrate thread naming and annotation of thread functions</span></li>
+<li><span><strong>Examples:</strong> Beagle and Beagle xM Linux distributions (available in the <tt>linux_distributions</tt> directory on the installation media and from <a href="http://connect.arm.com">http://connect.arm.com</a>) are unchanged from DS-5 5.10 and will no longer be updated in future releases</span></li>
+<li><span><strong>Simulation Models:</strong> dual-core Cortex-A9 simulation model for Emulation Baseboard is removed</span></li>
+</ul>
+
+<p>
+DS-5 version 5.10 build 1389 dated 2012/05/15:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.01u3 release for latest bug fixes</span></li>
+<li><span><strong>ARM Streamline:</strong> new dynamic Chart Config view allows controlling the Timeline view appearance</span></li>
+<li><span><strong>ARM Streamline:</strong> Capture options allows setting Sample Rate to None to disable periodic sampling interrupts</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view shows why threads stop / suspend due to contention, I/O or mutexes</span></li>
+<li><span><strong>ARM Streamline:</strong> additional Timeline view filtering per process</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view allows exporting counter data to a text file</span></li>
+<li><span><strong>ARM Streamline:</strong> Data view allows toggling between standard and compact listings</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Memory and Screen views can be configured to refresh periodically when running or stopped</span></li>
+<li><span><strong>DS-5 Debugger:</strong> DS-5 -&gt; Target Database in Eclipse Preferences dialog is enhanced to allow multiple target databases to be configured</span></li>
+<li><span><strong>DS-5 Debugger:</strong> debug launch configuration dialog allows editing trace and other system options</span></li>
+<li><span><strong>DS-5 Debugger:</strong> processor support extended to include Cortex-M0+ and Cortex-R7</span></li>
+<li><span><strong>DS-5 Debugger:</strong> pandaboard and Snowball board support extended to use hardware cross-triggering for tighter multi-core synchronisation</span></li>
+<li><span><strong>DS-5 Debugger:</strong> multi-core systems with clusters now show cluster grouping in the Debug Control view and in the output of the <tt>info cores</tt> command</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new command <tt>preprocess</tt> allows printing the value of C preprocessor macros</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Microcontroller Prototyping System (Cortex-M0+),
+          Freescale Kinetis L Series,
+          Fujitsu MB9BF506N,
+          NXP Shiner and
+          Origen board (contains Exynos 4210)
+</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new 4.7 version of firmware included</span></li>
+<li><span><strong>Examples:</strong> bare-metal start-up code added for the Cortex-M0+ and Cortex-R7 processors: startup_Cortex-M0+, startup_Cortex-R7</span></li>
+<li><span><strong>Examples:</strong> examples ported to Cortex-A9x4 RTSM platform: kernel_module, smp_primes_A9x4-RTSM</span></li>
+<li><span><strong>Examples:</strong> new Hello World example for Xilinx Zynq ZC702: Xilinx-Zynq_ZC702_RAM</span></li>
+<li><span><strong>Examples:</strong> added Linux distribution with kernel version 2.6.38 for use with simulation models of Versatile Express board with ARMv7 architecture compatibility</span></li>
+<li><span><strong>Simulation Models:</strong> added Cortex-A9x4 simulation model for Versatile Express board</span></li>
+<li><span><strong>Simulation Models:</strong> dual-core Cortex-A9 simulation model for Emulation Baseboard is deprecated and will be removed in a future release</span></li>
+</ul>
+
+<p>
+DS-5 version 5.9 build 1304 dated 2012/03/01:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.01u2 release for latest bug fixes</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline filtering per process selection</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline process pane can be configured to display GPU (graphics processor) and VPU (vertex processor) heat map</span></li>
+<li><span><strong>ARM Streamline:</strong> visualization of Mali<sup>&trade;</sup> GPU vertex and fragment processors trace activity</span></li>
+<li><span><strong>ARM Streamline:</strong> DVFS clock frequency is displayed in the Timeline chart</span></li>
+<li><span><strong>ARM Streamline:</strong> support for all performance counters on Qualcomm Scorpion processors (for example MSM8660)</span></li>
+<li><span><strong>ARM Streamline:</strong> support for the architecturally compliant counters on Qualcomm Krait processors (for example MSM8960)</span></li>
+<li><span><strong>ARM Streamline:</strong> current, voltage and power usage can be analyzed using the Energy Probe hardware unit (available to purchase separately)</span></li>
+<li><span><strong>ARM Streamline:</strong> added onlining/offlining support for perf inside gator</span></li>
+<li><span><strong>ARM Streamline:</strong> gator uses perf HAL on Linux versions 3.0 and later</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v8</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new 4.6 version of firmware included</span></li>
+<li><span><strong>DS-5:</strong> Linux Edition is renamed to Basic Edition</span></li>
+<li><span><strong>DS-5:</strong> installation now includes FlexNet 11 binaries</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added support for debugging Linux symmetric multiprocessing (SMP) systems</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Debug Control view provides separate visibility of active (currently scheduled) threads and all threads</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Debug Control view and command line indicate the power state of each core</span></li>
+<li><span><strong>DS-5 Debugger:</strong> when performing Linux kernel debug, the list of threads that is printed when stopping now only includes the active (currently scheduled) threads; use <tt>info threads</tt> to list all the threads</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new address spaces AHB: and APB: added for direct memory access via a CoreSight<sup>&trade;</sup> Debug Access Port</span></li>
+<li><span><strong>DS-5 Debugger:</strong> memory can be accessed whilst the target is running (subject to the target and address spaces supporting this)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> memory can be filled using new Fill Memory dialog in Eclipse and using <tt>memory fill</tt> from the command line</span></li>
+<li><span><strong>DS-5 Debugger:</strong> debugger can connect to VSTREAM (available for purchase separately) to debug on RTL simulators and hardware emulators</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+    ARM Versatile Express V2P Cortex-A15,
+    ARM Versatile Express with Cortex-A15 NEON Soft Macrocell Model,
+    ARM Versatile Express with Cortex-R5x2,
+    ARM Versatile Express Cortex-A15x4 + CortexA7x4 RTSM,
+    CALAO Systems Snowball board,
+    Freescale i.MX6 Quad,
+    NVIDIA Tegra 3,
+    PandaBoard ES,
+    ST-Ericsson AP9500,
+    TI AM3352/4/6/7/8/9 / OMAP 4460 and
+    Xilinx Zynq-7000 EPP ZC702
+</span></li>
+<li><span><strong>Eclipse:</strong> ELF Content Editor now displays segment information in a separate tab</span></li>
+<li><span><strong>Examples:</strong> new example added to demonstrate TrustZone<sup>&reg;</sup> debugging on Versatile<sup>&trade;</sup> Express A9x4 board: TrustZone</span></li>
+<li><span><strong>Examples:</strong> new example added to demonstrate symmetric multiprocessing (SMP) bare-metal debug on Cortex-A15 MPCore<sup>&trade;</sup>: smp_primes_A15x2-Coretile</span></li>
+<li><span><strong>Examples:</strong> new example added to demonstrate symmetric multiprocessing (SMP) bare-metal debug on Snowball: fireworks_snowball</span></li>
+<li><span><strong>Examples:</strong> new instrumented C code example added to demonstrate instrumented ARM Streamline bookmark, text, and visual annotations: Streamline_annotate</span></li>
+<li><span><strong>Examples:</strong> new example Jython script added in DS-5 Debugger: jython_hash</span></li>
+<li><span><strong>Examples:</strong> bare-metal start-up code added for the Cortex-A15 MPCore processor: startup_Cortex-A15MPCore</span></li>
+<li><span><strong>Examples:</strong> Kernel module debug example now has a generic makefile, to build it against any kernel with user-supplied dependencies, for example, for use on Snowball</span></li>
+</ul>
+
+<p>
+DS-5 version 5.8a build 1261 dated 2012/01/23:
+</p>
+<ul>
+<li><span><strong>Eclipse:</strong> updated Japanese translations for Eclipse plug-ins and product documentation</span></li>
+</ul>
+
+<p>
+DS-5 version 5.8 build 1213 dated 2011/11/29:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.01u1 release for latest bug fixes</span></li>
+<li><span><strong>ARM Compiler toolchain:</strong> added support for Cortex-A7</span></li>
+<li><span><strong>ARM Streamline:</strong> command line <tt>streamline</tt> tool provides new <tt>-timeline</tt> option to export Timeline data as text</span></li>
+<li><span><strong>ARM Streamline:</strong> annotation support is extended to the Linux kernel</span></li>
+<li><span><strong>ARM Streamline:</strong> event sampling can be performed at microsecond resolution</span></li>
+<li><span><strong>ARM Streamline:</strong> gator is modified to cope when all cores enter hibernate state</span></li>
+<li><span><strong>ARM Streamline:</strong> callstack unwinding is supported within kernel code</span></li>
+<li><span><strong>ARM Streamline:</strong> pins can be attached to charts in the Timeline view to identify areas of interest</span></li>
+<li><span><strong>ARM Streamline:</strong> Functions view adds an Image column showing the image that each function comes from</span></li>
+<li><span><strong>ARM Streamline:</strong> added support for Performance Monitoring Unit (PMU) on Cortex-A7</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v7</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Debug Configuration dialog includes improved support for debugging Android NDK-generated native libraries</span></li>
+<li><span><strong>DS-5 Debugger:</strong> trace start and stop points and trace ranges can be configured to restrict trace capture to areas of interest</span></li>
+<li><span><strong>DS-5 Debugger:</strong> trace triggers can be configured to mark points of interest in the trace capture and then locate them in the Trace view</span></li>
+<li><span><strong>DS-5 Debugger:</strong> instruction trace for Cortex-A5 and Cortex-A7 is supported</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Eclipse extension point interface added for third-party OS support (contact ARM for further information)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added <tt>set/show print current-vmid</tt> commands to control automatic printing of the current Virtual Machine ID (VMID) when it changes</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added <tt>core/thread apply</tt> command to execute a command over one or more cores or threads</span></li>
+<li><span><strong>DS-5 Debugger:</strong> debugger supports connecting to third-party CADI-based simulation models</span></li>
+<li><span><strong>DS-5 Debugger:</strong> cdbimporter tool extended to allow importing of third-party simulation models into the DS-5 Debugger configuration database</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Emulation Baseboard with ARM1156T2F-S Core Tile,
+          ARM Versatile Express with Cortex-A15x2 Soft Macrocell Model,
+          Atmel AT91SAM9G25 / AT91SAM9X35,
+          LG Electronics L9,
+          Mindspeed M84000 (Transcede 4000) and
+          NXP LPC3131 / LPC3141 / LPC3152
+</span></li>
+<li><span><strong>Examples:</strong> Xaos example extended to demonstrate Streamline visual annotation feature</span></li>
+<li><span><strong>Examples:</strong> added new start-up code examples in <tt>&lt;installdir&gt;/examples/Bare-metal_examples.zip</tt>: startup_Cortex-A7</span></li>
+<li><span><strong>Examples:</strong> pre-supplied Linux kernel and filesystem are now identical for BeagleBoard and Beagle-xM</span></li>
+<li><span><strong>Examples:</strong> example Linux kernel distributions are updated to linux-2.6.38</span></li>
+<li><span><strong>Examples:</strong> source code for Linux image for Cortex-A8 RTSM is now supplied (as a separate download)</span></li>
+<li><span><strong>Simulation Models:</strong> model_shell executable is included to facilitate running third-party simulation models</span></li>
+</ul>
+
+<p>
+DS-5 version 5.7b build 1210 dated 2011/11/28:
+</p>
+<ul>
+<li><span><strong>Eclipse:</strong> updated Japanese translations for Eclipse plug-ins and product documentation</span></li>
+</ul>
+
+<p>
+DS-5 version 5.7 build 1139 dated 2011/09/30:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.01 release for latest bug fixes and enhancements</span></li>
+<li><span><strong>ARM Compiler toolchain:</strong> inline assembler now supports Thumb-2 instructions</span></li>
+<li><span><strong>ARM Compiler toolchain:</strong> new stack protection feature, enabled using <tt>--protect_stack</tt>, helps to guard against local buffer overflows</span></li>
+<li><span><strong>ARM Compiler toolchain:</strong> vectorization enhanced to cope with const-references</span></li>
+<li><span><strong>ARM Streamline:</strong> selecting a range in the Timeline view shows aggregated event counters for that period</span></li>
+<li><span><strong>ARM Streamline:</strong> bookmarks can be set in the Timeline view to quickly label and return to important points</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view bookmarks can be automatically created by adding annotation functions in your application</span></li>
+<li><span><strong>ARM Streamline:</strong> command line interface added to allow scriptable capturing, analysis and reporting of Streamline data</span></li>
+<li><span><strong>ARM Streamline:</strong> event-based sampling (beta) allows event counters to be sampled after a configured number of samples events have occurred</span></li>
+<li><span><strong>ARM Streamline:</strong> added ability to display Linux thread names</span></li>
+<li><span><strong>ARM Streamline:</strong> support for 64-bit counters is added</span></li>
+<li><span><strong>ARM Streamline:</strong> gator daemon is released as open source</span></li>
+<li><span><strong>ARM Streamline:</strong> Cortex-A15 is fully supported (was previously early access)</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v6</span></li>
+<li><span><strong>DS-5:</strong> Ubuntu Desktop Edition 10.04 LTS (32-bit only) is added as a supported host platform</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added the ability to debug bare-metal applications on the pre-supplied dual-core Cortex-A9 Real-Time System Model (RTSM)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added jython interface to allow larger and more complex debugger scripts to be created</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new Functions view added to allow browsing and searching function by name, address, source file and image</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Event Viewer (early access) added to allow capture and display of logging events from bare-metal applications using the Instrumentation Trace Macrocell (ITM)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Expression Inspector view can be moved from the title bar</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Breakpoint Properties dialog provides quick access to scripts in the Scripts view for attaching to breakpoints</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added <tt>set/show print double-format/float-format</tt> commands to set and show the display format of double and single precision floating-point values</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added <tt>info inst-sets</tt> to list the available instruction sets for use in disassembly and other related commands</span></li>
+<li><span><strong>DS-5 Debugger:</strong> hardware breakpoint functionality extended to support hypervisor debug, including hypervisor specific and virtual machine specific breakpoints</span></li>
+<li><span><strong>DS-5 Debugger:</strong> internal breakpoints that the debugger uses to support features such as semihosting and Linux kernel debug are now visible in the Breakpoints view and on the command line</span></li>
+<li><span><strong>DS-5 Debugger:</strong> built-in DS-5 scripting functions extended to include <tt>strncmp</tt>, <tt>strcpy</tt>, <tt>strncpy</tt> and <tt>memcpy</tt></span></li>
+<li><span><strong>DS-5 Debugger:</strong> cycle-accurate tracing is available for some platforms</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Microcontroller Prototyping System (Cortex-M0/Cortex-M1/Cortex-M4),
+          Keil MCBSTR9,
+          ST STA2064/65,
+          ST STR912,
+          TI AM1707 / AM1808 / DM3725 / DM3730 / DM8168 / OMAP 3530 / OMAP L138 and
+          Xilinx Zynq-7000 EPP
+</span></li>
+<li><span><strong>DS-5 Debugger:</strong> processor support extended to include:
+          Cortex-M0/M1/M4, Cortex-R5, ARM946E-S, ARM966E-S, ARM968E-S and ARM1156T2(F)-S
+</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new 4.5 version of firmware included</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> CoreSight Access Tool (CSAT) added for low-level access to CoreSight components</span></li>
+<li><span><strong>Eclipse:</strong> updated to Eclipse 3.7, CDT 8.0, RSE 3.3 and added PyDev 2.2.2</span></li>
+<li><span><strong>Eclipse:</strong> ELF Content Editor now displays section information in a separate tab</span></li>
+<li><span><strong>Examples:</strong> examples ported to Cortex-A9x2 RTSM platform: fireworks_a9x2rtsm, smp_primes_a9x2rtsm</span></li>
+<li><span><strong>Examples:</strong> new example added to demonstrate use of the DS-5 Event Viewer functionality with ITM on the Versatile Express Cortex-A9x4 platform: smp_primes_ITM</span></li>
+<li><span><strong>Examples:</strong> bare-metal start-up code added for the Cortex-A15 processor, including vector table, exception handlers, MMU, caches and VFP/NEON initialization, based on the Versatile Express Cortex-A15 platform: startup_Cortex-A15</span></li>
+<li><span><strong>Examples:</strong> bare-metal start-up code added for the Cortex-R5(F) processor, including vector table, exception handlers, MPU, caches, TCM and VFP initialization, based on the Versatile Express R5x2 platform: startup_Cortex-R5</span></li>
+<li><span><strong>Examples:</strong> bare-metal start-up code added for the Cortex-M0/M1/M4 processors, including vector table, SysTick timer and interrupt handler, all written in C, based on the Microcontroller Prototyping System: startup_Cortex-M0, startup_Cortex-M1 and startup_Cortex-M4</span></li>
+<li><span><strong>Examples:</strong> new example added to demonstrate NEON auto-vectorization of the Fireworks bare-metal application using ARM Compiler, and shows how to modify the source code to improve vectorization, and how to measure the performance gain: optimization3</span></li>
+<li><span><strong>Examples:</strong> xaos example extended to demonstrate Streamline text annotation</span></li>
+<li><span><strong>Examples:</strong> kernel_module example modified to demonstrate kernel module debug on the Cortex-A8 RTSM platform</span></li>
+<li><span><strong>Simulation Models:</strong> added dual-core Cortex-A9 Emulation Baseboard platform model</span></li>
+</ul>
+
+<p>
+DS-5 version 5.6a build 1077 dated 2011/08/25:
+</p>
+<ul>
+<li><span><strong>ARM Streamline:</strong> fixed incorrect parsing of debug information from some images</span></li>
+<li><span><strong>Eclipse:</strong> updated Japanese translations for Eclipse plug-ins, and added Japanese translations for Welcome page and RSE</span></li>
+</ul>
+
+<p>
+DS-5 version 5.6 build 1051 dated 2011/07/28:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> updated to 5.0u1 release for latest bug fixes</span></li>
+<li><span><strong>ARM Streamline:</strong> new Log view displays output from printf() style annotations that you can place within your application</span></li>
+<li><span><strong>ARM Streamline:</strong> views are enhanced to display process IDs in addition to process names</span></li>
+<li><span><strong>ARM Streamline:</strong> support added for level 2 cache controller (L2C310) performance counters; this can be used as a reference implementation to support other memory mapped performance counters</span></li>
+<li><span><strong>ARM Streamline:</strong> gator daemon updated to support Cortex<sup>&trade;</sup>-A5</span></li>
+<li><span><strong>ARM Streamline:</strong> addition of visual annotation feature to allow screenshots from the target to be displayed in the Timeline view</span></li>
+<li><span><strong>ARM Streamline:</strong> early access support for Cortex-A15 and Qualcomm Snapdragon</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v5</span></li>
+<li><span><strong>DS-5:</strong> initial support for Japanese localization, including the Windows installer, Eclipse IDE, DS-5 Debugger and Streamline Performance Analyzer</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added the ability to debug bare-metal applications on the pre-supplied Cortex-A8 Real-Time System Model (RTSM)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> processor support extended to include ARM7TDMI<sup>&reg;</sup>, ARM11<sup>&reg;</sup> MPCore<sup>&reg;</sup>, ARM1176JZF-S<sup>&reg;</sup>, Cortex-M3, Cortex-R4, Cortex-A5 and Cortex-A15</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added support for TrustZone<sup>&reg;</sup> debugging, including accessing Secure and Normal worlds and world-specific breakpoints</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Memory Importer dialog allows entry of minimum and maximum addresses to be written to</span></li>
+<li><span><strong>DS-5 Debugger:</strong> the context menu on connections in the Debug Control view adds an option to reset all the views to link against that connection</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Memory view allows toggling the endianness used to display data</span></li>
+<li><span><strong>DS-5 Debugger:</strong> SMP support for the Versatile Express Cortex-A9x4 platform is enhanced to use cross-trigger hardware to achieve tight synchronization when multiple cores stop</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Emulation Baseboard with ARM11 MPCore or Cortex-R4F Core Tile,
+          ARM Microcontroller Prototyping System (Cortex-M3),
+          ARM Platform Baseboard for ARM1176JZF-S,
+          ARM Versatile Express A5x2,
+          ARM Versatile Express with Cortex-A15 Soft Macrocell Model,
+          Atmel AT91SAM9M10 / AT91SAM9G35 / AT91SAM9263-EK,
+          CSR SiRFprimaII,
+          Freescale i.MX233,
+          Kyoto KZM-A9-Dual,
+          ST SPEAr1310 and
+          TI DM6467 / Blaze MDP
+</span></li>
+<li><span><strong>DTSL:</strong> register access provided to ITM and STM CoreSight<sup>&trade;</sup> components</span></li>
+<li><span><strong>Examples:</strong> new set of examples added in <tt>&lt;installdir&gt;/examples/Bare-metal_boards_examples.zip</tt> to illustrate basic debug from on-chip RAM for the majority of the boards supported by DS-5</span></li>
+<li><span><strong>Examples:</strong> added new start-up code examples in <tt>&lt;installdir&gt;/examples/Bare-metal_examples.zip</tt>: startup_ARM926EJ-S, startup_ARM1136JF-S, startup_Cortex-A5MPCore, startup_Cortex-M3, startup_Cortex-R4</span></li>
+<li><span><strong>Examples:</strong> added new examples in <tt>&lt;installdir&gt;/examples/Bare-metal_examples.zip</tt> to demonstrate bare-metal debug on the Cortex-A8 simulation model and the Panda board: fireworks_a8rtsm, fireworks_panda</span></li>
+<li><span><strong>Examples:</strong> calendar example in <tt>&lt;installdir&gt;/examples/Bare-metal_examples.zip</tt> is updated to run on the bare-metal Cortex-A8 simulation model</span></li>
+</ul>
+
+<p>
+DS-5 version 5.5 build 966 dated 2011/05/23:
+</p>
+<ul>
+<li><span><strong>ARM Compiler toolchain:</strong> ARM Compiler 5.0 and its documentation is included</span></li>
+<li><span><strong>ARM Streamline:</strong> added support for profiling dynamically loaded kernel modules</span></li>
+<li><span><strong>ARM Streamline:</strong> added Counter Configuration dialog, accessible from the ARM Streamline Data view, to allow configuration of the events that are captured</span></li>
+<li><span><strong>ARM Streamline:</strong> Android process names are displayed in the Timeline view</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v4</span></li>
+<li><span><strong>ARM Streamline:</strong> gator daemon now compiles against Linux kernel 2.6.39</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new updated version of firmware included that provides improved support for bare-metal Symmetric Multiprocessing (SMP) debugging</span></li>
+<li><span><strong>DS-5:</strong> support for Windows Vista (previously deprecated) is now removed</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added support for debugging and tracing bare-metal SMP systems</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Memory view has the ability to import and export memory in a variety of formats</span></li>
+<li><span><strong>DS-5 Debugger:</strong> button added to Trace view to clear trace buffer</span></li>
+<li><span><strong>DS-5 Debugger:</strong> regions in the debugger memory map can be configured as to whether or not to perform a verify when a memory write occurs</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+    Core Logic CLM9721,
+    Freescale i.MX50,
+    NVIDIA Tegra 250,
+    Samsung Exynos 4210,
+    ST-Ericsson U8500 and
+    TI Sitara AM387x / Integra C6A814x / OMAP 4430
+</span></li>
+<li><span><strong>Eclipse:</strong> added editor for ARM Linker scatter files</span></li>
+<li><span><strong>Eclipse:</strong> added libhover, a plug-in to display tooltip help for C library functions in the source editor</span></li>
+<li><span><strong>Examples:</strong> new set of examples added in <tt>&lt;installdir&gt;/examples/Bare-metal_examples.zip</tt> to illustrate bare-metal development using ARM Compiler toolchain</span></li>
+<li><span><strong>Examples:</strong> added examples showing code optimization: optimization1 and optimization2</span></li>
+<li><span><strong>Examples:</strong> added examples showing Cortex-A family start-up code: startup_Cortex-A8, startup_Cortex-A9 and startup_Cortex-A9MPCore</span></li>
+<li><span><strong>Examples:</strong> Linux kernel distribution is moved into a separate download from the tools</span></li>
+</ul>
+
+<p>
+DS-5 version 5.4 build 834 dated 2011/02/02:
+</p>
+<ul>
+<li><span><strong>ARM Streamline:</strong> gator driver supports CPU online/offline</span></li>
+<li><span><strong>ARM Streamline:</strong> system-library support allowing profiling of libraries from any context</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view adds a caliper (blue arrow controls) to select the data that is used in the other statistical views</span></li>
+<li><span><strong>ARM Streamline:</strong> Timeline view adds a cross-section marker (blue slider control) to select the data that is shown in the Samples display</span></li>
+<li><span><strong>ARM Streamline:</strong> support added for analyzing Linux position independent executables (PIE)</span></li>
+<li><span><strong>ARM Streamline:</strong> support of per-cpu charts</span></li>
+<li><span><strong>ARM Streamline:</strong> trace capture and analysis is configured from the ARM Streamline Data view,
+          replacing the previous ARM Streamline entry in the Run/Debug Configurations dialog</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v3</span></li>
+<li><span><strong>DSTREAM/RVI:</strong> new 4.2 version of firmware included</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          ARM Versatile Express A9x4,
+          Atmel AT91SAM9G15 / AT91SAM9G20 / AT91SAM9X25,
+          Freescale i.MX25 / i.MX535,
+          NXP LPC3220 / LPC3230 / LPC3240,
+          Samsung S5PC100 / S5PC110 / S5PV210 and
+          TI OMAP 3430 / OMAP 3630
+</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added trace export feature to the Trace view</span></li>
+<li><span><strong>DS-5 Debugger:</strong> access is provided to the NEON registers for those targets that support them</span></li>
+<li><span><strong>DS-5 Debugger:</strong> <tt>silence/unsilence</tt> commands added to control whether messages are printed to the console when a breakpoint is hit</span></li>
+<li><span><strong>DS-5 Debugger:</strong> frozen views can be manually refreshed</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Disassembly view shows location of inlined functions</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Disassembly and Memory views can auto-complete symbol names in the Address field and have search buttons that can be used to find loaded symbols</span></li>
+<li><span><strong>DS-5 Debugger:</strong> support added for debugging Linux position independent executables (PIE)</span></li>
+<li><span><strong>DS-5 Debugger:</strong> target configurations added to allow tracing of just the Linux kernel (without capturing any user-level code)</span></li>
+<li><span><strong>Eclipse:</strong> updated to Eclipse 3.6, CDT 7.0 and RSE 3.2</span></li>
+<li><span><strong>Eclipse:</strong> standalone License Wizard replaced with Eclipse-based License Manager</span></li>
+<li><span><strong>Examples:</strong> U-Boot example now supports BeagleBoard-xM</span></li>
+<li><span><strong>Examples:</strong> Xaos example builds with -pthreads for multi-threaded execution</span></li>
+<li><span><strong>Examples:</strong> ARM Streamline capture example shows multi-threaded Xaos application running on a multi-core platform</span></li>
+<li><span><strong>GNU Tools:</strong> gcc and binutils are updated to CodeSourcery 2010.09 release,
+          and gdbserver is updated to version 7.0 from CodeSourcery 2010Q1 release</span></li>
+</ul>
+
+<p>
+DS-5 version 5.3 build 764 dated 2010/12/02:
+</p>
+<ul>
+<li><span>This is the first official release of DS-5 Linux Edition, which enables Linux boot code,
+          kernel and driver development via a DSTREAM or RVI target connection unit.</span></li>
+<li><span><strong>ARM Streamline:</strong> support added for ARM1136JF-S, ARM1176JZF-S and
+          Cortex-A9 (unicore and SMP)</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v2</span></li>
+<li><span><strong>DS-5 Debugger:</strong> device support extended to include:
+          Freescale Zoom i.MX27/i.MX31,
+          NXP LPC3250,
+          ST SPEAr300/310/600 and
+          TI AM3517/3730</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added features to aid Linux kernel and device driver debugging,
+          including listing processes and threads in the Debug Control view, a new Modules view,
+          the ability to pend breakpoints until a module is loaded, and the following new commands:
+          <ul>
+          <li><span><tt>info os-log</tt>: to dump the kernel dmesg log</span></li>
+          <li><span><tt>info os-modules</tt>: to list loaded kernel modules</span></li>
+          <li><span><tt>info os-version</tt>: to list the kernel version</span></li>
+          <li><span><tt>set/show os enabled</tt>: to enable and disable kernel support</span></li>
+          <li><span><tt>set/show os log-capture</tt>: to control dumping of the kernel dmesg log</span></li>
+          </ul>
+</span></li>
+<li><span><strong>DS-5 Debugger:</strong> Breakpoint Properties dialog extended to list sub-breakpoints and allows them to be configured</span></li>
+<li><span><strong>DS-5 Debugger:</strong> <tt>set semihosting auto</tt> option added to allow semihosting to be enabled automatically
+                         when a special symbol is detected in the image that is being debugged</span></li>
+<li><span><strong>Eclipse:</strong> Eclipse periodically checks for DS-5 updates on the ARM website and places a notification in
+          the Console view when an update is available</span></li>
+<li><span><strong>Examples:</strong> added Xaos interactive fractal zoomer Linux application to demonstrate ARM Streamline Performance Analyzer</span></li>
+<li><span><strong>Examples:</strong> added Linux device driver example to demonstrate debugging Linux loadable modules</span></li>
+<li><span><strong>Examples:</strong> Linux kernel version supplied in examples updated to 2.6.35</span></li>
+<li><span><strong>Examples:</strong> the example BeagleBoard SD card image now works out-of-the-box, without requiring manual changes
+          to the U-Boot environment</span></li>
+</ul>
+
+<p>
+DS-5 version 5.2 build 694 dated 2010/09/30:
+</p>
+<ul>
+<li><span><strong>ARM Streamline:</strong> added generic support for ARM9 and Cortex-A8 processor-based devices</span></li>
+<li><span><strong>ARM Streamline:</strong> includes gator_v1</span></li>
+<li><span><strong>DS-5 Debugger:</strong> extended bare-metal debugging over JTAG/SWD to include:
+          Atmel AT91SAM9G45,
+          Freescale i.MX28/i.MX35/i.MX51 and
+          Marvell 88SV581x</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new <tt>set/show</tt> commands to configure semihosting</span></li>
+<li><span><strong>DS-5 Debugger:</strong> search feature added to Expressions, Registers and Variables views</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new dialog to allow loading images and debug information during a debug session</span></li>
+<li><span><strong>DS-5 Debugger:</strong> address history added to Disassembly and Memory views</span></li>
+<li><span><strong>DS-5 Debugger:</strong> symbol searching is substantially faster</span></li>
+<li><span><strong>Examples:</strong> including a Linux distribution for beagleboard pre-configured for use with Streamline performance analyzer and a new U-Boot example to illustrate the debug of bare-metal bootloaders by DS-5 Debugger</span></li>
+</ul>
+
+<p>
+DS-5 version 5.1 build 636 dated 2010/08/06:
+</p>
+<ul>
+<li><span><strong>ARM Streamline:</strong> new performance analysis tool added</span></li>
+<li><span><strong>DS-5 Debugger:</strong> launch configuration for beagleboard extended to support bare-metal debugging</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added ability to set watchpoints from the Expressions, Memory and Variables views</span></li>
+<li><span><strong>DS-5 Debugger:</strong> new Trace view added to display trace when performing bare-metal debug on hardware that contains an ETB (Embedded Trace Buffer)</span></li>
+<li><span><strong>Examples:</strong> new fireworks example for beagleboard</span></li>
+</ul>
+
+<p>
+DS-5 version 5.0 build 594 dated 2010/07/05:
+</p>
+<ul>
+<li><span><strong>DS-5 Debugger:</strong> launch configuration dialog includes integration with Remote System Explorer for remote
+    log-in and file transfer</span></li>
+<li><span><strong>DS-5 Debugger:</strong> launch configuration dialog allows connection to gdbsever using a serial port</span></li>
+<li><span><strong>DS-5 Debugger:</strong> right-clicking in the source view shows an Inspect menu that allows quick evaluation of
+    an expression or variable</span></li>
+<li><span><strong>DS-5 Debugger:</strong> added Target view to show the capabilities of the target</span></li>
+<li><span><strong>Eclipse:</strong> DS-5 Home view updated with tutorial videos and cheat sheets</span></li>
+<li><span><strong>Examples:</strong> added pre-configured DS-5 Debugger launch configurations</span></li>
+<li><span><strong>Licensing:</strong> added license wizard on Windows</span></li>
+<li><span><strong>Licensing:</strong> license managed components, including DS-5 Debugger connections and the simulation models,
+     now take into account the support and maintenance period in the license to determine whether updates can be
+     used</span></li>
+<li><span><strong>Simulation Models:</strong> networking support is now enabled</span></li>
+</ul>
+
+<p>
+DS-5 version 5.0 build 472 dated 2010/04/28:
+</p>
+<ul>
+<li><span><strong>DS-5 Debugger:</strong> preliminary support for debugging Android native applications and libraries</span></li>
+<li><span><strong>Eclipse:</strong> added New Project wizard and builder support for the supplied gcc toolchain</span></li>
+<li><span><strong>Examples:</strong> addition of new <tt>threads</tt> example to demonstrate multi-threaded debugging</span></li>
+</ul>
+
+<p>
+DS-5 version 5.0 build 423 dated 2010/03/31:
+</p>
+<ul>
+<li><span><strong>DS-5 Debugger:</strong> new launch configuration dialog</span></li>
+<li><span><strong>DS-5 Debugger:</strong> ability to launch Cortex-A8 model running Linux for application debug using gdbserver</span></li>
+<li><span><strong>DS-5 Debugger:</strong> drag and drop supported in debugger views</span></li>
+<li><span><strong>Eclipse:</strong> updated to Eclipse 3.5.2 and RSE 3.1.2 releases</span></li>
+<li><span><strong>Simulation Models:</strong> inclusion of Cortex-A8 model</span></li>
+</ul>
+
+</body>
+</html>
+

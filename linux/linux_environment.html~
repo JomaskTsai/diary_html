@@ -1,0 +1,435 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html"; charset="utf-8">
+<title>Linux 開發環境</title>
+</head>
+<body>
+<table border=9 bordercolor=brown width="100%" background="../picture/wildboy24_2.bmp">
+<tr>
+<td>
+
+<!--   日曆
+-->
+<p align="center"><strong><a name="Toppage"><font size="10" face="新細明體">Linux 開發環境</font><font size="10"></font>
+</a></strong></p>
+<div align="center"><center>
+<table border="1" width="85%">
+<TBODY>
+
+  <td><a href="http://whatis.techtarget.com/fileformat/MK-Makefile-Generic" style="TEXT-DECORATION: none"><font size="2">MK File Format
+  </font></a></td>
+  <td><a href="H:\Diary - socle\diary_doc\src\doc\L6021_Spec_v1.0_reviewed.pdf" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>
+
+  <tr>
+  <td><a href="#W01" style="TEXT-DECORATION: none"><font size="2">ARM Toolchain
+  </font></a></td>
+  <td><a href="#W02" style="TEXT-DECORATION: none"><font size="2">Toolchain-binutile
+  </font></a></td>
+  <td><a href="#W03" style="TEXT-DECORATION: none"><font size="2">Socle linux build environment
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>  
+  
+  <tr>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></a></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>
+  <td><a href="#W00" style="TEXT-DECORATION: none"><font size="2">XXX
+  </font></td>  
+  
+</TBODY>
+</table>
+</center></div>
+<!--   日曆
+-->
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W01">ARM Toolchain</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<br><b>GNU 跨平台開發工具鍊</b>
+<br>為了對任何目標板應用程式的交叉開發,我們需要將各種二元公用程式(binutils)收集成工具鍊(toolchain),
+其中包括像是ld(loader), gas(GNU Assembler), ar(archive), C 編輯器(gcc)以及C 程式庫(glibc).
+<p align="center"><img src="../src/pic/20150611_1.png"></p>
+<br>GNU工具鏈（英語：GNU toolchain）是一個包含了由GNU計劃所產生的各種編程工具的集合，由自由軟體基金會負責維護工作。
+這些工具形成了一條工具鏈，用於開發應用程序和操作系統。
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W02">Toolchain-binutile</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W03">Socle linux build environment</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ol><b>台北Linux編譯環境,以bpi為例子</b>
+ <li>根據<a href="http://goo.gl/TYMxcC" style="TEXT-DECORATION: none">lemaker wiki</a>在台北server編譯核心
+  <br>台北server : 10.63.241.13
+ </li><li>在編譯完成後啟動"sudo bash ./copy_bsp.sh",將重要資料copy 至/tftpboot/
+ </li><li>使用tftp抓取所需要的資料
+</li></ol>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W04">Linux Kernel & U-boot 編譯流程-BSP (by BPi)</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ol>
+  <li><font color="aa1111"><b>Get a cross toolchain</b></font>
+   <br><font color="dd11dd">sudo apt-get update</font>
+   <br><font color="dd11dd">sudo apt-get upgrade</font>
+   <br><font color="dd11dd">sudo apt-get install</font> build-essential u-boot-tools uboot-mkimage binutils-arm-linux-gnueabihf 
+       gcc-4.7-arm-linux-gnueabihf-base g++-4.7-arm-linux-gnueabihf 
+   <br><font color="dd11dd">sudo apt-get install</font> gcc-arm-linux-gnueabihf cpp-arm-linux-gnueabihf libusb-1.0-0 libusb-1.0-0-dev 
+       git wget fakeroot kernel-package zlib1g-dev libncurses5-dev
+  </li><li><font color="aa1111"><b>Get the BSP repository:</b></font>
+   <br><font color="dd11dd">git clone</font> https://github.com/LeMaker/lemaker-bsp.git
+  </li><li><font color="aa1111"><b>Build</b></font>
+   <br><b>./</b>configure BananaPi
+   <br><font color="dd11dd">make</font>
+   <br><br>此時,會針對u-boot與kernel編譯並鏈接程式
+   <br>以下為我們需要的資料:
+   <br>./BananaPi_hwpack/bootloader/u-boot-sunxi-with-spl.bin
+   <br>./BananaPi_hwpack/kernel/uImage
+   <br>./BananaPi_hwpack/kernel/script.bin
+   <br>./BananaPi_hwpack/rootfs/*
+</li></ol>
+
+<a href="http://goo.gl/ksqEC9" style="TEXT-DECORATION: none">BananaPro/Pi:Building u-boot, script.bin and linux-kernel</a>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W05">Linux Kernel & U-boot 編譯流程-step-by-step (by BPi)</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ol>
+  <li><font color="aa1111"><b>Get a cross toolchain</b></font>
+   <br><font color="dd11dd">sudo apt-get update</font>
+   <br><font color="dd11dd">sudo apt-get upgrade</font>
+   <br><font color="dd11dd">sudo apt-get install</font> build-essential u-boot-tools uboot-mkimage binutils-arm-linux-gnueabihf 
+       gcc-4.7-arm-linux-gnueabihf-base g++-4.7-arm-linux-gnueabihf 
+   <br><font color="dd11dd">sudo apt-get install</font> gcc-arm-linux-gnueabihf cpp-arm-linux-gnueabihf libusb-1.0-0 libusb-1.0-0-dev 
+       git wget fakeroot kernel-package zlib1g-dev libncurses5-dev
+  </li><li><font color="aa1111"><b>Building u-boot</b></font>
+   <ul>
+    <li>Get the u-boot repository:
+     <br><font color="dd11dd">git clone</font> https://github.com/LeMaker/u-boot-sunxi.git
+    </li><li>make the u-boot configure:
+     <br><font color="dd11dd">make</font> <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf- BananaPi_config
+    </li><li>then make the u-boot:
+     <br><font color="dd11dd">make</font> <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf-
+   </li></ul>
+  </li><li><font color="aa1111"><b>Building script.bin</b></font>
+   <ul>
+    <li>Get the sunxi-tool repository:
+     <br><font color="dd11dd">git clone</font> https://github.com/LeMaker/sunxi-tools.git
+     <br><font color="dd11dd">git clone</font> https://github.com/LeMaker/sunxi-boards.git
+    </li><li>Go into sunxi-tools and run the command:
+     <br><font color="dd11dd">make</font>
+    </li><li>You may need install the dependent packages:
+     <br><font color="dd11dd">sudo apt-get install</font>pkg-config
+    </li><li>You will get the tools fex2bin, bin2fex and some others.
+     <br>${sunxi-tools}/fex2bin BananaPi.fex script.bin
+     <br>The prefix ${sunxi-tools} indicates that you are in your sunxi-tools tree.
+     <br>You will need this script.bin file later on when finishing the u-boot installation.
+   </li></ul>
+  </li><li><font color="aa1111"><b>Building the kernel</b></font>
+   <ul>
+    <li> get the linux kernel repository:
+     <br><font color="dd11dd">git clone</font> https://github.com/LeMaker/linux-sunxi.git
+    </li><li>set default kernel configuration:
+     <br><font color="dd11dd">make</font> <font color="44dd44">ARCH</font>=arm <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf- sun7i_defconfig
+    </li><li>tweak the config. You can open some kind of kernel configuring software or close the useless kernel configuration by editing your kernel configuration:
+     <br><font color="dd11dd">make</font> <font color="44dd44">ARCH</font>=arm <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf- menuconfig
+    </li><li>Building uImage and modules:
+     <br><font color="dd11dd">make</font> <font color="44dd44">ARCH</font>=arm <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf- uImage modules
+    </li><li>As a final step, create the full module tree:
+     <br><font color="dd11dd">make</font> <font color="44dd44">ARCH</font>=arm <font color="44dd44">CROSS_COMPILE</font>=arm-linux-gnueabihf- <font color="44dd44">INSTALL_MOD_PATH</font>=output modules_install
+    </li><li>Now you have the following residing in your kernel tree:
+     <br>arch/arm/boot/uImage
+     <br>output/lib/modules/3.4.XX/
+   </li></ul>
+   </li><li><b>Using four files</b>
+   <br>以下為我們需要的資料:
+   <br>u-boot-sunxi-with-spl.bin
+   <br>uImage
+   <br>script.bin
+   <br>modules/3.4.XX
+</li></ol>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W06">SD card installation (by BPi)</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+
+<ol>
+  <li><font color="aa1111"><b>選擇適當的distribution : Lubuntu (example)</b></font>
+   <a href="http://goo.gl/36eOkJ" style="TEXT-DECORATION: none">lemaker download page</a>
+  </li><li><font color="aa1111"><b>Format the SD card:</b></font>
+   <ul>
+    <li>Check the SD card node.
+     <br><font color="dd11dd">sudo fdisk</font> -l
+    </li><li>Delete all existing partitions on the SD card.
+     <br><font color="dd11dd">sudo fdisk</font> /dev/sdx
+     <br>Use the <font color="dd1111">o</font> command to delete all partitions on the SD card and then use the <font color="dd1111">n</font> command to add one new partition and use the <font color="dd1111">w</font> command to save the changes.
+    </li><li>Format all the partitions of SD card as FAT32.
+     <br><font color="dd11dd">sudo</font> mkfs.vfat /dev/sdxx
+   </li></ul>
+  </li><li><font color="aa1111"><b>Write the image file to the SD card.</b></font>
+   <ul>
+    <li>Check the SD card node.
+     <br><font color="dd11dd">sudo fdisk</font> -l
+    </li><li>Unmount all the partitions of the the SD card
+     <br><font color="dd11dd">umount</font> /dev/sdx
+    </li><li>Write the image file to SD card.
+     <br><font color="dd11dd">sudo dd</font> bs=4M if=[path]/[imagename] of=/dev/sdx
+     <br><font color="dd11dd">sudo</font>  pkill -USR1 -n -x <font color="dd11dd">dd</font>
+   </li></ul>
+   <br>燒入Image, 此時Image以4G 為base, 分成兩個partition. Partition 1 : u_boot, uImage. Partition 2 : ROOTFS
+  </li><li><font color="aa1111"><b>置換Kernal:imaeg</b></font>
+    <br>將uImage, script.bin 置放在partition 1
+    <br>更改uEnv.txt 內的內容:
+    <br>bootargs=console=ttyS0,115200 disp.screen0_output_mode=EDID:1024x768p50 hdmi.audio=EDID:0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait
+    <br>aload_script=fatload mmc 0 0x43000000 script.bin;
+    <br>aload_kernel=fatload mmc 0 0x48000000 uImage;bootm 0x48000000;
+    <br>uenvcmd=run aload_script aload_kernel
+  </li><li><font color="aa1111"><b>置換Kernal:modules</b></font>
+     <br>將編譯出來的"modules/3.4.XX", 取代/lib/modules內的資料
+  </li><li><font color="aa1111"><b>將編譯後的source tree 或 BSP 提供的header file 置放在Rootfs自訂的資料夾內</b></font>
+  </li><li><font color="aa1111"><b>在source tree 或是 header file 資料夾內, 執行"make modules_prepare"</b></font> 
+   <a href="http://goo.gl/kHKrrj" style="TEXT-DECORATION: none">編譯簡單的Kernel modules</a>
+   <br>輸入 make mrproper 先清掉一些垃圾
+   <br>輸入 make oldconfig , 會出現一堆東西給你選, 都按 Enter 應付它就對了
+   <br>輸入 make modules_prepare , 這一步是關鍵, 如果沒有 Error, 這創造了所有必要的基礎設施支持模塊建設
+</li></ol>
+
+<br>發現build kernel modules不用真的先編kernel再生成headers kernel source.
+<br>但有幾點要注意
+<ol>
+ <li>如果是玩pi的話，不要拿kernel.org的source來做oldconfig，會選到吐血
+  <br>拿pi官方的比較省時(https://github.com/raspberrypi/linux)
+ </li><li>要設定ARCH,CROSS_COMPILE
+ </li><li>一定要make modules_prepar
+</li></ol>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+<hr>
+<table border=0 width="100%">
+<tr>
+<td width="5%"></td>	<!-- 邊界 -->
+
+<td><center><font size=10><a name="W07">BPi 基本工具安裝</a></font></center>
+<p><font size=10>
+
+<table border=0 width="100%">
+<TBODY>
+<td width="20%"></td>
+<td>
+Lubuntu篇:
+<ul>
+ <li><font color="dd11dd">sudo apt-get install</font> make
+ </li><li><font color="dd11dd">sudo apt-get install</font> dpkg
+ </li><li><font color="dd11dd">sudo apt-get install</font> update
+ </li><li><font color="dd11dd">sudo apt-get install</font> upgrade
+ </li><li>更改bananapi權限
+  <ul>
+   <li>"su -"進入root權限, 密碼:bananapi
+   </li><li>找到"root ALL=(ALL:ALL) ALL"後, 將"bananapi ALL=(ALL:ALL) ALL"複製在它下面, 存檔, "exit" 跳離root
+  </li></ul>
+ </li><li>變更語系
+  <ul>
+   <li>sudo locale-gen zh_TW.UTF-8
+   </li><li><font color="dd11dd">sudo update-locale</font> LANG=zh_TW.UTF-8
+   </li><li><font color="dd11dd">sudo update-locale</font> LANGUAGE=zh_TW.UTF-8
+   </li><li><font color="dd11dd">cp</font> /etc/default/locale $HOME/.pam_environment
+   </li><li><font color="dd11dd">sudo reboot</font>
+  </li></ul>
+ </li><li>安裝正體中文字形 (ttf-wqy-microhe 已內建)
+   <br><font color="dd11dd"> sudo apt-get install</font> ttf-wqy-zenhei
+ </li><li>清除ibus套件
+  <ul>
+   <li>列出 ibus 套件
+    <br><font color="dd11dd">sudo dpkg</font> -l | <font color="dd11dd">grep</font> ibus
+   </li><li>移除 ibus 套件指令
+    <br><font color="dd11dd">sudo apt-get remove</font> --purge gir1.2-ibus-1.0 libibus-1.0-5
+  </li></ul>
+ </li><li>清除fcitx 套件
+  <ul>
+   <li>列出 fcitx 套件
+    <br><font color="dd11dd">sudo dpkg</font> -l | <font color="dd11dd">grep</font> fcitx
+   </li><li>移除 fcitx 套件指令
+    <br><font color="dd11dd">sudo apt-get remove</font> --purge fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4 fcitx-libs fcitx-libs-gclient fcitx-libs-qt fcitx-module-dbus fcitx-module-kimpanel fcitx-module-lua fcitx-module-x11 fcitx-modules fcitx-pinyin fcitx-table fcitx-table-cantonese fcitx-table-wubi-large fcitx-ui-classic
+  </li></ul>
+ </li><li>安裝 hime 輸入法
+  <br><font color="dd11dd"> sudo apt-get install</font> hime hime-chewing
+ </li><li><font color="dd11dd">sudo reboot</font>
+</li></ul>
+
+<a href="http://blog.ilc.edu.tw/blog/blog/6646/post/22967/513775" style="TEXT-DECORATION: none">瘋狂老爹的家</a>
+
+</td>
+<td width="20%"></td>
+</TBODY></table>
+
+<br>
+<p align="right"><a href="#Toppage" style="TEXT-DECORATION: none"><font size="2">回目錄</font></a></p><p><font size="2"></FIELDSET>
+</font></p></td>
+
+<td width="5%"></td>	<!-- 邊界 -->
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+<!--
+body { font-family: sans-serif; margin: 20px }
+h1 { color: #0083AB; text-align: center; }
+h2 { color: #0083AB; }
+h3 { color: #0083AB; }
+dt { font-weight: bold; }
+li { color: #0083AB; }
+p { color: black }
+span { color: black }
+sup { vertical-align: text-top; }
+.title { font-size: xx-large; font-weight: bold; color: #0083AB; text-align: center; }
+.builddata { color: #0083AB; text-align: center; }
+.bookref { font-style: italic; }
+.guiref { font-weight: bold; }
+-->
+</style>
+<title>DS-5 Release Notes</title>
+</head>
+<body>
+
+<img src="armdslogo.png" alt="ARM DS-5 Logo"/>
+<p>
+<div class="title">DS-5 Release Notes</div>
+<div class="builddata">(version 5.22.0 build 5220021 dated 2015/07/22 03:01:02 GMT)</div>
+</p>
+
+<h2>Introduction</h2>
+<p>
+ARM<sup>&reg;</sup> DS-5 Development Studio is the toolkit of choice for
+software developers who want to fully realize the benefits of the ARM Architecture. The DS-5
+installation contains:
+</p>
+<p>
+<ul>
+<li><span>DS-5 Debugger, covering all stages of product development</span></li>
+<li><span>ARM Compiler 5.05u2 for embedded and bare-metal code</span></li>
+<li><span>ARM Compiler 6.02 for embedded and bare-metal code for ARMv8-A (DS-5 Ultimate Edition only) and ARMv7-A processors</span></li>
+<li><span>Linaro GCC Toolchain 4.8-2014.04 for Linux applications and Linux kernel development targeting the AArch32 architecture</span></li>
+<li><span>ARM Streamline Performance Analyzer for various operating systems, including Linux and Android</span></li>
+<li><span>Eclipse IDE, source code editor and project manager</span></li>
+<li><span>Fixed Virtual Platform (FVP) software models for single and quad-core Cortex<sup>&trade;</sup>-A9 and ARMv8 (DS-5 Ultimate Edition only)</span></li>
+<li><span>Example projects and documentation</span></li>
+</ul>
+</p>
+
+<h2>What's New</h2>
+<p>
+This is a summary of the new features and other major changes in this release since the last major version of DS-5:
+</p>
+<ul>
+<span><strong>ARM Compiler</strong><ul>
+    <li><span>updated to ARM Compiler 5.05u2 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/topic/com.arm.doc.arn0005t/index.html">http://infocenter.arm.com/help/topic/com.arm.doc.arn0005t/index.html</a></span></li>
+    </ul>
+    <li><span>updated to ARM Compiler 6.02 for latest improvements and bug fixes</span></li>
+    <ul>
+        <li><span>for further information on changes see <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.arn0008g/index.html">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.arn0008g/index.html</a></span></li>
+    </ul>
+</ul></span>
+<span><strong>ARM Streamline Performance Analyzer</strong><ul>
+    <li><span>Android ATRACE_BEGIN/END annotations are now supported</span></li>
+    <li><span>Streamline can now retrieve executables and the libraries they used directly from the target during capture for analysis</span></li>
+    <li><span>warnings now show up in the Live view as they occur, rather than only after a capture has been analyzed</span></li>
+    <li><span>the upcoming Mali &quot;Utgard&quot; DDK release for Mali-400 and Mali-450 will support userspace gator</span></li>
+</ul></span>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>Variables view provides auto-completion and browsing for local variables</span></li>
+    <li><span>improved ability to cope with powered-down ARMv8 hardware targets</span></li>
+    <li><span>debugger can now access CoreSight components on AXI-AP bus at addresses &gt; 4GB</span></li>
+    <li><span>additional controls are provided in the DTSL options dialog for configuring Marvell HSSTP connections</span></li>
+    <li><span>new device support for:
+    <ul>
+    <li><span>Juno ARM Development Platform (r1)</span></li>
+    <li><span>Freescale i.MX7 SDB</span></li>
+    <li><span>Spansion S6J3110EJAA</span></li>
+    <li><span>Texas Instruments EVMK2H KeyStone II</span></li>
+    </ul>
+</ul></span>
+<span><strong>DSTREAM/RVI</strong><ul>
+    <li><span>new 4.24.0 build 12 of firmware included</span></li>
+</ul></span>
+<span><strong>Examples</strong><ul>
+    <li><span>added a new Streamline cache example to the Linux application examples, showing the use of Streamline to locate poor cache performance in application code</span></li>
+    <li><span>added a bare-metal example showing the use of ITM on a Cortex-M4 platform</span></li>
+    <li><span>added bare-metal-boards <tt>hello world</tt> examples for Altera Arria 10 and Spansion Traveo boards</span></li>
+    <li><span>updated the port of RTX for Cortex-A9 from RTX v4.74 to RTX v4.78, and corrected the behaviour of os_suspend(); see its readme for details on this and other fixes</span></li>
+    <li><span>Linux examples Xaos, Streamline_annotate and Streamline_cache_test are updated to use the latest streamline_annotate.c/.h, and the Streamline .apc's recaptured</span></li>
+    <li><span>Linux Distribution example is updated to replace old softfloat AEL filesystem with a recent Linaro hardfloat filesystem</span></li>
+    <li><span>converted remaining examples that used EB-Cortex-A8 model or Microcontroller Prototyping System (MPS) target to use Cortex-A9 model or MPS2 instead</span></li>
+</ul></span>
+<span><strong>Installer</strong><ul>
+    <li><span>added support for installing different versions of DS-5 on the same host; previous versions are no longer automatically uninstalled</span></li>
+</ul></span>
+<span><strong>Java</strong><ul>
+    <li><span>Java Runtime Environment (JRE) for Eclipse and other Java applications in DS-5 is upgraded to version 8</span></li>
+</ul></span>
+<span><strong>Eclipse</strong><ul>
+    <li><span>Eclipse IDE is upgraded to version 4.4.2 (Luna)</span></li>
+</ul></span>
+<span><strong>Simulation models</strong><ul>
+    <li><span>Cortex-A8 simulation model for Emulation Baseboard has been removed</li>
+    <li><span>updated to Fixed Virtual Platforms 9.3 release (64-bit host installation only)</span></li>
+</ul></span>
+</ul>
+<p>
+The following features are at beta status:
+</p>
+<ul>
+<span><strong>DS-5 Debugger</strong><ul>
+    <li><span>new Linux application rewind feature allows you to seamlessly run and step backwards,
+              use breakpoints and watchpoints (on supported kernels and targets) and examine the state of your
+              application at any point in the past</span></li>
+</ul></span>
+</ul>
+<p>
+The following features are deprecated and might be removed in a future release:
+</p>
+<ul>
+<span><strong>Linaro GCC Toolchain 4.8-2014.04</strong><ul>
+    <li><span>A greater variety of GCC toolchains is available on 
+    <a href="http://ds.arm.com/downloads/compilers/">http://ds.arm.com/downloads/compilers</a> and 
+    can be installed alongside DS-5 following this 
+    <a href="http://ds.arm.com/developer-resources/tutorials/adding-new-compiler-toolchains-to-ds-5/">tutorial</a></span></li>
+</ul></span>
+<span><b>Supported host platforms</b><ul>
+    <li><span>support for Red Hat Enterprise 5 is deprecated and will be removed in a future DS-5 release</span></li>
+</ul></span>
+</ul>
+<p>
+Information about the full set of target platforms supported by DS-5 can be found on
+<a href="http://ds.arm.com/developer-resources/supported-devices/">http://ds.arm.com/developer-resources/supported-devices/</a>.
+</p>
+<p>
+The source code for Streamline gator agent is available at 
+<a href="https://github.com/ARM-software/gator">https://github.com/ARM-software/gator</a>.
+</p>
+<p>
+The list of changes in this and previous releases can be found on
+<a href="http://ds.arm.com/developer-resources/ds-5-development-studio-changelog/">http://ds.arm.com/developer-resources/ds-5-development-studio-changelog/</a>.
+</p>
+
+<h2>Support and Updates</h2>
+<p>
+Visit the DS-5 web resources at <a href="http://ds.arm.com">http://ds.arm.com</a>
+to find to tutorials, knowledgebase articles, and any software updates that are available.
+</p>
+<p>
+Technical support for DS-5 should be obtained from your supplier.
+Support issues can be raised directly with ARM at
+<a href="https://silver.arm.com/">https://silver.arm.com/</a>
+(requires registration). Where appropriate, please mention the build of
+DS-5 that you are using, which can be found at the top of these release notes
+beneath the title. Refer to
+<a href="http://ds.arm.com/developer-resources/ds-5-technical-support/">http://ds.arm.com/developer-resources/ds-5-technical-support/</a>
+for further information on obtaining support.
+</p>
+<p>
+Queries and support issues relating to DS-5 can also be raised on ARM's public forums
+at: <a href="http://community.arm.com/groups/tools/">http://community.arm.com/groups/tools/</a>.
+</p>
+
+<h2>Host Computer Requirements</h2>
+<p>
+DS-5 requires a minimum specification of computer with a dual core 2GHz
+processor (or equivalent) and 2GB of RAM. 4GB or more of RAM is recommended
+to improve performance when debugging large images,  or when using the simulation
+models. A full installation requires approximately 3GB of hard disk space. A 
+minimum screen resolution of 1024x768 is required.
+</p>
+<p>
+DS-5 is supported on the following host platforms and service packs:
+</p>
+<ul>
+<li><span>Windows 7 Professional Service Pack 1</span></li>
+<li><span>Windows 7 Enterprise Service Pack 1</span></li>
+<li><span>Windows 8 (64-bit only) (ARM Compiler 5 and 6 toolchains only)</span></li>
+<li><span>Windows Server 2012 (ARM Compiler 5 and 6 toolchains only)</span></li>
+<li><span>Windows Server 2008 R2 (ARM Compiler 5 toolchain only)</span></li>
+<li><span>Red Hat Enterprise Linux 5 Desktop with Workstation option <b>[deprecated: support for this platform will be removed in a future DS-5 release]</b></span></li>
+<li><span>Red Hat Enterprise Linux 6 Workstation</span></li>
+<li><span>Ubuntu Desktop Edition 14.04 LTS (64-bit only)</span></li>
+<li><span>Ubuntu Desktop Edition 12.04 LTS</span></li>
+</ul>
+<p>
+DS-5 Ultimate Edition is supported on 64-bit host platforms only.
+</p>
+<p>
+ARM Compiler 6 is only supplied in the 64-bit installation of DS-5. For 32-bit installations of DS-5,
+you can download ARM Compiler 6 from <a href="http://ds.arm.com/downloads/compilers/">http://ds.arm.com/downloads/compilers/</a>.
+</p>
+<p>
+All line drawings in the online help use SVG format. To view these graphics, your
+browser must support the SVG format.
+</p>
+<p>
+DS-5 can co-exist with the earlier ARM RVDS toolchain provided that they are installed into separate directories.
+</p>
+
+<h2>Debug System Requirements</h2>
+<p>
+Android and ARM Linux application debug require gdbserver be available on your target. Depending
+on your chosen connection type, DS-5 Debugger might be able to copy gdbserver to the target for
+you, but otherwise you must copy it yourself.
+The recommended version of gdbserver is 7.0 or higher. gdbserver executables, built for 
+Android and ARM Linux, that are compatible with DS-5 Debugger are provided in the 
+<tt>&lt;installdir&gt;/arm/gdbserver</tt> directory. gdbserver executables for Android have been
+tested against Android Virtual Devices Froyo-v2.2 to ICS-v4.0. DS-5 Debugger is unable to
+provide reliable multi-threaded debug support with gdbserver versions prior to 6.8.
+</p>
+<p>
+Linux application rewind is supported for AArch32 architecture applications only, and
+requires undodb-server to be available on your target.
+DS-5 Debugger copies undodb-server to the target for you in the Download and Debug connection type,
+but for all other connection types you must copy it yourself. The undodb-server binary can be found in the
+<tt>&lt;installdir&gt;/arm/undodb/linux</tt> directory within your installation. Application rewind does not
+follow forked processes or allow modification of register values.
+</p>
+<p>
+DS-5 support for Android and Linux depends upon infrastructure and features
+introduced in specific kernel versions:
+</p>
+<ul>
+<li><span>
+    DS-5 Debugger supports debugging NDK-generated native libraries on Android versions 2.2, 2.3.x,
+    3.x.x, and 4.0.
+</span></li>
+<li><span>
+    DS-5 Debugger supports debugging ARM Linux kernel versions 2.6.28 and later. 
+</span></li>
+<li><span>
+    ARM Streamline Performance Analyzer supports ARM Linux kernel versions 3.4 and later.
+</span></li>
+<li><span>
+    Application debug on SMP systems requires ARM Linux kernel version 2.6.36 or later.
+</span></li>
+<li><span>
+    Access to VFP and NEON registers requires
+    ARM Linux kernel version 2.6.30 or later and gdbserver version 7.0 or later.
+</span></li>
+</ul>
+<p>
+ARM Linux kernel and bare-metal debugging require the use of additional tools (not supplied
+with DS-5) to connect to your target system. DSTREAM, RVI, ULINKpro and ULINKpro D debug units
+allow connection to physical hardware targets. VSTREAM allows connection
+to RTL simulators and hardware emulators. ARMv8 bare-metal debugging is only supported when
+using DSTREAM and VSTREAM with a DS-5 Ultimate Edition license.
+</p>
+<p>
+The minimum supported firmware version for DSTREAM, RVI and VSTREAM is 4.24.0. For DSTREAM
+and RVI it is recommended that you use the supplied debug hardware update tool to check that
+you are using the latest firmware and to update it if necessary. Updated firmware is available
+in the <tt>&lt;installdir&gt;/sw/debughw/firmware</tt> directory. The firmware for VSTREAM
+is delivered as part of the VSTREAM software, so you must obtain and install a newer version
+of this product if the firmware version is too old.
+</p>
+<!--
+For ULINK2 you must upgrade to CMSIS-DAP compatible firmware. Updated firmware and associated
+instructions are available in the <tt>&lt;installdir&gt;/sw/debughw/ULINK2</tt> directory.
+-->
+
+<h2><a name="installonlinux">Install on Linux</a></h2>
+<p>
+Separate installable products are provided for 32-bit and 64-bit Linux. Although
+you can install the 32-bit product on 64-bit Linux, it is recommended to
+install the 64-bit product instead. The 64-bit product is for use on 64-bit Linux
+only, and is capable of processing larger data sets and suffers from fewer
+operating system compatibility issues than the 32-bit product.
+</p>
+<p>
+To install DS-5 on Linux, run (not source) <tt>install.sh</tt> and follow the
+on-screen instructions. The installer unpacks DS-5 into your chosen directory,
+adds desktop shortcuts, and optionally installs support for hardware debug units.
+It is recommended that you delete any previous release of DS-5 before installing
+this release. The installer guides you through this process.
+Alternatively you can install this release into a different directory.
+</p>
+<p>
+The tools installed by both 32-bit and 64-bit installers have dependencies
+on 32-bit system libraries. You must ensure that 32-bit compatibility libraries
+are installed when using DS-5 on 64-bit Linux host platforms. DS-5 tools might
+fail to run or report errors about missing libraries if 32-bit compatibility
+libraries are not installed. The ARM Knowledgebase contains further information 
+about the required DS-5 dependencies:
+<a href="http://infocenter.arm.com/help/topic/com.arm.doc.faqs/ka14522.html">http://infocenter.arm.com/help/topic/com.arm.doc.faqs/ka14522.html</a>.
+</p>
+<p>
+The installer includes configuration files to allow USB connection to DSTREAM,
+RVI, ULINKpro and ULINKpro D hardware debug units. It is recommended to install these files if you
+intend to use these features. Installation of these files requires that you
+run the installer with root privileges. If you do not run the installer
+with root privileges or choose not to install these files, then you can still
+install them after installation by running the
+<tt>&lt;installdir&gt;/run_post_install_for_ARM_DS-5.sh</tt> script with root
+privileges. The installer creates a desktop menu using the freedesktop.org
+menu system on supported Linux platforms.
+</p>
+
+<h2>Install on Windows</h2>
+<p>
+Separate installable products are provided for 32-bit and 64-bit Windows. Although
+you can install the 32-bit product on 64-bit Windows, it is recommended to
+install the 64-bit product instead. The 64-bit product is for use on 64-bit Windows
+only, and is capable of processing larger data sets than the 32-bit product.
+</p>
+<p>
+To install DS-5 on Windows, run <tt>setup.exe</tt> and follow the on-screen
+instructions. If you have an earlier version of DS-5 already installed, this one will be installed
+alongside, without uninstalling your previous installation.
+</p>
+<p>
+During installation you might be prompted to install device drivers.
+These drivers are to allow USB connections to DSTREAM, RVI, ULINKpro, ULINKpro D and
+Energy Probe hardware units.
+It is recommended to install these drivers if you intend to use these
+features. You might receive warnings such as "Windows can't verify the publisher
+of this driver software" or "The software you are installing has not passed
+Windows Logo testing". You can safely ignore these warnings and continue with
+installation.
+</p>
+<p>
+Command-line installation and uninstallation are possible on Windows by opening a command prompt, 
+with administrative privileges, and running Microsoft's installer, <tt>msiexec.exe</tt>. You must 
+provide the location of the <tt>.msi</tt> file as an argument to <tt>msiexec</tt>. You can get a 
+full list of options for using <tt>msiexec</tt> by running <tt>msiexec /?</tt> on the command-line.
+An example of how to install DS-5 using <tt>msiexec</tt> is:
+<div style="margin-left: 2em;">
+<pre>
+msiexec.exe /i &lt;installer location&gt;\data\install.msi EULA=1 /qn /l*v install.log
+</pre>
+</div>
+Where:
+<ul>
+<li><span><tt>/i</tt>: this option is to perform the installation.</span></li>
+<li><span><tt>&lt;installer location&gt;\data\install.msi</tt>: this specifies the full pathname of 
+the <tt>.msi</tt> file to install.</span></li>
+<li><span><tt>EULA=1</tt>: this is an ARM specific option. Setting EULA to 1 means you accept the 
+End User License Agreement (EULA). You must read the EULA in the GUI installer before accepting it 
+on the command-line.</span></li>
+<li><span><tt>/qn</tt>: this option specifies quiet mode, so that the installation does not require 
+user interaction. Note device driver installation still requires user interaction. If you do not 
+require USB drivers or if you want the installation to avoid user interaction for USB drivers, you 
+can use <tt>SKIP_DRIVERS=1</tt> option on the command-line.</span></li>
+<li><span><tt>/l*v install.log</tt>: this option specifies the log file to log all output from the 
+installation.</span></li>
+</ul>
+</p>
+
+<h2>After Install</h2>
+<p>
+After installation, you can start Eclipse for DS-5 from the
+<span class="guiref">ARM DS-5 v5.22.0 -> Eclipse for DS-5 v5.22.0</span>
+entry in your desktop menu. Be aware that any existing "Eclipse for DS-5" entry in the desktop menu
+will point to the previous version of DS-5 that is still available for use on your host. Eclipse
+for DS-5 and other supplied tools can also be found within the <tt>&lt;installdir&gt;/bin</tt>
+directory.
+</p>
+<p>
+Portions of DS-5 are license managed and you must install a license before using
+them. See the Obtaining and Installing Your License section of these release notes
+below for further information about this.
+</p>
+<p>
+The installer does not modify any environment variables on your system. To run
+the tools more easily from a console you can manually add the
+<tt>&lt;installdir&gt;/bin</tt> directory to your
+<tt>PATH</tt> environment variable. You should be aware that DS-5 includes copies
+of gcc and make that might behave differently from any copies that are installed
+elsewhere on your system. For this reason, if you modify your PATH environment
+variable, it is recommended that you do this locally within a console rather than
+globally for your entire system. See your operating system documentation for
+further information on setting environment variables.
+</p>
+<p>
+On Linux you can run <tt>&lt;installdir&gt;/bin/suite_exec <em>&lt;shell&gt;</em></tt>
+to open a shell with the PATH environment variable correctly configured. Run this
+tool with no arguments for more help.
+</p>
+<p>
+On Windows the Start menu contains <span class="guiref">DS-5 Command Prompt</span>.
+This console is preconfigured with the <tt>bin</tt> directory added to the
+<tt>PATH</tt> environment variable.
+</p>
+<p>On both Linux and Windows the command prompts do not provide a compiler toolchain
+by default, but you can select one using the <tt>select_toolchain</tt> or
+<tt>select_default_toolchain</tt> commands.
+</p>
+<p>
+Further information on using DS-5 can be found in the on-line
+help within Eclipse for DS-5. To access the on-line help, start Eclipse for DS-5 and
+select <span class="guiref">Help</span> -> <span class="guiref">Help Contents</span>.
+The main documentation for DS-5 can be found under the
+<span class="guiref">DS-5 Documentation</span> section in the contents.
+</p>
+<p>
+Separate documentation is provided for the supplied examples in the
+<tt>&lt;installdir&gt;/examples/docs/index.html</tt> document, which is also
+linked to from the <span class="guiref">Examples Index</span> menu entry in the
+<span class="guiref">ARM DS-5 v5.22.0</span> Windows Start menu.
+</p>
+<p>
+You can find further instructions on installation, licensing and tutorials
+on-line at:
+<a href="http://ds.arm.com/developer-resources/tutorials/working-with-arm-ds-5/">http://ds.arm.com/developer-resources/tutorials/working-with-arm-ds-5/</a>.
+</p>
+
+<h2>Obtaining and Installing Your License</h2>
+<p>
+You must obtain a valid license before using DS-5. 
+</p>
+<p>
+You can use the License Manager dialog in Eclipse for DS-5 to obtain and install node-locked licenses on
+both Windows and Linux. You can open this dialog by selecting ARM License Manager
+in the Eclipse for DS-5 Help menu. You must also select a toolkit. The toolkit identifies which
+specific license you are using in the event that you have multiple licenses installed.
+</p>
+<p>
+Alternatively, floating and commercial (paid-for) node-locked licenses can be obtained and installed manually. Further instructions on
+this can be found in the <span class="bookref">ARM DS-5 License Management
+Guide</span> document in the <tt>&lt;installdir&gt;/documents</tt> directory.
+</p>
+<p>
+When the license and toolkit are configured within Eclipse then all license managed
+components will pick up the license and toolkit settings correctly, both within Eclipse and within
+the provided DS-5 Command Prompt (Windows) or suite_exec shell (Linux). If you use a different console then
+you must configure the tools manually. To do this set the environment
+variable ARMLMD_LICENSE_FILE to point at your license file, and ensure that the
+license managed compilation tools (armcc, armasm, armlink and fromelf) are passed
+the option <tt>--tool_variant=&lt;toolkit&gt;</tt> on each invocation. The argument to
+tool_variant is the type of license to use and corresponds to the prefix used
+by the license features in your license file up to the first '_' character. For
+example, if your license file contains a feature named &quot;ds5eval_compiler5&quot;
+then you must pass the compilation tools the <tt>--tool_variant=ds5eval</tt> option.
+Failure to set either the license location or the toolkit can result in errors
+reporting a failure to checkout a license, for example &quot;Cannot obtain license for...&quot;
+</p>
+<p>
+Consult the License Management FAQ at
+<a href="http://infocenter.arm.com/help/topic/com.arm.doc.faqs/kiLwjCHu92xQmR.html">http://infocenter.arm.com/help/topic/com.arm.doc.faqs/kiLwjCHu92xQmR.html</a>
+for more assistance with the installation of your license.
+</p>
+<p>
+Contact <a href="mailto:license.support@arm.com">license.support@arm.com</a> if you
+need additional help with registering or obtaining your license. Please provide your
+serial number, a detailed description of the problem, and your ARM web licensing
+system username and password. 
+</p>
+<p>
+If you are using floating licenses, then the version of the FlexNet license server
+software must be greater or equal to the version of FlexNet used within the DS-5 tools.
+This release of DS-5 contains tools based on FlexNet 11.12.1.0, along with FlexNet
+server binaries version 11.12.1.0.
+</p>
+
+<h2>Compilers</h2>
+<p>
+DS-5 is supplied with two versions of ARM Compiler for compiling bare-metal applications.
+ARM Compiler 5 supports all ARM architectures except ARMv8. ARM Compiler 6 supports
+architectures ARMv8 and ARMv7-A, as well as alpha support for architectures ARMv7-R,
+ARMv7-M and ARMv6-M. Use of ARMv8 support requires a DS-5 Ultimate Edition license.
+</p>
+<p>
+Both versions of ARM Compiler are license managed and not all editions of DS-5 include
+a license for it. If your edition of DS-5 does not include a license for ARM Compiler,
+or you are developing applications for a non-bare-metal case, such as Linux applications,
+then you might require the use of a third-party compiler.
+</p>
+<p>
+Linaro GCC Toolchain 4.8-2014.04 is provided for Linux applications and Linux kernel
+development targeting the AArch32 architecture. Other releases of GCC are available at
+<a href="https://launchpad.net/linaro-toolchain-binaries/">https://launchpad.net/linaro-toolchain-binaries/</a>.
+</p>
+
+<!--
+<p>
+GCC is one such toolchain that you can use as an alternative to ARM Compiler. The GCC
+toolchain allows you to compile bare-metal, Linux kernel and Linux applications. Linaro provide
+pre-built versions of GCC on their website. For example:
+</p>
+<p>
+GCC for Linux kernel and applications (2013.02 release):
+</p>
+<ul>
+<li><span>Installer for Windows host:<br>
+    <a href="https://launchpad.net/linaro-toolchain-binaries/trunk/2013.02/+download/gcc-linaro-arm-linux-gnueabihf-4.7-2013.02-01-20130221_win32.exe">https://launchpad.net/linaro-toolchain-binaries/trunk/2013.02/+download/gcc-linaro-arm-linux-gnueabihf-4.7-2013.02-01-20130221_win32.exe</a>
+</span></li>
+<li><span>Compressed archive for Linux host:<br>
+    <a href="https://launchpad.net/linaro-toolchain-binaries/trunk/2013.02/+download/gcc-linaro-arm-linux-gnueabihf-4.7-2013.02-01-20130221_linux.tar.bz2">https://launchpad.net/linaro-toolchain-binaries/trunk/2013.02/+download/gcc-linaro-arm-linux-gnueabihf-4.7-2013.02-01-20130221_linux.tar.bz2</a>
+</span></li>
+</ul>
+<p>
+GCC for bare-metal (2012.06 release):
+</p>
+<ul>
+<li><span>Installer for Windows host:<br>
+    <a href="https://launchpad.net/gcc-arm-embedded/4.6/4.6-2012-q2-update/+download/gcc-arm-none-eabi-4_6-2012q2-20120614.exe">https://launchpad.net/gcc-arm-embedded/4.6/4.6-2012-q2-update/+download/gcc-arm-none-eabi-4_6-2012q2-20120614.exe</a>
+</span></li>
+<li><span>Compressed archive for Linux host:<br>
+    <a href="https://launchpad.net/gcc-arm-embedded/4.6/4.6-2012-q2-update/+download/gcc-arm-none-eabi-4_6-2012q2-20120614.tar.bz2">https://launchpad.net/gcc-arm-embedded/4.6/4.6-2012-q2-update/+download/gcc-arm-none-eabi-4_6-2012q2-20120614.tar.bz2</a>
+</span></li>
+</ul>
+<p>
+For ease of use and to be able to use the tools from Eclipse IDE, ensure that the installed
+/ extracted binaries are present on the <tt>PATH</tt> environment variable, for example
+<tt>&quot;C:\Program Files (x86)\Linaro\gcc-linaro-arm-linux-gnueabihf-4.7-2013.02-01\bin&quot;</tt>.
+Newer releases of GCC might be made available on this website from time-to-time. Older
+releases are also available.
+</p>
+<p>
+The pre-built bare-metal examples supplied with DS-5 are built with ARM Compiler.
+The pre-built Linux application examples are built with Linaro's GCC 4.8-2014.04 release.
+</p>
+-->
+
+<h2>Uninstall</h2>
+<p>
+To uninstall DS-5 on Windows, use <span class="guiref">Add or Remove
+Programs</span> in <span class="guiref">Control Panel</span>, select
+<span class="guiref">ARM DS-5 v5.22.0</span> and click the
+<span class="guiref">Remove</span> button.
+</p>
+<p>
+To uninstall DS-5 on Linux, run <tt>remove_menus_for_ARM_DS-5.sh</tt> in the
+root directory of your installation to remove desktop menu entries, and then
+simply delete the installation directory.
+</p>
+<p>
+On both Windows and Linux, some per-user configuration is stored outside
+of the installation directory, which you might optionally choose to delete.
+For Windows these files are stored in <tt>%APPDATA%\ARM</tt>.
+For Linux these files are stored in <tt>$HOME/.ds-5</tt> and <tt>$HOME/.arm</tt>.
+</p>
+
+<h2>Known Issues and Limitations</h2>
+<p>
+The following known issues and limitations exist in this release:
+</p>
+
+<h3>Eclipse for DS-5</h3>
+<ul>
+<li><p>
+    <strong>Problem:</strong> Eclipse fails to start and reports &quot;cannot restore segment 
+    prot after reloc: Permission denied&quot; [SDDEBUG-13327]
+    <br>
+    <strong>Workaround:</strong> This error occurs because some of the shared libraries used 
+    by the applications require text relocation, but the Security-enhanced Linux 
+    (SELinux) policy on your machine prohibits this. To work around this, change the 
+    SELinux policy for your DS-5 applications and shared libraries to allow text relocation. This 
+    can be achieved with the following command, run under a super user account:<p>
+    <tt>chcon -R -t texrel_shlib_t &quot;&lt;installdir>&quot;</tt></p>
+</p></li>
+<li><p>
+    <strong>Problem:</strong> Eclipse fails to start and reports &quot;JVM terminated&quot; or
+    outputs a stack backtrace. [SDDEBUG-4443]
+    <br>
+    <strong>Workaround:</strong> This problem is often caused by heap settings for Eclipse that
+    are not suitable for the computer that you are running it on. To fix this you
+    must edit <tt>&lt;installdir&gt;/sw/eclipse/eclipse.ini</tt> to supply alternative
+    heap settings. The following knowledgebase article provides detailed instructions
+    on making this change: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.faqs/ka14185.html">http://infocenter.arm.com/help/topic/com.arm.doc.faqs/ka14185.html</a>.
+</p></li>
+</ul>
+
+</body>
+</html>
+

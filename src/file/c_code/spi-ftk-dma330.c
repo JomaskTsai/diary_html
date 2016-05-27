@@ -532,7 +532,7 @@ static int socle_spi_dma_tx_slave_config(struct socle_spi *soclespi,u8 bits_per_
 
 	sg_init_table(&sg_tx, 1);
 			
-	/* DMA TX Buffer */			
+	/* DMA TX Buffer */	//dma_map_single same as dma_map_sg		
 	soclespi->dma_tx_buf = dma_map_single(soclespi->dev,
 		(void *) soclespi->tx_buf, soclespi->dma_tx_count,
 		DMA_TO_DEVICE);
@@ -540,7 +540,7 @@ static int socle_spi_dma_tx_slave_config(struct socle_spi *soclespi,u8 bits_per_
 		printk("spi debug dma_mapping_error\n");
 		return -ENOMEM;
 	}
-				
+
 	/* DMA gs_tx */
 	sg_dma_address(&sg_tx) = soclespi->dma_tx_buf;
 	sg_dma_len(&sg_tx)     = soclespi->dma_tx_count;

@@ -16,3 +16,11 @@ min_version = "0.41"
 
 [taxonomies]
   tag = "tags"
+
+[menu]
+  [[menu.main]]
+    identifier = "post"
+    url = "/post/"
+    # title will be shown when you hover on this menu link
+    title = ""
+    weight = 1

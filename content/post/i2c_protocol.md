@@ -7,24 +7,22 @@ draft: true
 
 1. I2C 協定介紹
 2. 基於2.1版本的 I2C 協定概述
-    * Transmission Speeds
+    * I2C 傳送速率
     * I2C 實體層
     * 主從架構 Master-Slave Architecture
-    * 位元傳輸
+    * 位元傳輸 BIT TRANSFER
     * 傳輸資料 TRANSFERRING DATA
         * START 與 STOP 條件 (START Condition & STOP Condition) 
             * Repeated START 條件
-        * Byte format
+        * 位元組格式 Byte format
         * Acknowledge (ACK) and Not Acknowledge (NACK)
+          * ACK 機制 (ACK/NACK)
     * 尋址 Addressing Scheme
-        * 7-bit Addressing
-        * First Byte 
-            >　結構與功能，並搭配時序圖展示其在通信中的作用。
-        * 10-bit Addressing
-    * Acknowledgement Mechanism (ACK/NACK)
-    * Arbitration and Synchronization
-    * Multi-Master Configuration
-    * Error Detection and Handling
+        * 7-bit 定址
+        * 首位元組 (FIRST Byte)
+        * 10-bit 定址
+    * 仲裁 (Arbitration) 與同步 (Synchronization)
+    * 錯誤偵測與處理機制 Error Detection and Handling
 3. I2C Protocol Challenges and Limitations
 4. I2C vs Other Communication Protocols (SPI/UART)
 
@@ -180,9 +178,9 @@ I²C 使用兩條信號線——數據線（SDA）和時鐘線（SCL）來傳輸
 
 I²C 協議支持多主多從架構（Multi-Master, Multi-Slave），但多數實際應用中只有一個主機。
 
-## 位元傳輸
+## 位元傳輸 BIT TRANSFER
 
-位元傳輸 是 I²C 協議中最基本的數據交換單位，描述了如何在總線上以比特為單位進行數據的傳遞。
+位元傳輸是 I²C 協議中最基本的數據交換單位，描述了如何在總線上以比特為單位進行數據的傳遞。
 
 ### 位元傳輸過程：
 * 數據位（Data Bit）傳輸
@@ -202,9 +200,11 @@ I²C 協議支持多主多從架構（Multi-Master, Multi-Slave），但多數�
 ![Data validity](/images/figure_2.png)
 
 
-## TRANSFERRING DATA
+## 傳輸資料 TRANSFERRING DATA
 
 I²C 資料傳輸主要由 START 條件、ADDRESS BYTE、DATA BYTE、ACK/NACK 位元，以及 STOP 條件等型態組成。
+(畫圖)
+
 
 | 信號類型         | 由誰發出               | 作用及說明                                               |
 |------------------|------------------------|--------------------------------------------------------|
@@ -222,188 +222,178 @@ I²C 資料傳輸主要由 START 條件、ADDRESS BYTE、DATA BYTE、ACK/NACK �
 
 ### START 與 STOP 條件 (START Condition & STOP Condition) 
 
-1. 由**主機**產生 START 和 STOP 條件。
-2. 在 **START** 條件發生後，總線被視為 **busy**。在 **STOP** 條件發生後的某個時間，總線被視為再次 **空閒**。
-3. 如果產生 **repeated START (Sr)** 而不是 STOP 條件，總線將保持忙碌狀態。 START (S) 和 repeated START (Sr) 條件在功能上是相同的。
+| 條件            | 總線狀態變化         | 描述                                                   | 訊號波形
+|-----------------|---------------------|-------------------------------------------------------|---------------------|
+| START (S)       | 空閒 → 忙碌         | 主機發出，標記資料傳輸的開始。                        | SDA 從高變低 (在 SCL 高電平時)
+| STOP (P)        | 忙碌 → 空閒         | 主機發出，標記資料傳輸的結束，總線回到空閒。          | SDA 從低變高 (在 SCL 高電平時)
+| Repeated START (Sr) | 忙碌 → 忙碌         | 主機發出，總線保持忙碌狀態，可連續發送資料。          | 與 START 條件相同
 
-![START and STOP conditions](/images/figure_3.png)
+![START and STOP conditions](/images/figure_3_1.png)
 
-### Byte format
+### 位元組格式 Byte format
 
-1. SDA 線上的每個位元組必須是 **8 位元**長。每次傳輸可以傳輸的位元組數不受限制。每個位元組後面都必須有一個確認位。資料首先傳輸最高有效位元 (MSB)。
-2. 如果從設備在執行某些其他功能（例如服務內部中斷）之前無法接收或傳輸另一個完整的資料位元組，則它可以**將時脈線SCL 保持為低電平**，以強制主設備進入 **等待狀態**。
+I²C 的資料傳輸規則, 包括主設備和從設備間的地址、命令、或數據，都必須按 Byte(8-bit) 為基本單位傳輸.
+
+| 項目                    | 說明                                                    |
+|-------------------------|--------------------------------------------------------|
+| 位元組長度              | 每個位元組為 **8 位元**。                              |
+| 資料傳輸順序            | **最高有效位元 (MSB)** 先傳輸。                        |
+| 確認位元 (ACK)          | 每個位元組傳輸完成後需接收端回應 **1 個 ACK 位元**。    |
+| 等待機制                | 從設備可透過將 **SCL 保持低電平** 讓主設備進入 **等待狀態**。|
+
 
 ![Byte format](/images/figure_10.png)
 
 ### Acknowledge (ACK) and Not Acknowledge (NACK)
 
-1. 已定址的接收器必須在接收到每個位元組後產生**確認(ACK)**。
-2. **資料傳輸**必須經過確認。與確認相關的時脈由主機產生。發送器釋放SDA線（HIGH）在**確認時脈期間**。
-3. 接收器必須在應答時脈時拉低 SDA 線，以便在該時脈的高電位期間保持穩定的低電位。當然，也必須考慮設定和**保持時間**。
-4. 當從機不確認從機位址時（例如，因正在執行某些即時功能而無法接收或傳送），從機必須將資料線保持為高電位。然後，主機可以產生一個 STOP 條件來中止傳輸，或產生一個重複的 START 條件來開始新的傳輸。
-5. 如果從機接收器確實確認了從機位址，但在傳輸一段時間後無法接收更多資料位元組，則主機必須再次中止傳輸。
-6. 從傳送器必須**釋放資料線**以允許主機產生 STOP 或 repeated START 條件。
+分別介紹 ACK 與 NACK
 
 ![Acknowledge](/images/figure_4.png)
+
+#### Acknowledgement Mechanism
+
+| **狀態**            | **SDA 線狀態**        | **主機反應**                                          | **從機反應**                                      | 主機/從機行為                                               |
+|---------------------|-----------------------|------------------------------------------------------|--------------------------------------------------|-----------------------------------------------------------|
+| **ACK（確認）**      | SDA 拉低 (LOW)        | 產生時鐘信號，並釋放 SDA 線                           | 在時脈高電位期間將 SDA 拉低以表示確認。           | 表示資料成功接收，主機可繼續傳輸下一位元組。                 |
+| **NACK（不確認）**   | SDA 保持高電位 (HIGH) | 產生 STOP 或 repeated START 條件以中止或重啟傳輸。   | 保持 SDA 為高電位，表示無法處理資料。             | 表示從設備忙碌或無法處理，主機需選擇中止或重新開始傳輸。       |
+| **主機中止傳輸**     | SDA 從低到高 (STOP)   | 產生 STOP 條件終止傳輸，或產生 repeated START 進行新傳輸。 | 等待或釋放 SDA 線準備回應。                      | 主機發出 STOP 或 repeated START，結束或重新開始傳輸。         |
+
+#### 備註：
+1. 資料傳輸必須經過確認。與確認相關的時脈由主機產生。發送器釋放SDA線（HIGH）在確認時脈期間。
 
 
 ## 尋址 Addressing Scheme
 
-Addressing Scheme 指的是 I²C 協議中如何為每個設備分配並識別唯一位址的規則和結構。由於 I²C 是一個多設備總線協議，主機需要通過設備的位址來選擇目標設備進行通信。因此，Addressing Scheme 描述了如何在總線上對每個從機設備進行標識，並確保每個設備在同一總線上的唯一性。
+I²C 尋址 (Addressing Scheme) 的主要目的是確保 I²C 總線上的主機能夠準確地與目標設備通信。I²C 的尋址方案設計了明確的規則，方便多個設備共享相同的兩條訊號線 (SDA 和 SCL)，同時避免通信混亂。
 
-在 I²C 中，主要有兩種尋址方案：7-bit 尋址 和 10-bit 尋址。
+其核心目的是解決以下幾個關鍵問題：
 
+1. __設備唯一性__
+   * 每個從設備必須具有唯一的地址，以便主機能準確識別目標設備。
+   * 7-bit Addressing 支持 128 個設備 (0x00 到 0x7F)。
+   * 10-bit Addressing 支持 1024 個設備 (0x000 到 0x3FF)，適用於需要更多設備的系統。
+2. __通信指向性__
+   * 主機通過地址確定數據是發送給哪個設備，或者從哪個設備接收數據。
+   * 在通信開始時，主機發送目標設備的地址 (ADDRESS BYTE) 和操作類型 (讀取/寫入)。
+3. __兼容性與擴展性__
+   * 透過定義 7 位與 10 位地址格式，I²C 既能滿足常見設備數量的需求，又能擴展以應對更多設備的場景。
+4. __簡化總線設計__
+   * 利用地址 (Address) 來區分設備，而非專用線路，極大簡化了硬體連接，減少了引腳數量和成本。
+
+#### Or
+I²C 尋址 (Addressing Scheme) 是為了讓主機能準確地與目標從設備通信。設計目標包括：
+
+1. 唯一設備標識：每個從設備需有唯一的地址，主機透過地址確定通信對象。
+2. 多設備支持：支援 7-bit 和 10-bit 地址模式，滿足不同設備數量需求。
+3. 簡化通信：使用標準化地址結構確保穩定性和兼容性。
+4. 讀寫指令結合：首字節(Address Byte)同時包含設備地址及讀/寫操作類型。
 
 ### 7-bit 尋址
+7 位元地址格式是 I²C 的標準模式，最多支持 128 個設備。地址被編碼為 8 位元，其中包括：
+
+* 7 位元地址（0x00 至 0x7F）。
+* 1 位元操作位（R/W 位），指示讀取或寫入操作。
+#### 圖表描述
+
+```
+Bit 7     Bit 6    Bit 5    Bit 4    Bit 3    Bit 2    Bit 1    Bit 0  
++--------+--------+--------+--------+--------+--------+--------+--------+
+| 0      | 7-bit address (7 bits)   | R/W (1 bit)                       |
++--------+--------+--------+--------+--------+--------+--------+--------+
+```
+
+* R/W 位：0 表示寫入，1 表示讀取。
+
+#### 7-bit 通信過程
+
+在 7-bit 尋址中，通信過程基於以下步驟：
+
+1. 主機發送 START 條件。
+2. 主機傳送 7-bit 地址 + R/W 位，識別目標設備並指示操作類型。
+3. 從設備根據地址匹配並通過 ACK 信號回應。
+4. 隨後進行數據傳輸（讀取或寫入）。
+
+##### 列表描述
+
+| 步驟          | 說明                              |
+|---------------|-----------------------------------|
+| **START 條件** | 開始通信。                        |
+| **7-bit 地址** | 主機指定目標設備。                |
+| **R/W 位**     | 指示讀取 (1) 或寫入 (0) 操作。     |
+| **ACK/NACK 位**| 從設備回應地址匹配結果。           |
+| **數據傳輸**   | 實際數據交換過程。                |
+
+
+
 ### FIRST Byte
+
+在 I²C 通信中，**First Byte** 是通信的起點，其作用是讓主機發送目標設備的地址或執行特定指令。
+而 **7-bit Addressing** 是 First Byte 的最基本且最常用的應用，但它同時支持其他進階功能，例如廣播、10-bit 尋址前導碼等。
+
+#### *First Byte** 中已預先定義的功能列表
+
+| **位元 7-1**       | **位元 0 (R/W)** | **功能**                                 | **說明**                                                                 |
+|---------------------|------------------|------------------------------------------|--------------------------------------------------------------------------|
+| `0000 000`          | `0`              | **General Call**                        | 廣播指令，所有設備接收，例如初始化或同步時鐘。                                  |
+| `0000 001`          | `0`              | **START Byte**                          | 高速模式用於初始化通信，用於 Hs-mode。                                        |
+| `0000 010`          | `0`              | **CBUS Address**                        | 支持 CBUS 協議的設備通信。                                                   |
+| `0000 011` - `0000 111` | `0`              | **保留 (Reserved)**                     | 暫未定義用途，保留供未來擴展使用。                                              |
+| `1111 0XX`          | `0` 或 `1`       | **10-bit Address 前導碼**               | 用於 10-bit 地址通信，包含高位地址與操作類型 (讀/寫)。                            |
+| `1111 100`          | `1`              | **Device ID**                           | 主機讀取從設備的識別信息，例如型號或製造商等。                                      |
+| `其他 7-bit 地址`    | `0` 或 `1`       | **普通設備尋址 (Normal Addressing)**    | 用於標準 7-bit 地址模式下的從設備通信，識別具體設備並指定操作類型 (讀/寫)。            |
+
+
+#### 說明
+1. **General Call**  
+   - 地址 `0000 000` 是廣播地址，用於讓所有從設備接收相同的指令，常用於系統初始化、軟件復位或同步時鐘等。
+   - 從設備可根據設計選擇是否回應 General Call。
+
+2. **START Byte**  
+   - 地址 `0000 001` 是高速模式初始化專用的起始字節。
+   - 此功能僅適用於切換到 **High-Speed Mode (Hs-mode)**。
+
+3. **CBUS Address**  
+   - 地址 `0000 010` 是為支持 CBUS 協議的設備保留，用於特定通信場景。
+
+4. **10-bit Address 前導碼**  
+   - 地址 `1111 0XX` 用於指示後續的 10-bit 地址格式通信，前導碼中包含高 2 位地址與讀寫方向。
+
+5. **Device ID**  
+   - 地址 `1111 100` 被保留用於讀取設備識別信息，這是一種診斷和系統配置的功能。
+
+6. **普通設備尋址**  
+   - 其餘地址用於標準的 7-bit 或 10-bit 設備尋址，支持多達 128 個（7-bit）或 1024 個（10-bit）設備。
+
+---
+
+#### **總結**  
+First Byte 的功能設計覆蓋了多種應用場景，包括設備廣播、模式切換、高速通信和診斷識別，並為未來擴展預留了保留位元，具有靈活性和兼容性。
+
 ### 10-bit 尋址
 
+10-bit 尋址支持更多設備（1024 個）。地址結構包含 2 個位元組：
+- **第一個位元組**：前導碼 (11110) + 高 2 位元地址 + R/W 位。
+- **第二個位元組**：剩餘 8 位地址。
 
-### I2C 總線協定特性的適用性 (Ver7, 可移到最後面)
-<table>
-    <tr>
-        <td>特徵 Feature</td>
-        <td>單主控 Single controller</td>
-        <td>多主控 Multi-controller</td>
-        <td>目標 Target (Controller or Slave Deice)</td>
-    </tr>
-    <tr>
-        <td>START 條件</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-    </tr>
-    <tr>
-        <td>STOP 條件</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-    </tr>
-    <tr>
-        <td>認可 Acknowledge</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-    </tr>
-    <tr>
-        <td>同步 Synchronization</td>
-        <td>n/a</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td>n/a</td>
-    </tr>
-    <tr>
-        <td>仲裁協定 Arbitration</td>
-        <td>n/a</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td>n/a</td>
-    </tr>
-    <tr>
-        <td>時脈擴展 Clock stretching (1)</td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-    </tr>
-    <tr>
-        <td>7-bit 尋址</td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-        <td><font color=#0050A0>必要項</font></td>
-    </tr>
-    <tr>
-        <td>10-bit 尋址</td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-    </tr>
-    <tr>
-        <td>General Call address*</td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-    </tr>
-    <tr>
-        <td>Software Reset</td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-        <td><font color=#00A050>可選項</font></td>
-    </tr>
-    <tr>
-        <td>START byte (2)</td>
-        <td>n/a</td>
-        <td><font color=#00A050>可選項</font></td>
-        <td>n/a</td>
-    </tr>
-    <tr>
-        <td>Device ID</td>
-        <td>n/a</td>
-        <td>n/a</td>
-        <td><font color=#00A050>可選項</font></td>
-    </tr>
-</table>
+#### **圖表描述**  
+**第一位元組**：
+```
+Bit 7     Bit 6    Bit 5    Bit 4    Bit 3    Bit 2    Bit 1    Bit 0  
++--------+--------+--------+--------+--------+--------+--------+--------+
+| 1      | 1      | 1      | 1      | 0      | Address (2 bits) | R/W   |
++--------+--------+--------+--------+--------+--------+--------+--------+
+```
+**第二位元組**：
+```
+Bit 7     Bit 6    Bit 5    Bit 4    Bit 3    Bit 2    Bit 1    Bit 0  
++--------+--------+--------+--------+--------+--------+--------+--------+
+| Address (8 bits)                                                      |
++--------+--------+--------+--------+--------+--------+--------+--------+
+```
 
-1. Clock stretching is a feature of some targets. If no targets in a system can stretch the clock (hold SCL LOW), the
-controller need not be designed to handle this procedure.
-2. Bit banging’ (software emulation) **multi-controller** systems should consider a START byte.
+## I2C 仲裁 (Arbitration) 與同步 (Synchronization)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## ARBITRATION AND CLOCK GENERATION
-
-### **Synchronization (同步)** - SCL
-
-A procedure to synchronize the clock signals of two or more devices. The clock signals during arbitration are a synchronized combination of the clocks generated by the masters using the wired-AND connection to the SCL line.
-
-1. All masters generate their own clock on the SCL line to transfer messages on the I2C-bus. Data is only valid during the HIGH period of the clock. A defined clock is therefore needed for the **bit-by-bit** **arbitration procedure** to take place.
-2. Clock synchronization is performed using the **wired-AND** connection of I2C interfaces to the SCL line. This means that a HIGH to LOW transition on the SCL line will cause the devices concerned to start counting off their LOW period and, once a device clock has gone LOW, it will hold the SCL line in that state until the clock HIGH state is reached.
-3. However, the LOW to HIGH transition if this clock may not change the state of the SCL line if nother clock is still within its LOW period. The SCL line will therefore be held LOW by the device with the **longest LOW** period.
-4. Devices with shorter LOW periods enter a **HIGH wait-state** during this time.
-5. The **first** device to complete its HIGH period will again pull the SCL line LOW.
-6. In this way, a **synchronized SCL clock** is generated with its **LOW period** determined by the device with the **longest clock LOW period**, and its **HIGH period** determined by the one with the **shortest clock HIGH period**.
-
-* 目標：協調多個主機的 SCL（時鐘線）訊號，確保各主機的時鐘訊號能正確配合。
-* 原理：
-    * I²C 協議要求 SCL 是 線與（wired-AND） 訊號，任何主機都可以將 SCL 拉低。
-    * 當多個主機同時操作 SCL 時，實際上的 SCL 訊號是由所有主機的時鐘信號疊加的結果。
-    * 主機需要等待 SCL 釋放為高電平才能繼續下一個時鐘週期，這種機制自然地實現了時鐘同步。
-
-![Synchronization](/images/figure_5.png)
-
-#### **Wired-AND connection** - ??
-
-### **Arbitration (仲裁)** - SDA
-
-A procedure to ensure that, if more than one master simultaneously tries to control the bus, only one is allowed to do so and the winning message is not corrupted. If two or more masters try to put information onto the bus, the first to produce a ‘one’ when the other produces a ‘zero’ will lose the arbitration.
-
-1. A master may start a transfer only if the bus is free.
-2. Two or more masters may generate a START condition within the minimum hold time (tHD;STA, Hold time after START condition) of the START condition which results in a defined START condition to the bus.
-3. Arbitration takes place on the SDA line, while the SCL line is at the HIGH level, in such a way that the master which transmits a **HIGH level**, while another master is transmitting a **LOW level** will switch off its DATA output stage because the level on the bus doesn’t correspond to its own level.
-
-* 目標：確保在多個主機（Master）同時試圖控制匯流排時，只有一個主機能夠繼續進行傳輸，而其他主機會停止操作。
-* 原理：
-    * 仲裁發生在 SDA（數據線）上。
-    * 主機透過發送數據並同時監聽 SDA 線的電平來進行仲裁。
-    * 如果某個主機發送的是 1（釋放 SDA），但讀到的是 0（另一主機拉低 SDA），那麼它會退出仲裁，讓位於持續主導 SDA 的主機。
-* 結果：勝出的主機繼續完成它的資料傳輸，其他主機將進入等待。
-
-
-![Arbitration](/images/figure_6.png)
-
-### The difference between Arbitration and Synchronization
+在 I²C 協議中，**仲裁 (Arbitration) 和同步 (Synchronization)**是用來管理多個主控設備（Master）同時試圖控制匯流排的情況，兩者有不同的目的和機制：
 
 <table>
     <tr>
@@ -433,6 +423,32 @@ A procedure to ensure that, if more than one master simultaneously tries to cont
     </tr>
 </table>
 
+
+### **同步 (Synchronization)**
+
+* 目的：確保多個主控設備在時鐘線（SCL）上協調一致，避免時序錯亂。
+* 機制：
+    * 當多個主控設備嘗試驅動 SCL（時鐘線） 時，I²C 匯流排規範要求 線上最低頻率 決定最終的時鐘速率。
+      * SCL 的狀態是所有主控設備的 **線與邏輯** 運算。
+      * 如果一個主控設備設置 SCL 為高，但另一個主控設備設置為低，結果是匯流排上的 SCL 保持低電平，直到所有主控設備都設置為高。
+    * 這樣的設計確保了 SCL 線能以 **最低速率** 工作，而不會因個別主控設備的時間差造成問題。
+    * 線與邏輯 (wired-AND): 線上任何一個主控設備將 SCL 拉低，整個線路就是低電平。
+
+![Synchronization](/images/figure_5.png)
+
+### **仲裁 (Arbitration)**
+
+* 目的：確保在多主控架構中，只有一個主控設備可以繼續操作匯流排，其他主控設備會停止操作，避免衝突。
+* 機制：
+    * 仲裁發生在主控設備試圖同時發送數據時，主要是透過 **SDA** (資料線)的狀態來完成。
+    * 當一個主控設備在發送訊號時，會檢查匯流排上是否存在與其輸出訊號不一致的訊號。
+        * 如果主控設備檢測到匯流排是低電平（0），但並未主動輸出低電平（0），則表示有其他主控設備正在主導匯流排。
+        * 在這種情況下，該主控設備會退出競爭並停止傳輸。
+    * 最終只有一個主控設備可以繼續操作，其他的需要等下一個機會。
+* 結果：勝出的主機繼續完成它的資料傳輸，其他主機將進入等待。
+
+![Arbitration](/images/figure_6.png)
+
 #### 是否可能 SDA 和 SCL 由不同的主機產生？
 
 **不可能**
@@ -452,7 +468,7 @@ A procedure to ensure that, if more than one master simultaneously tries to cont
 3. 在 I²C 的設計下，SDA 和 SCL 不可能由不同的主控設備同時驅動。
 
 #### 為什麼最後會由單一主控控制？
-這是因為仲裁和同步兩者互相協作的結果：
+這是因為 **仲裁** 和 **同步** 兩者互相協作的結果：
 
 1. 仲裁機制排除其他主控：
     * 仲裁確保匯流排上的 SDA 和 SCL 最終只受單一主控設備驅動。
@@ -463,55 +479,6 @@ A procedure to ensure that, if more than one master simultaneously tries to cont
 3. 多主控的設計避免衝突：
     * 仲裁和同步的結合避免了不同主控設備同時驅動 SDA 和 SCL 的情況。
     * I²C 的協定規範，仲裁失敗的主控設備必須立即停止驅動匯流排，確保只有仲裁勝出的主控設備保留控制權。
-
-#### I²C 協議中仲裁、總線控制與特殊情況處理
-
-I²C（Inter-Integrated Circuit）是一種多主多從（Multi-Master, Multi-Slave）的串列匯流排協議，支援多個主控設備（Masters）在單一總線上進行資料通訊。這段敘述主要涉及以下幾個重點內容：仲裁、無中央控制邏輯、以及特殊情況下的處理方式。
-
-> Since control of the I2C-bus is decided solely on the address or master code and data sent by competing masters, there is no central master, nor any order of priority on the bus.
-> Special attention must be paid if, during a serial transfer, the arbitration procedure is still in progress at the moment when a repeated START condition or a STOP condition is transmitted to the I2C-bus. If it’s possible for such a situation to occur, the masters involved must send this repeated START condition or STOP condition at the same position in the format frame. In other words, arbitration isn’t allowed between:
-
-* A repeated START condition and a data bit.
-* A STOP condition and a data bit.
-* A repeated START condition and a STOP condition.
-
-1. 仲裁的核心概念
-
-    I²C 匯流排上，沒有中央控制器來決定哪個主控設備擁有優先權。控制匯流排的主控設備是根據仲裁機制決定的：
-    * 仲裁條件：
-        * 每個主控設備通過傳送 位址（Address） 和 資料（Data） 決定是否能持續掌控匯流排。
-        * 仲裁過程只基於線上的 SDA 狀態：
-            * 如果一個主控設備在輸出高電平（1）時，檢測到 SDA 線為低電平（0），它即退出仲裁。
-            * 退出仲裁的設備會釋放 SDA 與 SCL，不再控制匯流排。
-    * 結果： 最終只有一個主控設備贏得仲裁並繼續操作，而其他主控設備需等待匯流排釋放後再嘗試。
-
-2. 無中央控制與無優先順序
-    * 無中央控制器：
-        * I²C 的設計沒有指定固定的優先級，任何設備都可以成為主控設備。
-        * 主控設備是否能繼續操作，完全取決於它是否在仲裁過程中勝出。
-    * 無優先順序：
-        * 匯流排上的競爭是基於主控設備發出的資料內容（如地址或資料位），並無固定優先順序。
-        * 這使得 I²C 匯流排更具靈活性，但也要求所有主控設備需依規範執行仲裁。
-
-3. 特殊情況處理：重複 START 或 STOP 條件期間仲裁進行中
-
-    問題描述： 
-    當兩個或多個主控設備在傳輸過程中，仲裁尚未完成，而其中一個或多個主控設備試圖：
-    1. 發送重複 START 條件（Repeated START）。
-    2. 發送 STOP 條件。
-
-    此時，可能會出現競爭情況，若處理不當，匯流排將無法正確同步。
-
-    解決方法：
-
-    1. 主控設備需同步重複 START 或 STOP 的位置：
-        * 仲裁中，所有主控設備必須在相同的時序位置發送 START 或 STOP。
-        * 這意味著當主控設備試圖發送重複 START 或 STOP 時，它們需確認自身仲裁的進程是否允許在正確的位元框架內操作。
-    2. 若仲裁失敗的主控設備遇到 START/STOP：
-        * 當主控設備偵測到自己失去仲裁控制，必須立即停止產生 START 或 STOP 信號，並釋放總線。
-    3. 硬體與韌體協同設計：
-        * 設備設計應確保硬體能根據 SDA 和 SCL 狀態快速決定是否停止操作。
-        * 韌體邏輯需在傳送 START/STOP 信號前檢查匯流排狀態，避免不一致的條件發生。
 
 #### 範例：重複 START 條件期間仲裁
 
@@ -532,236 +499,71 @@ I²C（Inter-Integrated Circuit）是一種多主多從（Multi-Master, Multi-Sl
 * Master A 繼續掌控匯流排，並發送重複 START。
 * Master B 等待匯流排釋放後重試。
 
-#### 總結
-
-* 仲裁與同步機制確保 I²C 匯流排能在無中央控制的條件下運行。
-* 主控設備需正確處理特殊情況（如仲裁期間的重複 START/STOP），避免操作不一致。
-* 設備設計時，必須結合硬體快速響應能力與韌體邏輯同步，來實現協議的穩定運作。
-
-### Use of the clock synchronizing mechanism as a handshake (內部使用)
+#### Use of the clock synchronizing mechanism as a handshake (內部使用)
 
 保持 SCL LOW level 有兩種層面, 一個是 Byte 層面, 另一個是 bit 層面.
 Byte 層面是發生在 Date 傳輸後, 接收端需要儲存或是反應結果, 需要相應的時間.
 Bit 層面則是透過 Low level 來降低 SCL 的速度.
 
-
-
-## FORMATS WITH 7-BIT ADDRESSES
-
-## 7-BIT ADDRESSING
-
-![First Byte](/images/figure_7.png)
-
-### GENERAL CALL ADDRESS
-
-### START Byte
-
-#### START Byte 的作用
-1. 加速多從設備的同步
-* 在某些場景下，匯流排上有多個從設備（Slaves），它們需要快速捕捉主控設備的訊號。
-* 通常，這些從設備可能需要以不同的速度同步到匯流排的操作。
-* 使用 START byte，可以提醒所有從設備進入同步狀態，而不需要立即發送特定的目標位址。
-2. 簡化從設備的設計
-* 從設備可以設計為監聽 START byte，而不是立即處理後續的資料，從而降低對準確位址比對的即時需求。
-* 特別是在多主控情境下，START byte 為從設備提供額外的緩衝時間來準備。
-3. 支援高速通訊模式
-* 在某些高效能的 I²C 系統中，START byte 可以用於啟動特定的快速操作模式（如快速初始化，或 Ultra Fast 模式）。
-
-#### START Byte 的使用場景
-* 多從架構：多個從設備需要監聽並同步到匯流排。
-* 時鐘恢復：在匯流排上有可能的時鐘偏差情況下，START byte 幫助從設備重新同步。
-* 設備啟動與初始化：作為初始化訊號，提醒從設備準備接受位址訊息或數據。
-
-## I2C vs UART vs SPI
-
-
-
-
-# Note
-## Fault diagnosis and debugging are simple
-
-## Malfunctions can be immediately traced
-
-
-
-
-
-
-這是一個清晰的 I²C 協議報告大綱，涵蓋了技術層面及比較分析。以下是每個部分的重點及建議內容，幫助強化報告結構與內容深度：
-
-1. Introduction to I2C Protocol
-重點內容：
-
-簡述 I²C 協議的由來，由 Philips 開發，主要用於低速通訊的嵌入式系統。
-強調其特點：簡單的雙線協議 (SDA 和 SCL)、支持多主多從架構。
-使用情境範例，例如感測器、EEPROM、顯示器等設備。
-建議：
-
-提供歷史背景及用途的時間軸圖表，幫助聽眾快速理解其演進與應用場景。
-2. I2C Protocol Overview Based on Version 2.1
-I2C Physical Layer
-重點內容：
-
-兩條線 (SDA 和 SCL) 具備雙向數據傳輸的能力，依賴於上拉電阻維持信號穩定性。
-建議：
-
-補充實際電路圖，標註 SDA、SCL 線路及其作用。
-Transmission Speeds
-重點內容：
-
-不同速度模式：
-標準模式 (100 kbps)
-快速模式 (400 kbps)
-快速模式+ (1 Mbps)
-高速模式 (3.4 Mbps)
-超快速模式 (5 Mbps，僅用於單向通訊)
-建議：
-
-使用表格清楚列出各模式的速度限制與應用範例，並強調 2012 年新增的超快速模式特性。
-Master-Slave Architecture
-重點內容：
-
-單主與多主的架構，主設備負責生成時鐘信號和起始信號。
-從設備只能回應，不會主動通訊。
-建議：
-
-使用示意圖描述多主多從情境，說明如何避免總線衝突。
-Addressing Scheme
-重點內容：
-
-7-bit 與 10-bit 地址格式的差異及應用場景。
-討論廣播地址 (0x00) 的特殊用法。
-建議：
-
-提供 I²C 地址分配的範例表（如 EEPROM、感測器常用地址）。
-Data Transfer Format
-重點內容：
-
-起始條件、數據位元 (8-bit)、應答
-
-
-
-
----
-
-
-以下是針對大綱中每個部分的重點內容與建議：
-
----
-
-### **1. Introduction to I2C Protocol**
-**重點：**
-- 簡介 I²C (Inter-Integrated Circuit) 是一種串列通訊協議，由 Philips 在 1982 年設計。
-- 應用範圍：嵌入式系統、感測器模組、顯示器等。
-- 關鍵特性：雙線式通訊（SDA、SCL），支援多主機、多從機架構。
-
-**建議內容：**
-- 提供一個簡單的實際應用案例，例如用 I²C 接口連接溫度感測器。
-- 使用示意圖說明 SDA 和 SCL 線如何實現通信。
-
----
-
-### **2. I2C Protocol Overview Based on Version 2.1**
-**重點：**
-#### **I2C Physical Layer**
-- 描述 SDA（數據線）和 SCL（時鐘線）的功能與特性。
-- 解釋需要外部拉高電阻的原因。
-
-#### **Transmission Speeds**
-- 列出 I²C 支援的速度模式：
-  - 標準模式（100 kbps）
-  - 快速模式（400 kbps）
-  - 高速模式（3.4 Mbps）
-  - Ultra Fast Mode（5 Mbps，僅支援單向傳輸）。
-
-#### **Master-Slave Architecture**
-- 主從式架構：主機負責生成時鐘並初始化通訊，從機被動響應。
-
-#### **Addressing Scheme**
-- 討論 7 位元和 10 位元位址的差異。
-- 說明如何避免位址衝突。
-
-#### **Data Transfer Format**
-- 包括開始位元、位址位元、數據位元、確認位元、結束位元。
-- 圖解 I²C 數據帧結構。
-
-#### **Start and Stop Condition**
-- 說明如何產生 Start/Stop 條件（SDA 與 SCL 的電位變化）。
-
-#### **Repeated Start Condition**
-- 解釋多筆數據傳輸間的「重啟條件」用途。
-
-#### **Acknowledgement Mechanism (ACK/NACK)**
-- 描述從機如何回應主機的數據傳輸。
-
-#### **Voltage Levels and Pull-up Resistors**
-- 討論信號的邏輯電平與拉高電阻的重要性。
-
-#### **Arbitration And Synchronization**
-- 多主機情境下如何仲裁與同步。
-- 示意圖展示仲裁失敗時主機的行為。
-
-#### **Multi-Master Configuration**
-- 支援多主機架構的設計與限制。
-
-#### **Error Detection and Handling**
-- 討論通訊錯誤的檢測方法，例如丟失 ACK 或時鐘同步問題。
-
-**建議內容：**
-- 在各小節提供簡潔的表格或圖表輔助說明。
-- 加入與 2012 年 Ultra Fast 模式的關聯描述，強調其單向通訊應用。
-
----
-
-### **3. I2C Protocol Challenges and Limitations**
-**重點：**
-- 討論 I²C 的限制，如速度相對較慢、電磁干擾敏感性。
-- 分析多主機架構的實現困難（如仲裁問題）。
-- 信號完整性問題：隨電纜長度增加，信號衰減可能影響通訊。
-
-**建議內容：**
-- 可用實際案例說明限制，例如在高頻率下的拉高電阻設計挑戰。
-- 提出解決方案或最佳實踐，例如使用較短的連接線或加強 EMI 保護。
-
----
-
-### **4. I2C vs Other Communication Protocols (SPI/UART)**
-**重點：**
-- 比較 I²C 與 SPI、UART 的優缺點：
-  - **I²C**: 支援多主多從架構，硬體要求少，但速度較慢。
-  - **SPI**: 支援全雙工、速度快，但需要更多的線。
-  - **UART**: 使用簡單，無需時鐘線，但只支援點對點通訊。
-- 實例化每個協議在不同應用場合的選擇。
-
-**建議內容：**
-- 製作比較表格，從速度、線數、拓撲結構、應用情境等維度對比三種協議。
-- 引入現代應用趨勢（如 IoT）來說明各協議的適用性。
-
----
-
-### **整體建議**
-1. 在報告中多使用圖解（如波形圖、架構圖）以便觀眾快速理解技術細節。
-2. 強調 2012 年 Ultra Fast Mode 的新增特性並與其他速度模式做比較。
-3. 引入實際應用案例或常見問題（如仲裁失敗、位址衝突）增強內容實用性。
-4. 各章節末加入簡要總結，幫助觀眾整理重點。
-
-
-#### 資料有效性 (Data Validity)
-
-資料有效性 指的是在 I²C 通訊中如何確保傳輸的數據準確無誤，並且能夠被接收設備正確理解。
-
-* 數據位有效性
-    * 數據位的傳輸：每個數據位的有效性是由 SCL 線的時鐘信號所同步的。只有當 SCL 線為高時，SDA 線上的數據才會被接收方讀取並判斷為有效。這一點是為了避免數據在總線上傳輸過程中的錯誤。
-    * 數據位的時間要求：
-        * 數據保持時間：當 SCL 線為高時，SDA 線上的數據必須保持穩定，直到 SCL 線下邊緣觸發新的位元傳輸。
-* 起始與停止條件的有效性：
-    * Start Condition 和 Stop Condition 是 I²C 協議中兩個關鍵的控制信號，能夠幫助識別每個傳輸的開始和結束。
-    * Start Condition：當 SDA 線由高變低時，並且 SCL 線保持高，表示傳輸開始。
-    * Stop Condition：當 SDA 線由低變高時，並且 SCL 線保持高，表示傳輸結束。
-* 應答機制 (ACK/NACK)：
-    * ACK（應答）：當從機成功接收到數據位後，會通過拉低 SDA 線來應答主機，表示該位數據已成功接收。
-    * NACK（非應答）：當從機無法接收數據時，會保持 SDA 線為高，通知主機傳輸失敗。
-    * ACK/NACK 的作用：這一機制保證了數據的有效性和完整性，並讓主機知道數據是否被正確接收。
-* 錯誤檢測機制：
-    * 時序錯誤：SDA 線的數據變化必須在 SCL 線的低邊緣進行。如果在不符合時序要求的情況下發生 SDA 線的變化，則會引發錯誤。
-    * 傳輸中斷：如果在傳輸過程中出現任何異常（如 SDA 線處於不正確狀態），I²C 協議會通過 NACK 或仲裁機制來處理。
+### 仲裁流程在 F/S 模式與 HS 模式的差異
+
+1. F/S 模式仲裁流程
+   * 主控代碼（Master Code）傳輸結束 → 仲裁完成。
+   * 勝出的主控設備繼續，失敗的主控設備停止參與。
+2. Hs 模式
+    * 沒有仲裁或時鐘同步，直接由主控設備接管匯流排，適合需要高速傳輸的應用，但不支援多主控環境下的動態仲裁。
+
+## 錯誤偵測與處理機制 Error Detection and Handling
+
+I²C（Inter-Integrated Circuit）是一種穩健的通訊協議，但為了確保資料傳輸的可靠性，它具備多種錯誤偵測與處理機制。以下是其主要的錯誤偵測與處理方式介紹：
+
+以下是以表格形式介紹 I²C 的錯誤偵測與處理機制：
+
+| **錯誤類型**               | **描述**                                                                                  | **偵測方式**                                                                 | **處理方式**                                                                                                                                         |
+|----------------------------|-------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **ACK/NACK 錯誤**          | 接收端未正確應答（ACK/NACK 信號）。                                                        | 主機檢查從機是否回應 ACK 或 NACK。                                           | 若收到 NACK，主機可停止傳輸或重試。                                                                                                                   |
+| **仲裁失敗**               | 多主機同時傳輸時發生訊號衝突，導致仲裁失敗。                                               | 每個主機監控 SDA 線狀態。                                                   | 輸掉仲裁的主機自動停止傳輸並釋放總線。                                                                                                               |
+| **時鐘延展超時**           | 從機通過時鐘延展（Clock Stretching）拖延過久，影響總線通訊。                                | 主機檢測 SCL 長時間維持低電平。                                             | 主機設定超時機制，超時後可終止傳輸並重新初始化。                                                                                                     |
+| **停止條件未檢測**         | 停止條件（SDA 從低到高，且 SCL 為高）未正確發送或檢測到。                                    | 主機監控 SDA 和 SCL 線的邏輯變化。                                           | 手動產生停止條件或重啟總線。                                                                                                                         |
+| **資料損壞**               | 因為雜訊或電磁干擾，資料傳輸錯誤或位元丟失。                                               | 主機與從機監控 SDA 和 SCL 跳變的正確性。                                     | - 加入 CRC 校驗或重傳機制。<br>- 提升硬體抗雜訊能力（如屏蔽或加濾波器）。                                                                            |
+| **總線卡住（SDA/SCL 卡住）** | 因中斷或設備故障，SDA 或 SCL 線卡在低電平，阻塞總線。                                        | 主機檢測線路無法回到空閒狀態（SCL 和 SDA 均為高電平）。                     | - 使用時鐘脈衝恢復技術釋放線路。<br>- 重置卡住的從機或重新初始化總線。                                                                                |
+| **設備不回應**             | 從機未正確回應主機的請求（如未回應位址或無 ACK）。                                         | 主機檢測從機無回應或發送 NACK。                                             | - 確認設備位址正確性。<br>- 嘗試重傳或隔離故障設備。                                                                                                 |
+| **雜訊與串音**             | 電磁干擾（EMI）或相鄰信號影響導致誤觸發或訊號錯誤。                                         | 偵測資料或時鐘線的異常波形或跳變。                                           | - 使用屏蔽電纜或雙絞線。<br>- 降低總線速度或加入 EMI 濾波元件。                                                                                      |
+| **電壓不匹配**             | 不同設備的工作電壓（如 3.3V 和 5V）不一致，導致訊號不穩定。                                  | 在設計階段確認設備電壓是否匹配。                                             | 使用邏輯電平轉換器（如 BSS138）來匹配不同電壓設備。                                                                                                   |
+| **設備死鎖**               | 某些從機因內部錯誤無法釋放 SDA 線，導致通訊無法繼續。                                        | 偵測 SDA 線持續低電平且無訊號變化。                                         | - 使用硬體重置（如拉低設備 RESET 引腳）。<br>- 增加設備內部看門狗計時器。                                                                             |
+| **多主機協議錯誤**         | 多主機設置不當導致衝突或無法協同工作。                                                     | 主機監控總線仲裁過程中的異常行為。                                           | - 確保所有主機支援多主機模式。<br>- 設計合理的優先級管理策略。                                                                                        |
+| **傳輸超時**               | 因雜訊或設備異常，資料傳輸超時，影響通訊效率。                                             | 主機設置超時計時器，檢測長時間無應答的情況。                                 | - 中止當前傳輸並重新初始化。<br>- 對傳輸過程進行重試。                                                                                               |
+
+### **說明：**
+- 每個錯誤的處理方式可根據實際應用場景進行調整。
+- 在高可靠性場景中，建議結合硬體與軟體多層次處理方式，例如增加監控系統及恢復機制。
+
+# I2C 通訊協定的主要挑戰與限制
+
+| **挑戰/限制**         | **詳細描述**                                                                 |
+|--------------------|----------------------------------------------------------------------------|
+| **通訊速率限制**     | - 標準速率為 100 kbps，快速模式為 400 kbps，超高速模式可達 5 Mbps。<br> - 速度較 SPI 等協定慢，適合低速應用。   |
+| **線路長度限制**     | - 長線增加電容負載，限制通訊距離。<br> - 通常僅適用於數公分到數十公分的距離。                               |
+| **多主控設計的挑戰**  | - 多主控設備需要精確協調，可能會發生仲裁延遲或失敗。<br> - 同步化問題可能引發錯誤。                   |
+| **總線擁堵**         | - 單總線共享兩條信號線，設備多時可能造成瓶頸。<br> - 設備多會導致延遲，尤其在高頻傳輸時。                    |
+| **噪聲與干擾敏感性**   | - 易受外部 EMI 干擾，特別是在長線和未屏蔽環境中。<br> - 噪聲會增加信號誤判的風險。                       |
+| **錯誤檢測機制缺乏**   | - 沒有內建 CRC 檢查機制，僅提供簡單的 ACK/NACK。<br> - 在高噪聲環境中，數據錯誤難以發現。                     |
+| **實現成本與複雜度**   | - 需要精確設計上拉電阻。<br> - 高速模式和多主控模式下，軟體實現與測試較為複雜。                           |
+| **地址限制**         | - 7 位地址模式最多支持 127 個設備，會受限於可用地址數量。<br> - 設備地址衝突需要額外處理。                   |
+| **無法支持全雙工**     | - 為半雙工協定，無法同時傳送與接收數據，效率低於全雙工協定。                                                |
+| **高頻切換的功耗問題**  | - 高速傳輸時，SDA 和 SCL 的頻繁切換會增加功耗。<br> - 電池供電設備需要特別設計以減少功耗。                   |
+
+# I2C vs Other Communication Protocols (SPI/UART)
+
+| 特性         | **I2C**                               | **SPI**                               | **UART**                              |
+|--------------|--------------------------------------|--------------------------------------|--------------------------------------|
+| **引腳數量** | 兩條線（SDA, SCL）                   | 四條線（MOSI, MISO, SCK, CS）         | 兩條線（TX, RX）                    |
+| **速度**     | 最大 3.4 Mbps（高速模式）            | 可達數十 Mbps（根據硬體而定）        | 通常 115200 bps 或更低               |
+| **應用範圍** | 多從機系統，低速設備，簡單應用       | 高速數據傳輸，點對點通信              | 藍牙模組、GPS、外部設備通信         |
+| **優點**     | 佔用引腳少，支援多主控，簡單易用      | 高速傳輸，全雙工，簡單直觀            | 低成本，簡單實現，廣泛應用          |
+| **缺點**     | 傳輸速度較慢，仲裁較為複雜           | 需要更多引腳，點對點通信              | 傳輸速度較慢，無多設備支持           |
+
+## **結論**
+- **I2C**：適合低速通信的多設備系統，特別是設備數量多、對引腳數量有限制的應用，如感測器或顯示模組。
+- **SPI**：適合需要較高速度和全雙工數據交換的場景，通常用於存儲裝置、顯示屏和高效能感測器。
+- **UART**：適合與外部設備進行簡單、異步的串行通信，廣泛應用於藍牙、GPS 模組和通信接口。
